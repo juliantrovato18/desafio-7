@@ -1,0 +1,17 @@
+{
+  "name": "desafio-7",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "@parcel/transformer-image": "2.0.0-beta.3.1",
+    "parcel": "^2.0.0-beta.3.1"
+  },
+  "scripts": {
+    "dev:fe": "parcel serve ./fe-src/index.html",
+    "build": "parcel build ./src/index.html --dist-dir build --public-url /dwf-m5-parcel-server",
+    "deploy": "gh-pages -d build"
+  },
+  "dependencies": {
+    "gh-pages": "^3.2.3"
+  }
+}
