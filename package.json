@@ -1,12 +1,12 @@
 {
   "name": "desafio-7",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --watch ./be-src/index.ts --exec ts-node ./be-src/index.ts ",
     "dev:fe": "parcel serve ./fe-src/index.html",
     "build:be": "tsc",
+    "build:fe": "parcel build ./fe-src/index.html",
     "build": "npm run build:be",
     "start": "node ./be-dist/index.js"
   },
