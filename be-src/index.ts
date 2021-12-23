@@ -2,6 +2,7 @@ import { sequelize} from "../be-src/models/conn";
 import {User, Product, Auth} from "../be-src/models/index"
 import * as express from "express";
 import * as crypto from "crypto";
+import * as cors from "cors";
 import * as path from "path";
 import * as jwt from "jsonwebtoken";
 import { createProduct, createProfile, updateProfile, getProfile } from "./controllers/user-controller";
@@ -11,6 +12,7 @@ import { createProduct, createProfile, updateProfile, getProfile } from "./contr
 
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 function getSHA256ofString(text:string){
