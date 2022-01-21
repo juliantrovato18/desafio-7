@@ -1,11 +1,13 @@
 import { sequelize} from "../be-src/models/conn";
-import {User, Product, Auth} from "../be-src/models/index"
+import {User, Pet, Auth} from "../be-src/models/index"
 import * as express from "express";
 import * as crypto from "crypto";
 import * as cors from "cors";
 import * as path from "path";
-import * as jwt from "jsonwebtoken";
-import { createProduct, createProfile, updateProfile, getProfile } from "./controllers/user-controller";
+import *as jwt from "jsonwebtoken"
+import { createPet, findPet, findAllPets, updatePet, deleteReport } from "./controllers/pets-controller";
+import { createAuth, createUser, findToken} from "./controllers/user-controller";
+import { index } from "./lib/algolia";
 
 
 
@@ -15,46 +17,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-function getSHA256ofString(text:string){
-    return crypto.createHash('sha256').update(text).digest('hex')
-}
+const SECRET = "asdasdasdsad2211"
 
 const port = process.env.PORT || 3003;
 
 
-const SECRET = "asdasdasdsad2211"
 
 
-// app.post("/auth", async (req, res)=>{
-//      const [user, created] = await User.findOrCreate({
-//         where:{
-//             email: req.body.email   
-//         },
-//         defaults:{
-//             email:req.body.email,
-//             name: req.body.name,
-//             birthdate: req.body.birthdate
-            
-//         }
-        
-//     }) 
-    
 
-//     const [auth, authCreated] = await Auth.findOrCreate({
-//         where:{user_id: user.get("id")},
-//         defaults:{
-//             email: req.body.email,
-//             password: getSHA256ofString(req.body.password),
-//             user_id: user.get("id")
-            
-//         }
-//     })
-// 		console.log({auth, authCreated});
-//         res.json(auth);
-		
-    
-    
-// })
 
 
 // app.post("/auth/token", async (req, res)=>{
@@ -113,46 +83,141 @@ const SECRET = "asdasdasdsad2211"
 //     res.json(product)
 // })
 
-app.post("/create", async (req, res)=>{
+
+//Signup
+app.post("/auth", async (req, res)=>{
     if(!req.body){
         res.status(400).json({
             message: "no hay datos en el body"
         })
     }
-    const newProfile = await createProfile(1, req.body)
-    res.json(newProfile)
+    const newUser = await createUser(req.body);
+    const newAuth = await createAuth(newUser.get("id"),req.body);
+
+    res.json({newAuth, newUser});
 })
 
-app.post("/profile", async (req, res)=>{
-    if(!req.body){
+
+//Signin
+app.post("/auth/token", async (req, res)=>{
+    const auth = await findToken(req.body);
+    if(auth){
+        res.json(auth);
+    }else{
         res.status(400).json({
-            message: "no hay datos en el body"
+            message: "user or pass are incorrect"
         })
     }
-    const newProfile = await updateProfile(1, req.body)
-    res.json(newProfile)
+})
+
+ function  authMiddleware(req, res, next){
+    const token = req.headers.authorization.split(" ")[1];
+    try{
+        const data = jwt.verify(token, SECRET)
+        req._user = data
+        next();
+    }catch(e){
+        res.status(401).json({error:"unauthorized"})
+    } 
+}
+
+
+//me 
+app.get("/me", authMiddleware, async (req,res)=>{
+        const findUser = await User.findByPk(req._user.id)
+        res.json(findUser);
 })
 
 
-app.get("/profiles", async (req, res)=>{
-    const profiles = User.findAll();
-    res.json(profiles);
+//crea una mascota en la base de datos
+app.post("/pet", authMiddleware, async (req, res)=>{
+
+    if(!req._user.id){
+        res.status(400).json("unauthorized");
+    }else{
+        const pet = await createPet(req._user.id ,req.body)
+        res.json(pet);
+    }
+    
 })
 
-app.get("/profile", async (req, res)=>{
-    const profileFound = await getProfile(1);
-    console.log(profileFound);
-    res.json(profileFound);
+//busca una mascota
+app.get("/pet/:id", authMiddleware, async (req,res)=>{
+    if(!req.params.id){
+        res.status(400).json("unauthorized");
+    }else{
+        const pet = await findPet(req.params.id)
+        res.json(pet);
+    }
 })
 
-const staticPath = path.resolve(__dirname, "../fe-src");
-app.use(express.static(staticPath));
+
+//busca todas las mascotas
+app.get("/pets", authMiddleware, async (req,res)=>{
+    if(!req._user.id){
+        res.status(400).json("unauthorized");
+    }else{
+        const pets = await findAllPets()
+        res.json(pets);
+    }
+})
+
+
+//modifica una mascota ya existente
+app.put("/pets/:id", authMiddleware, async (req, res)=>{
+    try {
+        const [updatedPet] = await Pet.update(req.body,{
+            where:{
+                id:req.params.id
+            }
+        })
+        
+         const indexItem = await updatePet(req.body);
+        const algoliaRes = await index.saveObject({
+            ...indexItem, 
+            objectID:req.params.id
+        });
+         
+        res.json(updatedPet)
+    } catch (er) {
+        console.log(er)
+    }
+    
+
+})
+
+//Elimina el reporte de la mascota
+app.delete("/delete-report/:id", authMiddleware, async (req,res)=>{
+    const reportDeleted = await deleteReport(req.params.id);
+    const algoliaR = await index.delete(req.params.id);
+    res.json({message: "reporte eliminado"})
+    
+})
+
+app.get("/mascotas-cerca", async (req,res)=>{
+    const {lat, lng} = req.query;
+    const {hits} = await index.search("",{
+        aroundLatLng : [lat, lng].join(","),
+        aroundRadius: 10000
+    })
+    res.json(hits);
+})
+
+
+
+
+app.use(express.static("dist"));
+
+// const staticPath = path.resolve(__dirname, "../fe-src");
+// app.use(express.static(staticPath));
 
 app.get("*", function(req, res){
     
-    res.sendFile(staticPath + "/index.html");
+    res.sendFile(path.resolve(__dirname, "./../index.html")) 
 })
   
+// app.get("*", express.static(__dirname + "./../index.html"))
+
 app.listen(port, ()=>{
       console.log("todo ok, corriendo en", port);
   })

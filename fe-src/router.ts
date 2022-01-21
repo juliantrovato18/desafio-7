@@ -1,6 +1,6 @@
 import { initWelcomePage } from "./pages/welcome-page";
-import { initinstructionsPage } from "./pages/instructions";
-
+import { initinstructionsPage } from "./pages/ingresar-page";
+import { initiSigninPage } from "./pages/signin-page";
 
 const routes = [
     {
@@ -8,8 +8,12 @@ const routes = [
         component: initWelcomePage,
     },
     {
-        path: /\/instructions/,
+        path: /\/ingresar/,
         component: initinstructionsPage,
+    },
+    {
+        path: /\/signin/,
+        component: initiSigninPage,
     },
 
 

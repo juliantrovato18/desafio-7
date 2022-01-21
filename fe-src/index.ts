@@ -4,7 +4,7 @@ import { patitaComp } from "./components/patita";
 import { customText } from "./components/text";
 import { button } from "./components/button";
 import { input } from "./components/input";
-
+import {state} from "./state"
 
 
 (function () {
@@ -16,4 +16,6 @@ import { input } from "./components/input";
     customText();
     button();
     input();
+    
+    
 })();

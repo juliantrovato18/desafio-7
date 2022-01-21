@@ -1,5 +1,6 @@
 import { headerComp } from "../../components/header";
 import { patitaComp } from "../../components/patita";
+import { state } from "../../state";
 
 export function initWelcomePage(params){
     const div = document.createElement("div");
@@ -13,7 +14,7 @@ export function initWelcomePage(params){
       <section class="section">
       <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
       <custom-text variant="body">para conocer, las mascotas perdidas cerca tuyo, necesitamos permiso para conocer tu ubicacion </custom-text>
-      <custom-button class="button">Dar mi ubicacion</custom-button>
+      <button-comp class="button">Dar mi ubicacion</button-comp>
       </section>
 
       
@@ -63,9 +64,13 @@ export function initWelcomePage(params){
     `
     div.appendChild(style);
    
-   //  div.querySelector(".button").addEventListener("click",()=>{
-   //      params.goTo("/instructions");
-   //  })
+    div.querySelector(".button").addEventListener("click",()=>{
+      state.singup(()=>{
+         console.log(state.getState());
+         params.goTo("/ingresar");
+     });
+        
+    })
     return div;
 
 }
