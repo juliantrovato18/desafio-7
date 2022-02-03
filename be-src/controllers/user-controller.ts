@@ -15,7 +15,7 @@ function getSHA256ofString(text:string){
 }
 
 export async function createUser(dataProfile){
-    
+            
         const [user, created] = await User.findOrCreate({
             where:{
                 email:dataProfile.email,
@@ -28,6 +28,7 @@ export async function createUser(dataProfile){
             
             
         })
+        console.log({user});
         return user
     
     

@@ -5,8 +5,9 @@ import { sequelize } from "../models/conn";
 
 export class Reporte extends Model {}
 Reporte.init({
-  location: DataTypes.STRING,
-  petName: DataTypes.STRING,
-  petClass: DataTypes.STRING,
-  when: DataTypes.INTEGER
+  name: DataTypes.STRING,
+  phoneNumber: DataTypes.INTEGER,
+  when: DataTypes.STRING,
+  user_id: DataTypes.INTEGER
+  
 }, { sequelize, modelName: 'Reporte' });

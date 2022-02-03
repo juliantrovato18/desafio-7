@@ -1,6 +1,8 @@
 import { initWelcomePage } from "./pages/welcome-page";
 import { initinstructionsPage } from "./pages/ingresar-page";
 import { initiSigninPage } from "./pages/signin-page";
+import { initReportPetPage } from "./pages/report-pet-page";
+import { initEditPetPage } from "./pages/edit-pet-page";
 
 const routes = [
     {
@@ -14,6 +16,14 @@ const routes = [
     {
         path: /\/signin/,
         component: initiSigninPage,
+    },
+    {
+        path: /\/reports/,
+        component: initReportPetPage,
+    },
+    {
+        path: /\/edit/,
+        component: initEditPetPage,
     },
 
 

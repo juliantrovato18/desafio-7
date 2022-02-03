@@ -10,6 +10,7 @@ const API_BASE_URL = "http://localhost:3003";
         password:"",
         token: "",
         petname: "",
+        petImage:"",
         lat: "",
         lng: "",
 
@@ -41,6 +42,7 @@ const API_BASE_URL = "http://localhost:3003";
     //newAuth
     singup(callback){
         const cs = state.getState();
+        console.log(cs.name);
 
         fetch(API_BASE_URL + "/auth",{
             method: "post",
@@ -55,12 +57,12 @@ const API_BASE_URL = "http://localhost:3003";
         }).then(res=>{
             return res.json()
         }).then(data=>{
+            console.log({data});
             cs.name = data.name
             cs.email = data.email
             cs.password = data.password
-            const newState = state.setState(cs);
-            console.log(data);
-            console.log(cs);
+            
+        
             callback();
         })
 

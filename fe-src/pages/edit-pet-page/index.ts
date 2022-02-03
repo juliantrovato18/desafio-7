@@ -1,6 +1,6 @@
 import { state } from "../../state";
 
-export function initiSigninPage(params){
+export function initEditPetPage(params){
     const div = document.createElement("div");
     div.innerHTML = `
             <section class= "section1">
@@ -9,23 +9,10 @@ export function initiSigninPage(params){
             </div>
             <custom-header></custom-header>
             </section>
-            <form class= "section">
-            <custom-text variant= "title">Mis datos</custom-text>
-            <div class= "input-container">
-            <label class ="label">Nombre</label>
-            <input-comp type="name" class="name"></input-comp>
-            <label class ="label">Email</label>
-            <input-comp type="email" class="email"></input-comp>
-            <label class ="label">Contraseña</label>
-            <input-comp type="password" class="input"></input-comp>
-            <label class ="label">Repetir contraseña</label>
-            <input-comp type="password" class="input"></input-comp>
-            </div>
-            <div class= "container-button">
-            <button-comp class="button">Guardar</button-comp>
-            </div>
-            </form>
-            
+           <section class="section-2">
+           <card-comp></card-comp>
+           </section>
+           
             
     `
     const style = document.createElement("style");
@@ -87,36 +74,50 @@ export function initiSigninPage(params){
          .label{
         
          }
+
+         .search-form {
+            background-color: coral;
+            padding: 10px;
+            }
+            body,
+            input,
+            button {
+             font-size: 24px;
+             }
+             body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+             }
+            html {
+            height: 100%;
+        }
         
   
     
     `
         div.appendChild(style);
         const currentState = state.getState();
-        const input = div.querySelector(".section");
-        console.log(input);
-        input.addEventListener("submit", (res:any)=>{
-            console.log(res.detail.text);
-           currentState.name = res.detail.name
-           currentState.email = res.detail.email
-           currentState.password = res.detail.password
-           const newState = this.setState(currentState);
-           console.log(newState);
-        });
+        // const input = div.querySelector(".section");
+        // console.log(input);
+        // input.addEventListener("submit", (res:any)=>{
+        //     console.log(res.detail.text);
+        //    currentState.name = res.detail.name
+        //    const newState = this.setState(currentState);
+        //    console.log(newState);
+        // });
 
-    div.querySelector(".button").addEventListener("click",(e)=>{
-        const clase2 = document.querySelector(".name");
-        const nombre =  clase2.shadowRoot.querySelector("input").value;
-        const clase = document.querySelector(".email");
-        const email =  clase.shadowRoot.querySelector("input").value;
-        currentState.name = nombre;
-        currentState.email = email;
-        console.log(state.getState());
+    //div.querySelector(".button").addEventListener("click",(e)=>{
+        // const clase2 = document.querySelector(".name");
+        // const nombre =  clase2.shadowRoot.querySelector("input").value;
+        // currentState.name = nombre;
+        // console.log(state.getState());
            
-        state.singup(()=>{
-            params.goTo("/welcome");
-        })
+        //state.singup(()=>{
+          //  params.goTo("/welcome");
+        //})
         
-    })
+    //})
     return div;
 }

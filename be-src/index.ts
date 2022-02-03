@@ -1,5 +1,6 @@
 import { sequelize} from "../be-src/models/conn";
 import {User, Pet, Auth} from "../be-src/models/index"
+import { createReport } from "./controllers/reporte-controller";
 import * as express from "express";
 import * as crypto from "crypto";
 import * as cors from "cors";
@@ -91,10 +92,16 @@ app.post("/auth", async (req, res)=>{
             message: "no hay datos en el body"
         })
     }
+    console.log(req.body);
     const newUser = await createUser(req.body);
     const newAuth = await createAuth(newUser.get("id"),req.body);
+    const data = {
+            email:newAuth.getDataValue("email"),
+            name: newUser.getDataValue("name")
+        }
 
-    res.json({newAuth, newUser});
+    
+    res.json(data);
 })
 
 
@@ -194,6 +201,23 @@ app.delete("/delete-report/:id", authMiddleware, async (req,res)=>{
     
 })
 
+//Reporta la mascota vista (REPORTS)
+app.post("/report", authMiddleware, async (req, res)=>{
+    if(!req._user.id){
+        res.status(400).json({
+            message: "no hay datos"
+        })
+    }else{
+        const reporte = await createReport(req.body, req._user.id);
+            res.json(reporte)
+    }
+    
+    
+})
+
+
+
+// Busca las mascotas, cerca de su locacion
 app.get("/mascotas-cerca", async (req,res)=>{
     const {lat, lng} = req.query;
     const {hits} = await index.search("",{

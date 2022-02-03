@@ -4,6 +4,7 @@ import { patitaComp } from "./components/patita";
 import { customText } from "./components/text";
 import { button } from "./components/button";
 import { input } from "./components/input";
+import { cardComp } from "./components/cards";
 import {state} from "./state"
 
 
@@ -16,6 +17,7 @@ import {state} from "./state"
     customText();
     button();
     input();
+    cardComp();
     
     
 })();

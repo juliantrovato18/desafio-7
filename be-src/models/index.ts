@@ -8,6 +8,7 @@ User.hasMany(Reporte);
 User.hasOne(Auth);
 Pet.belongsTo(User);
 Reporte.belongsTo(Pet);
+Reporte.belongsTo(Auth);
 Reporte.belongsTo(User);
 Auth.belongsTo(User);
 

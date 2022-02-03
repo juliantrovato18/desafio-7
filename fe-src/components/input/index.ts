@@ -24,6 +24,8 @@ export function input(){
             shadow.appendChild(input);
             shadow.appendChild(style);
 
+            
+
         }
     }
     customElements.define("input-comp", Input);
