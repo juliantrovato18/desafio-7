@@ -1,17 +1,18 @@
 import { state } from "../../state";
-import { initMap } from "../../../be-src/lib/mapbox";
-import {mapbox} from "mapbox";
-import {mapboxgl} from "mapbox-gl";
-const MapboxClient = require("mapbox");
+import * as mapboxgl from "mapbox-gl";
+import * as Marker  from "mapbox-gl";
 import Dropzone from "dropzone";
- const imgChange = require("../../img/change.jpg");
+const imgChange = require("../../img/change.jpg");
+import {initMap} from "../../../be-src/lib/mapbox/index";
+import { initSearchForm } from "../../../be-src/lib/mapbox/index";
+
 
 export function initReportPetPage(params){
     const div = document.createElement("div");
     div.innerHTML = `
             <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
-            <script src="//api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
-            <script src="//unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js"></script>
+            <script defer src="//api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+            <script defer src="//unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js"></script>
             <section class="page">
             <section class= "section1">
             <div>
@@ -39,7 +40,7 @@ export function initReportPetPage(params){
             </form>
             <div id="map" class="map" style="width: 300px; height: 200px"></div>
             <label class ="label">Ubicacion</label>
-            <input-comp></input-comp>
+            <input-comp class="mapbox-input"></input-comp>
             <p>Buscá un punto de referencia para reportar a tu mascota. Puede ser una dirección, un barrio o una ciudad.</p>
             <div class= "container-button">
             <button-comp class="button">Reportar como perdido</button-comp>
@@ -140,6 +141,7 @@ export function initReportPetPage(params){
         const dropzonImg: any = div.querySelector(".img-change");
         const buttonDrop:any = div.querySelector(".button-drop");
         const mapa = div.querySelector(".map");
+        const mapboxInput = div.querySelector(".mapbox-input");
         
 
         const initDropzone = new Dropzone(dropzonImg,{
@@ -154,19 +156,25 @@ export function initReportPetPage(params){
             pictureImg = file.dataURL;
             
             dropzonImg.src = file.dataURL;
-        })
+        }),
          
-        const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
-        const mapboxClient = new MapboxClient(MAPBOX_TOKEN);
-
-        function initMap() {
-        mapboxgl.accessToken = MAPBOX_TOKEN;
-        return new mapboxgl.Map({
-            container: mapa,
-            style: "mapbox://styles/mapbox/streets-v11",
-        });
-        }
-        initMap();
+        
+       
+        
+        
+        (function () {
+          const map = initMap(mapa, 12, 21 );
+          initSearchForm(mapboxInput ,function (results) {
+            const firstResult = results[0];
+            const [lng, lat] = firstResult.geometry.coordinates;
+            const marker = new mapboxgl.Marker()
+              .setLngLat(firstResult.geometry.coordinates)
+              .addTo(map);
+            map.setCenter(lng, lat);
+            map.setZoom(14);
+          });
+        })();
+        
         
         button.addEventListener("click",(e:any)=>{
             const petName = div.querySelector(".name");
