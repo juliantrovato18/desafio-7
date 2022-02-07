@@ -1,23 +1,17 @@
-import { initRouter } from "./router";
-import { headerComp } from "./components/header";
-import { patitaComp } from "./components/patita";
-import { customText } from "./components/text";
-import { button } from "./components/button";
-import { input } from "./components/input";
-import { cardComp } from "./components/cards";
+import "./router";
+import "./components/button/index";
+import "./components/cards/index";
+import "./components/header/index";
+import "./components/input/index";
+import "./components/patita/index";
+import "./components/text/index";
+import "./pages/welcome-page/index";
+import "./pages/ingresar-page/index";
+import "./pages/report-pet-page/index";
+import "./pages/edit-pet-page/index";
 import {state} from "./state"
 
 
 (function () {
-    
-    const root = document.querySelector(".root");
-    initRouter(root);
-    headerComp();
-    patitaComp();
-    customText();
-    button();
-    input();
-    cardComp();
-    
     
 })();

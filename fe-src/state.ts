@@ -1,9 +1,7 @@
-
 const API_BASE_URL = "http://localhost:3003";
 
- const state = {
+const state = {
     data : {
-        
         name: "",
         phoneNumber:"",
         email:"",
@@ -14,13 +12,8 @@ const API_BASE_URL = "http://localhost:3003";
         lat: "",
         lng: "",
 
-
-        
-        
         listeners:[],
-        
     },
-    
 
     getState(){
         return this.data
@@ -36,7 +29,6 @@ const API_BASE_URL = "http://localhost:3003";
 
     suscribe(callback: (any) => any) {
         this.listeners.push(callback);
-
     },
 
     //newAuth
@@ -62,12 +54,9 @@ const API_BASE_URL = "http://localhost:3003";
             cs.email = data.email
             cs.password = data.password
             
-        
             callback();
         })
-
     }
+}
 
- }
- 
 export {state}

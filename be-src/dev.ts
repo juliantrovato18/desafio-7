@@ -1,2 +1,2 @@
-import "dotenv/config"
-import "../be-src/index.ts"
+import "dotenv/config";
+import "../be-src/index.ts";

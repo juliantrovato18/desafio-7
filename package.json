@@ -8,10 +8,12 @@
     "build:be": "tsc",
     "build:fe": "parcel build ./fe-src/index.html",
     "build": "npm run build:be",
+    "deploy": "gh-pages -d build",
     "start": "node ./be-dist/index.js"
   },
   "dependencies": {
     "@types/node": "^17.0.2",
+    "@vaadin/router": "^1.7.4",
     "algoliasearch": "^4.11.0",
     "cloudinary": "^1.27.1",
     "concurrently": "^6.5.1",
