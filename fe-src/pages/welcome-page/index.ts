@@ -1,32 +1,40 @@
-import { headerComp } from "../../components/header";
-import { patitaComp } from "../../components/patita";
+import { Router } from "@vaadin/router";
 import { state } from "../../state";
 
-export function initWelcomePage(params){
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <section class= "section1">
-      <div>
-      <custom-patita class="patita" variant="small"></custom-patita>
-      </div>
-      <custom-header></custom-header>
-      </section>
-      <section class="section">
-      <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
-      <custom-text variant="body">para conocer, las mascotas perdidas cerca tuyo, necesitamos permiso para conocer tu ubicacion </custom-text>
-      <button-comp class="button">Dar mi ubicacion</button-comp>
-      </section>
+class initWelcomePage extends HTMLElement {
 
+   shadow: ShadowRoot;
+   constructor() {
+      super();
+      this.shadow = this.attachShadow({mode: 'open'});
+   }
+   connectedCallback(){
+      this.render();
+   }
+   render() {
       
-    `
-    
-    const style = document.createElement("style");
-    style.innerHTML=`
+      const div = document.createElement("div");
+      div.innerHTML = `
+         <section class="section1">
+            <div>
+               <custom-patita class="patita" variant="small"></custom-patita>
+            </div>
+            <custom-header></custom-header>
+         </section>
+         <section class="section">
+            <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
+            <custom-text variant="body">para conocer, las mascotas perdidas cerca tuyo, necesitamos permiso para conocer tu ubicacion </custom-text>
+            <button-comp class="button">Dar mi ubicacion</button-comp>
+         </section>
+      `;
+      
+      const style = document.createElement("style");
+      style.innerHTML=`
              * {
             box-sizing: border-box;
          }
          body {
-          margin: 0;
+            margin: 0;
          }
          .section1{
             display:flex;
@@ -57,20 +65,17 @@ export function initWelcomePage(params){
             align-items:center;
             justify-content:center;
          }
-         
-  
-        
-  
-    `
-    div.appendChild(style);
-   
-    div.querySelector(".button").addEventListener("click",()=>{
-      state.singup(()=>{
-         console.log(state.getState());
-         params.goTo("/ingresar");
-     });
-        
-    })
-    return div;
-
+      `;
+      
+      div.appendChild(style);
+      this.shadow.appendChild(div);
+      
+      this.shadow.querySelector(".button").addEventListener("click",()=>{
+         state.singup(()=>{
+            console.log(state.getState());
+            Router.go("/ingresar");
+         });
+      });
+   }
 }
+customElements.define("welcome-page", initWelcomePage);

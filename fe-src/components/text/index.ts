@@ -1,8 +1,8 @@
-export function customText(){
-class TextComponent extends HTMLElement {
+
+export class TextComponent extends HTMLElement {
     constructor() {    
-      super();
-      this.render();
+        super();
+        this.render();
     }
     
     render(){
@@ -16,21 +16,19 @@ class TextComponent extends HTMLElement {
                 font-weight: bold;
                 color: black;
                 padding:0px;
-
+                
             }
             .body{
                 font-size: 40px;
                 
             }
-        `
-
-
+        `;
+        
         div.className = variant;
         div.textContent = this.textContent;
         shadow.appendChild(div);
         shadow.appendChild(style);
     }
     
-  }
-  customElements.define("custom-text", TextComponent);
 }
+customElements.define("custom-text", TextComponent);
