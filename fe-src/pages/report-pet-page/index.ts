@@ -6,7 +6,7 @@ import Dropzone from "dropzone";
 const imgChange = require("../../img/change.jpg");
 const mapboxToken = process.env.TOKEN_MAPBOX;
 const mapboxClient = new MapboxClient(mapboxToken);
-console.log("Token de mapbox_token: ", mapboxToken);
+
 
 class InitReportPetPage extends HTMLElement {
 
@@ -30,7 +30,7 @@ class InitReportPetPage extends HTMLElement {
                 </div>
                 <custom-header></custom-header>
             </section>
-            <custom-text variant= "title">Reportar mascotas perdidas</custom-text>
+            <custom-text variant= "title" >Reportar mascotas perdidas</custom-text>
             <form class= "form">
                 <div class= "input-container">
                     <label class ="label">Nombre de la mascota</label>
@@ -39,24 +39,24 @@ class InitReportPetPage extends HTMLElement {
                     <img src="${imgChange}" class="img-change"></img>
                 </div>
                 <div class= "container-button">
-                    <button-comp class="button">Guardar</button-comp>
+                    <custom-text variant="title" class="drop-text">Agregar/Modificar foto</custom-text>
                 </div>
             </form>
             <section class="sec">
                 <div class="container-mapbox">
-                    <form class="search-form">
-                        <input name="q" type="search" />
-                        <button>Buscar</button>
-                    </form>
+                    
                     <div id="map" class="map" style="width: 300px; height: 200px"></div>
+                        <form class= "mapbox-box">
                         <label class ="label">Ubicacion</label>
-                        <input-comp class="mapbox-input"></input-comp>
+                        <input class="input-valido" name="q" type="search"/>
+                        <button>Buscar</button>
+                        </form>
                         <p>Buscá un punto de referencia para reportar a tu mascota. Puede ser una dirección, un barrio o una ciudad.</p>
                         <div class= "container-button">
-                        <button-comp class="button">Reportar como perdido</button-comp>
+                        <button-comp class="button">Guardar</button-comp>
+                        </div>
                     </div>
-                <div class= "container-button">
-                    <button-comp class="button">Cancelar</button-comp>
+                <div class= "container-button-cancelar">
                 </div>
             </section>
         </section>    
@@ -78,7 +78,8 @@ class InitReportPetPage extends HTMLElement {
             }
             .page{
                 min-width: 414px;
-                min-height: 1000px;
+                max-height: 1000px;
+                
             }
 
             .patita{
@@ -103,7 +104,19 @@ class InitReportPetPage extends HTMLElement {
             .container-button{
                 display: flex;
                 padding: 0px;
-                margin-top: 20px;
+                margin-top: 10px;
+            }
+            .container-button-cancelar{
+                display: flex;
+                padding: 0px;
+                margin-top: 10px;
+            }
+
+            .drop-text{
+                border:solid 1px;
+                border-radius:1px;
+                background-color: #97EA9F;
+                width:330px;
             }
 
             .button{
@@ -127,7 +140,7 @@ class InitReportPetPage extends HTMLElement {
             .sec {
                 display:flex;
                 max-width: 100px;
-                max-height: 50px;
+                min-height: 300px;
                 margin-top: 100px;
                 flex-direction: row;    
             }
@@ -144,7 +157,7 @@ class InitReportPetPage extends HTMLElement {
         const dropzonImg: any = this.shadow.querySelector(".img-change");
         const buttonDrop:any = this.shadow.querySelector(".button-drop");
         const mapa = this.shadow.getElementById('map');
-        const mapboxInput = this.shadow.querySelector(".mapbox-input");
+        const mapboxInput = this.shadow.querySelector(".input-valido");
 
         const initDropzone = new Dropzone(dropzonImg,{
             url: "/falsa",
@@ -186,6 +199,7 @@ class InitReportPetPage extends HTMLElement {
             const map = initMap();
             initSearchForm(function (results) {
                 const firstResult = results[0];
+                const [lng, lat] = firstResult.geometry.coordinates;
                 const marker = new mapboxgl.Marker()
                     .setLngLat(firstResult.geometry.coordinates)
                     .addTo(map);
@@ -197,13 +211,19 @@ class InitReportPetPage extends HTMLElement {
                     
                     const petName = div.querySelector(".name");
                     const pet =  petName.shadowRoot.querySelector("input").value;
+                    const location = this.shadow.querySelector(".input-valido").value;
+                    console.log(location);
                     currentState.petname = pet;
                     currentState.petImage = pictureImg;
+                    currentState.lng = lng;
+                    currentState.lat = lat;
                     
                     console.log(currentState);
                     console.log({
                         pet,
-                        pictureImg
+                        pictureImg,
+                        lng,
+                        lat
                     });
                 })
             });
