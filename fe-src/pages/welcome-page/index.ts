@@ -69,12 +69,41 @@ class initWelcomePage extends HTMLElement {
       
       div.appendChild(style);
       this.shadow.appendChild(div);
+      const currentState = state.getState();
+
+      const successCallback = (position)=>{
+         const lat = position.coords.latitude;
+         const lng = position.coords.longitude;
+         console.log(lat, lng);
+      }
+      const errorCallback = (err)=>{
+         console.error("ha ocurrido un error", err);
+      }
+
+      const options = {
+         enableHighAccuracy: true,
+         maximumAge: 30000,
+         timeout:27000
+      }
+
+      if("geolocation" in navigator){
+         navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options)
+         
+         
+      }else{
+         console.error("la geolocalizacion no esta disponible");
+      }
       
+
+
       this.shadow.querySelector(".button").addEventListener("click",()=>{
-         state.singup(()=>{
-            console.log(state.getState());
-            Router.go("/ingresar");
-         });
+            if(navigator.geolocation == null){
+               console.log("Dar ubicacion")
+            }else{
+               Router.go("/ingresar");
+            }
+            
+         
       });
    }
 }

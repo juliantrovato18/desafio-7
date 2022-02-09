@@ -11,6 +11,8 @@ const state = {
         petImage:"",
         lat: "",
         lng: "",
+        myLat:"",
+        myLng:"",
 
         listeners:[],
     },
