@@ -7,7 +7,6 @@ const imgChange = require("../../img/change.jpg");
 // const mapboxToken = process.env.TOKEN_MAPBOX;
 const mapboxClient = new MapboxClient("pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t6YWR4ZzhtMjN0MDJwdHZrZm54ZTFjcSJ9.tNj8iOs3xhDWm898q8Fg7w");
 
-
 class InitReportPetPage extends HTMLElement {
 
     shadow: ShadowRoot;
