@@ -4,9 +4,8 @@ import MapboxClient from "mapbox";
 import * as mapboxgl from "mapbox-gl";
 import Dropzone from "dropzone";
 const imgChange = require("../../img/change.jpg");
-const mapboxToken = process.env.TOKEN_MAPBOX;
-const token = "pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t6NjA4aWQ0MHZyMjJvbXBtY2o0OGNyZSJ9._aFiRBTfp3-1Z4zwW4I5pg";
-const mapboxClient = new MapboxClient(token);
+// const mapboxToken = process.env.TOKEN_MAPBOX;
+const mapboxClient = new MapboxClient("pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t6YWR4ZzhtMjN0MDJwdHZrZm54ZTFjcSJ9.tNj8iOs3xhDWm898q8Fg7w");
 
 
 class InitReportPetPage extends HTMLElement {
@@ -32,27 +31,27 @@ class InitReportPetPage extends HTMLElement {
                 <custom-header></custom-header>
             </div>
             <custom-text variant= "title" >Reportar mascotas perdidas</custom-text>
-        <form class="form">
-            <div class= "input-container">
-                <label class ="label">Nombre de la mascota</label>
-                <input-comp type="name" class="name"></input-comp>
-                <div id="dropzone" class="pet-photo-container">
-                <img src="${imgChange}" class="img-change"></img>
-            </div>
-            <div class= "container-button">
-            <custom-text variant="title" class="drop-text">Agregar/Modificar foto</custom-text>
-            </div>
-            <div class="container-mapbox">
-                <div id="map" class="map" style="width: 300px; height: 200px"></div>
-                <label class ="label">Ubicacion</label>
-                <input class="input-valido" name="q" type="search"/>
-                <button>Buscar</button>
-                <p>Buscá un punto de referencia para reportar a tu mascota. Puede ser una dirección, un barrio o una ciudad.</p>
-                <div class= "container-button">
-                <button class="button" type="submit">Guardar</button>
+            <form class="form">
+                <div class= "input-container">
+                    <label class ="label">Nombre de la mascota</label>
+                    <input type="name" class="name"></input>
+                    <div id="dropzone" class="pet-photo-container">
+                    <img src="${imgChange}" class="img-change"></img>
                 </div>
-            </div>
-        </form>
+                <div class= "container-button">
+                <custom-text variant="title" class="drop-text">Agregar/Modificar foto</custom-text>
+                </div>
+                <div class="container-mapbox">
+                    <div id="map" class="map" style="width: 300px; height: 200px"></div>
+                    <label class="label">Ubicacion</label>
+                    <input class="input-valido" name="q" type="search"/>
+                    <button class="search-button"> Buscar </button>
+                    <p>Buscá un punto de referencia para reportar a tu mascota. Puede ser una dirección, un barrio o una ciudad.</p>
+                    <div class= "container-button">
+                    <button class="button" type="submit">Guardar</button>
+                    </div>
+                </div>
+            </form>
         </div>    
         `;
 
@@ -64,7 +63,12 @@ class InitReportPetPage extends HTMLElement {
             body {
                 margin: 0; 
             }
-
+            .name {
+                width: 312px;
+                height: 50px;
+                border-radius: 4px; 
+                border: 1px solid #000;
+            }
             .section1{
                 display:flex;
                 flex-direction: row;
@@ -95,6 +99,10 @@ class InitReportPetPage extends HTMLElement {
                 display: flex; 
                 justify-content:space-between;
                 flex-direction:column;
+            }
+            .img-change {
+                width: 330px;
+                height: 250px;
             }
             .container-button{
                 display: flex;
@@ -139,6 +147,24 @@ class InitReportPetPage extends HTMLElement {
                 margin-top: 100px;
                 flex-direction: row;    
             }
+            .dz-size {
+                display: none;
+            }
+            .dz-filename {
+                display: none;
+            }
+            .dz-success-mark {
+                display: none;
+            }
+            .dz-error-mark {
+                display: none;
+            }
+            .mapboxgl-ctrl-attrib-button {
+                display: none;
+            }
+            .mapboxgl-ctrl-attrib-inner {
+                display: none;
+            }
         `;
 
         div.appendChild(style);
@@ -146,16 +172,13 @@ class InitReportPetPage extends HTMLElement {
         
         const currentState = state.getState();
         const form = this.shadow.querySelector(".form");
-        const button = document.querySelector(".button");
+        const searchButton = this.shadow.querySelector(".search-button");
+        const petName = (this.shadow.querySelector(".name") as HTMLInputElement);
         let pictureImg;
 
         const dropzonImg: any = this.shadow.querySelector(".img-change");
-        const buttonDrop:any = this.shadow.querySelector(".button-drop");
-        var input = (this.shadow.querySelector(".input") as HTMLInputElement);
         const mapa = this.shadow.getElementById('map');
-        var mapboxInput = (this.shadow.querySelector(".input-valido") as HTMLInputElement);
-        
-        
+        const mapboxInput = (this.shadow.querySelector(".input-valido") as HTMLInputElement);
 
         const initDropzone = new Dropzone(dropzonImg,{
             url: "/falsa",
@@ -169,18 +192,19 @@ class InitReportPetPage extends HTMLElement {
             dropzonImg.src = file.dataURL;
             pictureImg = file.dataURL;
         });
-            //COMO DEBERIA SER EL FORM        
+
+        // COMO DEBERIA SER EL FORM        
         // form.addEventListener("submit", (e)=>{
         //     e.preventDefault();
         //     const imagen = div.querySelector(".img-change");
         //     const data = imagen.querySelector("img").src;
         //     const petName = div.querySelector(".name");
-        //      const pet =  petName.shadowRoot.querySelector("input").value;
+        //     const pet =  petName.shadowRoot.querySelector("input").value;
         //     console.log(pet, data);
-        // })
+        // });
 
         function initMap() {
-            mapboxgl.accessToken = mapboxToken;
+            mapboxgl.accessToken = "pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t6YWR4ZzhtMjN0MDJwdHZrZm54ZTFjcSJ9.tNj8iOs3xhDWm898q8Fg7w";
             return new mapboxgl.Map({
                 container: mapa,
                 style: "mapbox://styles/mapbox/streets-v11",
@@ -188,22 +212,23 @@ class InitReportPetPage extends HTMLElement {
         }
 
         function initSearchForm(callback) {
-            mapboxClient.geocodeForward(
-                console.log(mapboxInput.value),
-                mapboxInput.value,
-                {
-                    country: "ar",
-                    autocomplete: true,
-                    language: "es",
-                },
-                function (err, data, res) {
-                    console.log(data);
-                    if (!err) callback(data.features);
-                }
-            );    
-        }
+            searchButton.addEventListener('click', (e) => {
+                e.preventDefault();
 
-        
+                mapboxClient.geocodeForward(
+                    mapboxInput.value,
+                    {
+                        country: 'ar',
+                        autocomplete: true,
+                        language: "es",
+                    },
+                    function (err, data, res) {
+                    // console.log(data);
+                    if (!err) callback(data.features);
+                    }
+                );
+            });
+        }
 
         (function () {
             const map = initMap();
@@ -216,31 +241,44 @@ class InitReportPetPage extends HTMLElement {
                 map.setCenter(firstResult.geometry.coordinates);
                 map.setZoom(14);
                 
-                button.addEventListener("submit",(e:any)=> {
+                // form.addEventListener("submit",(e:any)=> {
+                //     e.preventDefault();
+                    
+                //     const pet =  petName.shadowRoot.querySelector("input").value;
+                //     const imagen = div.querySelector(".img-change");
+                //     const data = imagen.querySelector("img").src;
+                //     const location = div.querySelector(".q");
+                //     const loc = this.shadowRoot.querySelector(".input-valido").value;
+                //     console.log(loc);
+                //     currentState.petname = pet;
+                //     currentState.petImage = pictureImg;
+                //     currentState.lng = lng;
+                //     currentState.lat = lat;
+                    
+                //     console.log(currentState);
+                //     console.log({
+                //         pet,
+                //         data,
+                //         lng,
+                //         lat
+                //     });
+                // });
+                form.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    
-                    const petName = div.querySelector(".name");
-                    const pet =  petName.shadowRoot.querySelector("input").value;
-                    const imagen = div.querySelector(".img-change");
-                    const data = imagen.querySelector("img").src;
-                    const location = div.querySelector(".q");
-                    const loc = this.shadowRoot.querySelector(".input-valido").value;
-                    console.log(loc);
-                    currentState.petname = pet;
-                    currentState.petImage = pictureImg;
-                    currentState.lng = lng;
-                    currentState.lat = lat;
-                    
-                    console.log(currentState);
-                    console.log({
-                        pet,
-                        data,
-                        lng,
-                        lat
+                    console.log(e.target)
+                    console.log("Este es el form: ", {
+                        petName: petName.value,
+                        pictureImg: pictureImg,
+                        Ubi: {
+                            name: e.target["q"].value,
+                            lat: lat,
+                            lng: lng,
+                        },
                     });
-                })
+                });
             });
         })();
+
     }
 }
 customElements.define("reports-page", InitReportPetPage)
