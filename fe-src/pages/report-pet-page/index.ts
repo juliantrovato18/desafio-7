@@ -4,13 +4,8 @@ import MapboxClient from "mapbox";
 import * as mapboxgl from "mapbox-gl";
 import Dropzone from "dropzone";
 const imgChange = require("../../img/change.jpg");
-<<<<<<< HEAD
 const mapboxToken = "pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t6YWR4ZzhtMjN0MDJwdHZrZm54ZTFjcSJ9.tNj8iOs3xhDWm898q8Fg7w";
 const mapboxClient = new MapboxClient(mapboxToken);
-=======
-// const mapboxToken = process.env.TOKEN_MAPBOX;
-const mapboxClient = new MapboxClient("pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t6YWR4ZzhtMjN0MDJwdHZrZm54ZTFjcSJ9.tNj8iOs3xhDWm898q8Fg7w");
->>>>>>> 14051ed563d8d176ef62810883cd462fb2f7d13b
 
 
 class InitReportPetPage extends HTMLElement {
@@ -105,15 +100,9 @@ class InitReportPetPage extends HTMLElement {
                 justify-content:space-between;
                 flex-direction:column;
             }
-<<<<<<< HEAD
             .img-change{
                 width: 250px;
                 height: 200px;
-=======
-            .img-change {
-                width: 330px;
-                height: 250px;
->>>>>>> 14051ed563d8d176ef62810883cd462fb2f7d13b
             }
             .container-button{
                 display: flex;
@@ -230,27 +219,16 @@ class InitReportPetPage extends HTMLElement {
         }
 
         function initSearchForm(callback) {
-<<<<<<< HEAD
             form.addEventListener("click", (e)=>{
                 e.preventDefault();
                 mapboxClient.geocodeForward(
                     mapboxInput.value,
                     {
                         country: "ar",
-=======
-            searchButton.addEventListener('click', (e) => {
-                e.preventDefault();
-
-                mapboxClient.geocodeForward(
-                    mapboxInput.value,
-                    {
-                        country: 'ar',
->>>>>>> 14051ed563d8d176ef62810883cd462fb2f7d13b
                         autocomplete: true,
                         language: "es",
                     },
                     function (err, data, res) {
-<<<<<<< HEAD
                         console.log(data);
                         if (!err) callback(data.features);
                     }
@@ -259,14 +237,6 @@ class InitReportPetPage extends HTMLElement {
             )}
             
             
-=======
-                    // console.log(data);
-                    if (!err) callback(data.features);
-                    }
-                );
-            });
-        }
->>>>>>> 14051ed563d8d176ef62810883cd462fb2f7d13b
 
         (function () {
             const map = initMap();
@@ -282,7 +252,6 @@ class InitReportPetPage extends HTMLElement {
                 // form.addEventListener("submit",(e:any)=> {
                 //     e.preventDefault();
                     
-<<<<<<< HEAD
                     const petName = this.shadowRoot.querySelector(".name");
                     const pet =  petName.shadowRoot.querySelector("input").value;
                     const imagen = div.querySelector(".img-change");
@@ -294,18 +263,6 @@ class InitReportPetPage extends HTMLElement {
                     currentState.petImage = pictureImg;
                     currentState.lng = lng;
                     currentState.lat = lat;
-=======
-                //     const pet =  petName.shadowRoot.querySelector("input").value;
-                //     const imagen = div.querySelector(".img-change");
-                //     const data = imagen.querySelector("img").src;
-                //     const location = div.querySelector(".q");
-                //     const loc = this.shadowRoot.querySelector(".input-valido").value;
-                //     console.log(loc);
-                //     currentState.petname = pet;
-                //     currentState.petImage = pictureImg;
-                //     currentState.lng = lng;
-                //     currentState.lat = lat;
->>>>>>> 14051ed563d8d176ef62810883cd462fb2f7d13b
                     
                 //     console.log(currentState);
                 //     console.log({
