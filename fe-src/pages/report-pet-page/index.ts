@@ -4,9 +4,8 @@ import MapboxClient from "mapbox";
 import * as mapboxgl from "mapbox-gl";
 import Dropzone from "dropzone";
 const imgChange = require("../../img/change.jpg");
-const mapboxToken = process.env.TOKEN_MAPBOX;
-const token = "pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t6NjA4aWQ0MHZyMjJvbXBtY2o0OGNyZSJ9._aFiRBTfp3-1Z4zwW4I5pg";
-const mapboxClient = new MapboxClient(token);
+const mapboxToken = "pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t6YWR4ZzhtMjN0MDJwdHZrZm54ZTFjcSJ9.tNj8iOs3xhDWm898q8Fg7w";
+const mapboxClient = new MapboxClient(mapboxToken);
 
 
 class InitReportPetPage extends HTMLElement {
@@ -96,6 +95,10 @@ class InitReportPetPage extends HTMLElement {
                 justify-content:space-between;
                 flex-direction:column;
             }
+            .img-change{
+                width: 250px;
+                height: 200px;
+            }
             .container-button{
                 display: flex;
                 padding: 0px;
@@ -129,6 +132,13 @@ class InitReportPetPage extends HTMLElement {
             .input {
                 width: 100%;
             }
+            .dz-size{
+                display:none;
+            }
+            .mapboxgl-ctrl-attrib-inner{
+                display:none;
+            }
+            
             .label {
             
             }
@@ -180,7 +190,7 @@ class InitReportPetPage extends HTMLElement {
         // })
 
         function initMap() {
-            mapboxgl.accessToken = mapboxToken;
+            mapboxgl.accessToken = "pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t6YWR4ZzhtMjN0MDJwdHZrZm54ZTFjcSJ9.tNj8iOs3xhDWm898q8Fg7w";
             return new mapboxgl.Map({
                 container: mapa,
                 style: "mapbox://styles/mapbox/streets-v11",
@@ -188,20 +198,24 @@ class InitReportPetPage extends HTMLElement {
         }
 
         function initSearchForm(callback) {
-            mapboxClient.geocodeForward(
-                console.log(mapboxInput.value),
-                mapboxInput.value,
-                {
-                    country: "ar",
-                    autocomplete: true,
-                    language: "es",
-                },
-                function (err, data, res) {
-                    console.log(data);
-                    if (!err) callback(data.features);
-                }
-            );    
-        }
+            form.addEventListener("click", (e)=>{
+                e.preventDefault();
+                mapboxClient.geocodeForward(
+                    mapboxInput.value,
+                    {
+                        country: "ar",
+                        autocomplete: true,
+                        language: "es",
+                    },
+                    function (err, data, res) {
+                        console.log(data);
+                        if (!err) callback(data.features);
+                    }
+                );    
+            }
+            )}
+            
+            
 
         
 
@@ -219,7 +233,7 @@ class InitReportPetPage extends HTMLElement {
                 button.addEventListener("submit",(e:any)=> {
                     e.preventDefault();
                     
-                    const petName = div.querySelector(".name");
+                    const petName = this.shadowRoot.querySelector(".name");
                     const pet =  petName.shadowRoot.querySelector("input").value;
                     const imagen = div.querySelector(".img-change");
                     const data = imagen.querySelector("img").src;
