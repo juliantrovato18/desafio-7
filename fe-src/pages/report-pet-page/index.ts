@@ -193,16 +193,6 @@ class InitReportPetPage extends HTMLElement {
             pictureImg = file.dataURL;
         });
 
-        // COMO DEBERIA SER EL FORM        
-        // form.addEventListener("submit", (e)=>{
-        //     e.preventDefault();
-        //     const imagen = div.querySelector(".img-change");
-        //     const data = imagen.querySelector("img").src;
-        //     const petName = div.querySelector(".name");
-        //     const pet =  petName.shadowRoot.querySelector("input").value;
-        //     console.log(pet, data);
-        // });
-
         function initMap() {
             mapboxgl.accessToken = "pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t6YWR4ZzhtMjN0MDJwdHZrZm54ZTFjcSJ9.tNj8iOs3xhDWm898q8Fg7w";
             return new mapboxgl.Map({
@@ -241,28 +231,6 @@ class InitReportPetPage extends HTMLElement {
                 map.setCenter(firstResult.geometry.coordinates);
                 map.setZoom(14);
                 
-                // form.addEventListener("submit",(e:any)=> {
-                //     e.preventDefault();
-                    
-                //     const pet =  petName.shadowRoot.querySelector("input").value;
-                //     const imagen = div.querySelector(".img-change");
-                //     const data = imagen.querySelector("img").src;
-                //     const location = div.querySelector(".q");
-                //     const loc = this.shadowRoot.querySelector(".input-valido").value;
-                //     console.log(loc);
-                //     currentState.petname = pet;
-                //     currentState.petImage = pictureImg;
-                //     currentState.lng = lng;
-                //     currentState.lat = lat;
-                    
-                //     console.log(currentState);
-                //     console.log({
-                //         pet,
-                //         data,
-                //         lng,
-                //         lat
-                //     });
-                // });
                 form.addEventListener('submit', (e) => {
                     e.preventDefault();
                     console.log(e.target)
@@ -281,4 +249,4 @@ class InitReportPetPage extends HTMLElement {
 
     }
 }
-customElements.define("reports-page", InitReportPetPage)
+customElements.define("reports-page", InitReportPetPage);
