@@ -242,6 +242,7 @@ class InitReportPetPage extends HTMLElement {
                             lng: lng,
                         },
                     });
+                    
                     currentState.lat = lat;
                     currentState.lng = lng;
                     console.log(currentState);

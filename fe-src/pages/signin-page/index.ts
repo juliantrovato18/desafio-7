@@ -10,8 +10,6 @@ class initiSigninPage extends HTMLElement {
     constructor() {
         super();
         this.shadow = this.attachShadow({mode: 'open'});
-        
-        
     }
     connectedCallback() {
         this.render();
@@ -19,26 +17,26 @@ class initiSigninPage extends HTMLElement {
     render() {
         const div = document.createElement("div");
         div.innerHTML = `
-            <section class= "section1">
+            <section class="section1">
                 <div>
                     <custom-patita class="patita" variant="small"></custom-patita>
                 </div>
                 <custom-header></custom-header>
             </section>
-            <form class= "section">
+            <form class="section">
                 <custom-text variant= "title">Mis datos</custom-text>
                 <div class= "input-container">
                     <label class ="label">Nombre</label>
-                    <input-comp type="petname-input" name="name" placeholder="Nombre de tu mascota" class="name"></input-comp>
+                    <input type="petname-input" name="name" class="input" placeholder="Nombre de tu mascota" class="name"></input>
                     <label class ="label">Email</label>
-                    <input-comp type="email" name="email" class="email"></input-comp>
+                    <input type="email" name="email" class="input email"></input>
                     <label class ="label">Contraseña</label>
-                    <input-comp type="password" class="input"></input-comp>
+                    <input type="password"  name="password" class="input"></input>
                     <label class ="label">Repetir contraseña</label>
-                    <input-comp type="password" class="input"></input-comp>
+                    <input type="password" class="input"></input>
                 </div>
-                <div class= "container-button">
-                    <button-comp class="button">Guardar</button-comp>
+                <div class="container-button">
+                    <button class="button"> Guardar </button>
                 </div>
             </form>
         `;
@@ -90,7 +88,11 @@ class initiSigninPage extends HTMLElement {
                 justify-content:center;
             }
             .input{
-                width: 100%;     
+                width: 312px;
+                height: 50px;
+                border: solid 1px black;
+                border-radius: 4px;
+                padding: 10px;    
             }
         `;
 
@@ -98,32 +100,22 @@ class initiSigninPage extends HTMLElement {
         this.shadow.appendChild(div);
 
         const currentState = state.getState();
-        const input = this.shadow.querySelector(".section");
-        console.log(input);
-        input.addEventListener("submit", (res:any)=> {
-            res.preventDefault();
+        const form = this.shadow.querySelector(".section");
+        // console.log(form);
 
-            console.log(res.detail.text);
-            currentState.name = res.detail.name
-            currentState.email = res.detail.email
-            currentState.password = res.detail.password
-            const newState = state.setState(currentState);
-            console.log(newState);
-        });
+        form.addEventListener("submit", (e)=> {
+            e.preventDefault();
 
-        const nombre =  (this.shadow.querySelector(".name") as HTMLInputElement);
-        const email = (this.shadow.querySelector(".email") as HTMLInputElement);
-        console.log(nombre.value, email.value);
+            console.log(e.target);
+            console.log(e.target["name"].value);
+            console.log(e.target["email"].value);
+            console.log(e.target["password"].value);
 
-        this.shadow.querySelector(".button").addEventListener("click",(e:any)=>{
-            
-            currentState.name = e.target.nombre
-            currentState.email = email.value;
-            console.log(state.getState());
-            
-            state.singup(()=>{
-                Router.go("/reports");
-            });
+            // currentState.name = res.detail.name
+            // currentState.email = res.detail.email
+            // currentState.password = res.detail.password
+            // const newState = state.setState(currentState);
+            // console.log(newState);
         });
     }
 }

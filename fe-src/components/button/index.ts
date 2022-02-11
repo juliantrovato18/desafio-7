@@ -1,15 +1,25 @@
 
 export class Button extends HTMLElement {
+
+    shadow: ShadowRoot;
+    class;
     constructor() {    
         super();
+        this.class = this.getAttribute("class");
+    }
+    connectedCallback() {
         this.render();
     }
-
     render(){
-        const shadow = this.attachShadow({mode: 'open'});
+        this.shadow = this.attachShadow({mode: 'open'});
         const button = document.createElement("button");
         const style = document.createElement("style");
         button.className = "root";
+
+        button.innerHTML = `
+            <button class=${this.class}></button>
+        `;
+
         style.innerHTML = `
             .root{
                 width: 100%;
@@ -19,10 +29,11 @@ export class Button extends HTMLElement {
                 background-color: #FF9DF5;
                 padding: 20px;
             }
-        `
+        `;
+        
         button.textContent= this.textContent;
-        shadow.appendChild(button);
-        shadow.appendChild(style);
+        this.shadow.appendChild(button);
+        this.shadow.appendChild(style);
     }
 }
 customElements.define("button-comp", Button);

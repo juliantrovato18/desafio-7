@@ -6,15 +6,14 @@ export class Input extends HTMLElement {
     type;
     placeholder;
     name;
+    style;
     constructor() {    
         super();
         this.shadow = this.attachShadow({mode: 'open'});
         this.type = this.getAttribute("type");
         this.name = this.getAttribute("name");
-        this.placeholder = this.getAttribute("placeholder")
-        
-        
-    
+        this.style = this.getAttribute("style");
+        this.placeholder = this.getAttribute("placeholder");
     }
     connectedCallback(){
         this.render();
@@ -26,8 +25,8 @@ export class Input extends HTMLElement {
         
 
         input.innerHTML = `
-            <input name=${this.name} type=${this.type} placeholder=${this.placeholder} style="style"></input>
-        `
+            <input name=${this.name} type=${this.type} placeholder=${this.placeholder} style=${style} />
+        `;
 
         style.innerHTML = `
             .root{
@@ -41,10 +40,9 @@ export class Input extends HTMLElement {
         
         
 
-        input.textContent= this.textContent;
+        // input.textContent= this.textContent;
         input.appendChild(style);
-        this.shadow.appendChild(input);
-        
+        this.shadow.appendChild(input);   
     }
 }
 customElements.define("input-comp", Input);
