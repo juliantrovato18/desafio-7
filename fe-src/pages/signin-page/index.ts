@@ -1,12 +1,17 @@
 import { state } from "../../state";
 import { Router } from "@vaadin/router";
 
-class initiSigninPage extends HTMLElement {
 
+class initiSigninPage extends HTMLElement {
+    
     shadow: ShadowRoot;
+    type;
+    placeholder;
     constructor() {
         super();
         this.shadow = this.attachShadow({mode: 'open'});
+        
+        
     }
     connectedCallback() {
         this.render();
@@ -24,9 +29,9 @@ class initiSigninPage extends HTMLElement {
                 <custom-text variant= "title">Mis datos</custom-text>
                 <div class= "input-container">
                     <label class ="label">Nombre</label>
-                    <input-comp type="name" class="name"></input-comp>
+                    <input-comp type="petname-input" name="name" placeholder="Nombre de tu mascota" class="name"></input-comp>
                     <label class ="label">Email</label>
-                    <input-comp type="email" class="email"></input-comp>
+                    <input-comp type="email" name="email" class="email"></input-comp>
                     <label class ="label">Contraseña</label>
                     <input-comp type="password" class="input"></input-comp>
                     <label class ="label">Repetir contraseña</label>
@@ -106,17 +111,18 @@ class initiSigninPage extends HTMLElement {
             console.log(newState);
         });
 
-        this.shadow.querySelector(".button").addEventListener("click",(e)=>{
-            const clase2 = document.querySelector(".name");
-            const nombre =  this.shadow.querySelector("input").value;
-            const clase = this.shadow.querySelector(".email");
-            const email =  this.shadow.querySelector("input").value;
-            currentState.name = nombre;
-            currentState.email = email;
+        const nombre =  (this.shadow.querySelector(".name") as HTMLInputElement);
+        const email = (this.shadow.querySelector(".email") as HTMLInputElement);
+        console.log(nombre.value, email.value);
+
+        this.shadow.querySelector(".button").addEventListener("click",(e:any)=>{
+            
+            currentState.name = e.target.nombre
+            currentState.email = email.value;
             console.log(state.getState());
             
             state.singup(()=>{
-                Router.go("/welcome");
+                Router.go("/reports");
             });
         });
     }

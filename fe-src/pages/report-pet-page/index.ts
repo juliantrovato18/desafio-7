@@ -178,6 +178,7 @@ class InitReportPetPage extends HTMLElement {
         const dropzonImg: any = this.shadow.querySelector(".img-change");
         const mapa = this.shadow.getElementById('map');
         const mapboxInput = (this.shadow.querySelector(".input-valido") as HTMLInputElement);
+        
 
         const initDropzone = new Dropzone(dropzonImg,{
             url: "/falsa",
@@ -212,7 +213,7 @@ class InitReportPetPage extends HTMLElement {
                         language: "es",
                     },
                     function (err, data, res) {
-                    // console.log(data);
+                    
                     if (!err) callback(data.features);
                     }
                 );
@@ -232,7 +233,6 @@ class InitReportPetPage extends HTMLElement {
                 
                 form.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    console.log(e.target)
                     console.log("Este es el form: ", {
                         petName: petName.value,
                         pictureImg: pictureImg,
@@ -242,7 +242,11 @@ class InitReportPetPage extends HTMLElement {
                             lng: lng,
                         },
                     });
+                    currentState.lat = lat;
+                    currentState.lng = lng;
+                    console.log(currentState);
                 });
+                
             });
         })();
 
