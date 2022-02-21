@@ -7,6 +7,8 @@ router.setRoutes([
     {path: "/signin", component: "signin-page"},
     {path: "/", component: ""},
     {path: "/reports", component: "reports-page"},
+    {path: "/pass", component: "ingresar-pass"},
+    {path: "/pets", component: "pets-page"},
     {path: "/", component: ""},
     {path: "/", component: ""},
 ]);

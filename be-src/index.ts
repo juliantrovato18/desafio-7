@@ -139,11 +139,15 @@ app.get("/me", authMiddleware, async (req,res)=>{
 //crea una mascota en la base de datos
 app.post("/pet", authMiddleware, async (req, res)=>{
 
-    if(!req._user.id){
-        res.status(400).json("unauthorized");
-    }else{
-        const pet = await createPet(req._user.id ,req.body)
-        res.json(pet);
+    try {
+        if(!req._user.id){
+            res.status(400).json("unauthorized");
+        }else{
+            const pet = await createPet(req._user.id ,req.body)
+            res.json(pet);
+        }
+    } catch (err) {
+        console.log(err);
     }
     
 })

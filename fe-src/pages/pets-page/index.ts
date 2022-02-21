@@ -1,7 +1,7 @@
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
 
-class initWelcomePage extends HTMLElement {
+class PetsPage extends HTMLElement {
 
    shadow: ShadowRoot;
    constructor() {
@@ -21,9 +21,9 @@ class initWelcomePage extends HTMLElement {
             <custom-header></custom-header>
          </section>
          <section class="section">
-            <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
-            <custom-text variant="body">para conocer, las mascotas perdidas cerca tuyo, necesitamos permiso para conocer tu ubicacion </custom-text>
-            <button-comp class="button">Dar mi ubicacion</button-comp>
+            <custom-text variant="title">Mis mascotas reportadas</custom-text>
+            <custom-text variant="body">Aun no reportaste ninguna mascota</custom-text>
+            <card-comp></card-comp>
          </section>
       `;
       
@@ -42,12 +42,12 @@ class initWelcomePage extends HTMLElement {
          }
          .section{
             width: 375px;
-            min-height:580px;
+            min-height:800px;
             padding: 20px;
             display:flex;
             flex-direction: column;
             align-items:center;
-            justify-content:space-between;
+            justify-content:flex-start;
          }
          .patita{
             padding: 10px;
@@ -69,6 +69,7 @@ class initWelcomePage extends HTMLElement {
       div.appendChild(style);
       this.shadow.appendChild(div);
       const currentState = state.getState();
+      console.log(currentState);
 
       const successCallback = (position)=>{
          const lat = position.coords.latitude;
@@ -93,17 +94,11 @@ class initWelcomePage extends HTMLElement {
          console.error("la geolocalizacion no esta disponible");
       }
       
+      const petImg = (this.shadow.querySelector(".img") as HTMLElement);
+      const petName = (this.shadow.querySelector(".pet-title") as HTMLElement);
+      petName.title = currentState.petname;
 
-
-      this.shadow.querySelector(".button").addEventListener("click",()=>{
-            if(navigator.geolocation == null){
-               console.log("Dar ubicacion")
-            }else{
-               Router.go("/ingresar");
-            }
-            
-         
-      });
+      
    }
 }
-customElements.define("welcome-page", initWelcomePage);
+customElements.define("pets-page", PetsPage);

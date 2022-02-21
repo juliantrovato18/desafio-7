@@ -25,7 +25,6 @@ class InitReportPetPage extends HTMLElement {
         <div class="page">
             <div class= "section1">
                 <div>
-                    <custom-patita class="patita" variant="small"></custom-patita>
                 </div>
                 <custom-header></custom-header>
             </div>
@@ -33,7 +32,7 @@ class InitReportPetPage extends HTMLElement {
             <form class="form">
                 <div class= "input-container">
                     <label class ="label">Nombre de la mascota</label>
-                    <input type="name" class="name"></input>
+                    <input type="name" class="name" ></input>
                     <div id="dropzone" class="pet-photo-container">
                     <img src="${imgChange}" class="img-change"></img>
                 </div>
@@ -242,13 +241,19 @@ class InitReportPetPage extends HTMLElement {
                             lng: lng,
                         },
                     });
-                    
+                    currentState.petname = petName.value;
+                    currentState.petImage = pictureImg;
                     currentState.lat = lat;
                     currentState.lng = lng;
                     console.log(currentState);
+                    state.createPet(()=>{
+                        
+                        Router.go("/pets");
+                    })
                 });
                 
             });
+            
         })();
 
     }

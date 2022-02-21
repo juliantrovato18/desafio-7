@@ -24,7 +24,7 @@ class IngresarPage extends HTMLElement {
                 <custom-text variant= "title">Ingresar</custom-text>
                 <div class= "input-container">
                     <label class ="label">Email</label>
-                    <input-comp type="text" class="input"></input-comp>
+                    <input type="email"  name="email" class="input"></input>
                     <div class= "container-button">
                         <button-comp class="button">
                             <custom-text variant= "body">Siguiente</custom-text>
@@ -86,14 +86,28 @@ class IngresarPage extends HTMLElement {
             .label{
                 margin-left: 30px;
             }
+            .input{
+                width: 312px;
+                height: 50px;
+                border: solid 1px black;
+                border-radius: 4px;
+                padding: 10px;    
+            }
         `;
         
         div.appendChild(style);
         this.shadow.append(div);
-
+        const cs = state.getState();
+        const mail = (this.shadow.querySelector(".input") as HTMLInputElement)
+        
         this.shadow.querySelector(".button").addEventListener("click",()=>{
-            console.log("Aca actua el estado y luego pasa a la siguiente page");
-            Router.go("/ingresar");
+            if(mail.value == cs.email){
+                Router.go("/pass");
+                
+            }else{
+                Router.go("/signin");
+            }
+            
         });
     }
 }

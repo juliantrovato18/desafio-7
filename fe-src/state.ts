@@ -56,9 +56,65 @@ const state = {
             cs.email = data.email
             cs.password = data.password
             
+            
             callback();
         })
-    }
+    },
+
+    //signin
+    signin(callback){
+        const cs = state.getState();
+
+        fetch(API_BASE_URL + "/auth/token",{
+            method: "post",
+            headers:{
+                "content-type": "application/json"
+                
+            },
+            body:JSON.stringify({
+                email: cs.email,
+                password: cs.password
+            })
+        }).then((res)=>{
+            return res.json();
+        }).then((data)=>{
+            console.log({data})
+            cs.token = data.token
+            callback();
+        })
+    },
+
+    //crea una mascota en la base de datos
+    createPet(callback){
+        const cs = state.getState();
+        
+
+        fetch(API_BASE_URL + "/pet",{
+            method: "post",
+            headers:{
+                "content-type": "application/json",
+                "Authorization": "bearer "+ state.data.token,
+            },
+            body:JSON.stringify({
+                petname: cs.petname,
+                petImage: cs.petImage,
+                lat: cs.lat,
+                lng: cs.lng, 
+            })
+    }).then((res)=>{
+        return res.json()
+    }).then((data)=>{
+        console.log({data})
+        // cs.petname = data.petname,
+        // cs.petImage = data.petImage,
+        // cs.lat = data.lat,
+        // cs.lng = data.lng
+        callback();
+    })
+    },
+
+
+
 }
 
 export {state}

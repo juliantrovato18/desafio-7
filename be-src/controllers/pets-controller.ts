@@ -11,22 +11,21 @@ export async function createPet(userId, data){
 
     const pet = await Pet.create({
         petname: data.petname,
-        estado: data.estado,
+        petImage:data.petImage,
         lat: data.lat,
         lng: data.lng,
-        petClass: data.petClass,
         user_id: userId
     })
 
     const petId = await pet.get("id");
     const petName = await pet.get("petname");
-    const classPet = await pet.get("petClass");
+    const petImage = await pet.get("petImage");
     const lat = await pet.get("lat");
     const lng = await pet.get("lng");
     const algoliaPet =  index.saveObject({
         objectID:petId,
         petname:petName,
-        petClass: classPet,
+        petImage:petImage,
         _geoloc:{
             lat: lat,
             lng: lng

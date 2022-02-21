@@ -1,21 +1,32 @@
 
 export class Card extends HTMLElement {
+    shadow: ShadowRoot;
+    src;
+    petName;
+    ubi;
     constructor() {    
         super();
-        this.render();
-    }
+        this.shadow = this.attachShadow({mode: 'open'});
+        this.src= this.getAttribute("src");
+        this.petName = this.getAttribute("name");
+        this.ubi = this.getAttribute("p");
         
+        
+    }
+     connectedCallback(){
+         this.render();
+     }   
     render(){
-        const shadow = this.attachShadow({mode: 'open'});
+        
         const card = document.createElement("div");
         const style = document.createElement("style");
         card.innerHTML= `
             <div class="div">
             <div class= "container-img">
-            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepng.es%2Fpng-n0982v%2F&psig=AOvVaw2kD_Wh0IpF22HkKRHAlJvU&ust=1643329408005000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCJD-0YjU0PUCFQAAAAAdAAAAABAD" class="img"></img>
+            <img src=${this.src} class="img"></img>
             </div>
-            <h1>Totodile</h1>
-            <p>ubi</p>
+            <h1 class="pet-title">${this.petName}</h1>
+            <p class="pet-info">${this.ubi}</p>
             <button>reportar info</button>
             </div>
         `;
@@ -35,8 +46,9 @@ export class Card extends HTMLElement {
             }
         `
             
-        shadow.appendChild(card);
-        shadow.appendChild(style);
+        
+        this.shadow.appendChild(style);
+        this.shadow.appendChild(card);
     }
 }
 customElements.define("card-comp", Card);

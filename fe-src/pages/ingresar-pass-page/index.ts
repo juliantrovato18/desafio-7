@@ -1,12 +1,9 @@
 import { state } from "../../state";
 import { Router } from "@vaadin/router";
 
-
-class initiSigninPage extends HTMLElement {
+class IngresarPass extends HTMLElement {
     
     shadow: ShadowRoot;
-    type;
-    placeholder;
     constructor() {
         super();
         this.shadow = this.attachShadow({mode: 'open'});
@@ -17,36 +14,32 @@ class initiSigninPage extends HTMLElement {
     render() {
         const div = document.createElement("div");
         div.innerHTML = `
-            <section class="section1">
+            <section class= "section1">
                 <div>
                 </div>
                 <custom-header></custom-header>
             </section>
-            <form class="section">
-                <custom-text variant= "title">Mis datos</custom-text>
+            <section class= "section">
+                <custom-text variant= "title">Ingresar</custom-text>
                 <div class= "input-container">
-                    <label class ="label">Nombre</label>
-                    <input type="petname-input" name="name" class="input" placeholder="Tu nombre" class="name"></input>
-                    <label class ="label">Email</label>
-                    <input type="email" name="email" class="input email"></input>
                     <label class ="label">Contraseña</label>
                     <input type="password"  name="password" class="input"></input>
-                    <label class ="label">Repetir contraseña</label>
-                    <input type="password1" name="password1" class="input"></input>
-                </div>
-                <div class="container-button">
-                    <button class="button"> Guardar </button>
-                </div>
-            </form>
+                    <div class= "container-button">
+                        <button-comp class="button">
+                            <custom-text variant= "body">Siguiente</custom-text>
+                        </button-comp>
+                    </div>
+                </div>    
+            </section>
         `;
-
+        
         const style = document.createElement("style");
         style.innerHTML = `
             * {
                 box-sizing: border-box;
             }
             body {
-                margin: 0; 
+                margin: 0;
             }
             .section1{
                 display:flex;
@@ -59,24 +52,23 @@ class initiSigninPage extends HTMLElement {
             }
             .section{
                 min-width: 375px;
-                min-height: 750px;
+                min-height: 670px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-evenly;
                 align-items: center;
             }
             .input-container{
-                min-height: 350px;
                 display: flex;
-                justify-content:space-between;
+                justify-content:center;
                 flex-direction:column;
             }
             .container-button{
                 display: flex;
-                padding: 0px;
+                padding: 20px;
             }
             .button{
-                width:320px;
+                width:335px;
                 height:50px;
                 font-size:30px;
                 font-weight:bold;
@@ -93,33 +85,31 @@ class initiSigninPage extends HTMLElement {
                 border-radius: 4px;
                 padding: 10px;    
             }
+            .label{
+                margin-left: 30px;
+            }
         `;
-
+        
         div.appendChild(style);
-        this.shadow.appendChild(div);
+        this.shadow.append(div);
+        const cs = state.getState();
+        console.log(cs);
+        const pass = (this.shadow.querySelector(".input") as HTMLInputElement)
+        
 
-        const currentState = state.getState();
-        const form = this.shadow.querySelector(".section");
-        // console.log(form);
 
-        form.addEventListener("submit", (e)=> {
-            e.preventDefault();
-
-            // console.log(e.target);
-            // console.log(e.target["name"].value);
-            // console.log(e.target["email"].value);
-             console.log(e.target["password"].value);
-
-            currentState.name = e.target["name"].value;
-            currentState.email = e.target["email"].value;
-            currentState.password = e.target["password"].value;
+        this.shadow.querySelector(".button").addEventListener("click",()=>{
+            cs.password = pass.value;
+            if(pass.value == cs.password){
+                state.signin(()=>{
+                    Router.go("/pets");
+                })
+                
+            }else{
+                Router.go("/signin")
+            }
             
-            console.log(currentState);
-            state.singup(()=>{
-                Router.go("/ingresar");
-            })
-
         });
     }
 }
-customElements.define("signin-page", initiSigninPage);
+customElements.define("ingresar-pass", IngresarPass)
