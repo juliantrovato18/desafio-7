@@ -12,8 +12,21 @@ class PetsPage extends HTMLElement {
       this.render();
    }
    render() {
+
+      
       
       const div = document.createElement("div");
+
+      const currentState = state.getState();
+      console.log(currentState);
+      state.getPets();
+      const lostPets = currentState.lostPets
+      console.log({lostPets});
+
+
+      if(lostPets.length ==0){
+
+
       div.innerHTML = `
          <section class="section1">
             <div>
@@ -23,10 +36,33 @@ class PetsPage extends HTMLElement {
          <section class="section">
             <custom-text variant="title">Mis mascotas reportadas</custom-text>
             <custom-text variant="body">Aun no reportaste ninguna mascota</custom-text>
-            <card-comp></card-comp>
+            
          </section>
       `;
       
+      
+   }else{
+
+   
+     
+         div.innerHTML =`
+         <section class="section1">
+            <div>
+            </div>
+            <custom-header></custom-header>
+            </section>
+            <section class="section">
+            <custom-text variant="title">Mis mascotas reportadas</custom-text>
+            ${lostPets.map((pet)=>{
+               console.log(pet);
+               `<card-comp title=${pet.petname} img=${pet.petImage} ubi=${pet.lat}></card-comp>`
+            }).join(" ")
+            }
+         </section>
+         `
+      
+      }
+
       const style = document.createElement("style");
       style.innerHTML=`
              * {
@@ -65,11 +101,9 @@ class PetsPage extends HTMLElement {
             justify-content:center;
          }
       `;
-      
       div.appendChild(style);
       this.shadow.appendChild(div);
-      const currentState = state.getState();
-      console.log(currentState);
+      
 
       const successCallback = (position)=>{
          const lat = position.coords.latitude;
@@ -94,9 +128,7 @@ class PetsPage extends HTMLElement {
          console.error("la geolocalizacion no esta disponible");
       }
       
-      const petImg = (this.shadow.querySelector(".img") as HTMLElement);
-      const petName = (this.shadow.querySelector(".pet-title") as HTMLElement);
-      petName.title = currentState.petname;
+      
 
       
    }

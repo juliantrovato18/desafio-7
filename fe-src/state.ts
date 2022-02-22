@@ -13,6 +13,7 @@ const state = {
         lng: "",
         myLat:"",
         myLng:"",
+        lostPets :[],
 
         listeners:[],
     },
@@ -113,7 +114,22 @@ const state = {
     })
     },
 
+    getPets(){
+        const cs = state.getState();
 
+        fetch(API_BASE_URL + "/pets",{
+            method: "GET",
+            headers:{
+                "Authorization": "bearer "+ state.data.token
+            } 
+        }).then((res)=>{
+            return res.json()
+        }).then((data)=>{
+            console.log(data);
+            cs.lostPets = data;
+            
+        })
+    }
 
 }
 

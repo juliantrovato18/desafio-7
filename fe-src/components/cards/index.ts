@@ -8,7 +8,7 @@ export class Card extends HTMLElement {
         super();
         this.shadow = this.attachShadow({mode: 'open'});
         this.src= this.getAttribute("src");
-        this.petName = this.getAttribute("name");
+        this.petName = this.getAttribute("h1");
         this.ubi = this.getAttribute("p");
         
         

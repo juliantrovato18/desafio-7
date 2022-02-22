@@ -16,7 +16,6 @@ class IngresarPage extends HTMLElement {
         div.innerHTML = `
             <section class= "section1">
                 <div>
-                    <custom-patita class="patita" variant="small"></custom-patita>
                 </div>
                 <custom-header></custom-header>
             </section>
