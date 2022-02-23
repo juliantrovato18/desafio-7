@@ -12,27 +12,24 @@ export async function createPet(userId, data){
     const pet = await Pet.create({
         petname: data.petname,
         petImage:data.petImage,
+        place:data.place,
         lat: data.lat,
         lng: data.lng,
         user_id: userId
     })
 
-    const petId = await pet.get("id");
-    const petName = await pet.get("petname");
-    const petImage = await pet.get("petImage");
-    const lat = await pet.get("lat");
-    const lng = await pet.get("lng");
+    
     const algoliaPet =  index.saveObject({
-        objectID:petId,
-        petname:petName,
-        petImage:petImage,
+        
+        petname: data.petname,
+        petImage:data.petImage,
         _geoloc:{
-            lat: lat,
-            lng: lng
-        }
+            lat: data.lat,
+            lng: data.lng
+        },
+        objectID:userId,
     }).then(res=>{
-        console.log(algoliaPet);
-        console.log(res);
+        console.log("res",res);
     }).catch(e=>{
         console.log(e);
     })
@@ -84,6 +81,20 @@ export async function updatePet(body, id?){
 
     return respuesta
 }
+
+
+//busca las mascotas que el usuario reporto
+export async function findMyPets(userId){
+    const petsFounded = Pet.findAll({
+        where:{
+            user_id: userId
+        }
+    })
+    return petsFounded
+}
+
+
+
 
 //eliminar reporte de la mascota
 export async function deleteReport(id){

@@ -16,15 +16,15 @@ class PetsPage extends HTMLElement {
       
       
       const div = document.createElement("div");
-
+      const mascotas = document.createElement("div");
       const currentState = state.getState();
       console.log(currentState);
-      state.getPets();
-      const lostPets = currentState.lostPets
-      console.log({lostPets});
+      state.getMyPets();
+      const myReportedPets = currentState.reportedPets
+      console.log({myReportedPets});
 
 
-      if(lostPets.length ==0){
+      if(myReportedPets.length ==0){
 
 
       div.innerHTML = `
@@ -45,7 +45,7 @@ class PetsPage extends HTMLElement {
 
    
      
-         div.innerHTML =`
+         mascotas.innerHTML =`
          <section class="section1">
             <div>
             </div>
@@ -53,9 +53,9 @@ class PetsPage extends HTMLElement {
             </section>
             <section class="section">
             <custom-text variant="title">Mis mascotas reportadas</custom-text>
-            ${lostPets.map((pet)=>{
-               console.log(pet);
-               `<card-comp title=${pet.petname} img=${pet.petImage} ubi=${pet.lat}></card-comp>`
+            ${myReportedPets.map((pet)=>{
+               console.log({pet});
+               `<card-comp title=${pet.petname} img=${pet.petImage} ubi=${pet.place}></card-comp>`
             }).join(" ")
             }
          </section>
@@ -103,6 +103,7 @@ class PetsPage extends HTMLElement {
       `;
       div.appendChild(style);
       this.shadow.appendChild(div);
+      this.shadow.appendChild(mascotas);
       
 
       const successCallback = (position)=>{

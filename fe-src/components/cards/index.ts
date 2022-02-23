@@ -7,9 +7,7 @@ export class Card extends HTMLElement {
     constructor() {    
         super();
         this.shadow = this.attachShadow({mode: 'open'});
-        this.src= this.getAttribute("src");
-        this.petName = this.getAttribute("h1");
-        this.ubi = this.getAttribute("p");
+        
         
         
     }
@@ -49,6 +47,12 @@ export class Card extends HTMLElement {
         
         this.shadow.appendChild(style);
         this.shadow.appendChild(card);
+
+        console.log(this.src);
+        const image = this.querySelector(".img").setAttribute("src", this.src);
+        
+        this.petName = this.getAttribute("h1");
+        this.ubi = this.getAttribute("p");
     }
 }
 customElements.define("card-comp", Card);

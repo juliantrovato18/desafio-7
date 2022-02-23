@@ -9,11 +9,14 @@ const state = {
         token: "",
         petname: "",
         petImage:"",
+        placeName:"",
         lat: "",
         lng: "",
         myLat:"",
         myLng:"",
+        userId:"",
         lostPets :[],
+        reportedPets:[],
 
         listeners:[],
     },
@@ -56,6 +59,7 @@ const state = {
             cs.name = data.name
             cs.email = data.email
             cs.password = data.password
+            cs.userId = data.userId
             
             
             callback();
@@ -83,6 +87,12 @@ const state = {
             cs.token = data.token
             callback();
         })
+        const storage = {
+            token:cs.token,
+            email:cs.email,
+            nombre: cs.name
+        }
+        localStorage.setItem("storage", JSON.stringify(storage));
     },
 
     //crea una mascota en la base de datos
@@ -99,6 +109,7 @@ const state = {
             body:JSON.stringify({
                 petname: cs.petname,
                 petImage: cs.petImage,
+                place: cs.placeName,
                 lat: cs.lat,
                 lng: cs.lng, 
             })
@@ -127,6 +138,25 @@ const state = {
         }).then((data)=>{
             console.log(data);
             cs.lostPets = data;
+            
+        })
+    },
+
+
+    //mascotas reportadas por un usuario en particular
+    getMyPets(){
+        const cs = state.getState();
+
+        fetch(API_BASE_URL + "/mypets/"+ cs.user_id ,{
+            method: "GET",
+            headers:{
+                "Authorization": "bearer "+ state.data.token
+            } 
+        }).then((res)=>{
+            return res.json()
+        }).then((data)=>{
+            console.log(data);
+            cs.reportedPets = data;
             
         })
     }

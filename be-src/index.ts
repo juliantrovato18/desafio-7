@@ -6,7 +6,7 @@ import * as crypto from "crypto";
 import * as cors from "cors";
 import * as path from "path";
 import *as jwt from "jsonwebtoken"
-import { createPet, findPet, findAllPets, updatePet, deleteReport } from "./controllers/pets-controller";
+import { createPet, findPet, findMyPets, findAllPets, updatePet, deleteReport } from "./controllers/pets-controller";
 import { createAuth, createUser, findToken} from "./controllers/user-controller";
 import { index } from "./lib/algolia";
 
@@ -97,7 +97,8 @@ app.post("/auth", async (req, res)=>{
     const newAuth = await createAuth(newUser.get("id"),req.body);
     const data = {
             email:newAuth.getDataValue("email"),
-            name: newUser.getDataValue("name")
+            name: newUser.getDataValue("name"),
+            userId:newAuth.getDataValue("id")
         }
 
     
@@ -172,6 +173,18 @@ app.get("/pets", authMiddleware, async (req,res)=>{
         res.json(pets);
     }
 })
+
+
+//busca las reportadas del usuario
+app.get("/mypets/:id", authMiddleware, async (req,res)=>{
+    if(!req._user.id){
+        res.status(400).json("unauthorized");
+    }else{
+        const pets = await findMyPets(req._user.id)
+        res.json({pets});
+    }
+})
+
 
 
 //modifica una mascota ya existente
