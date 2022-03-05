@@ -84,6 +84,7 @@ class IngresarPass extends HTMLElement {
                 border: solid 1px black;
                 border-radius: 4px;
                 padding: 10px;    
+                margin-left: 30px;
             }
             .label{
                 margin-left: 30px;

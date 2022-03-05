@@ -1,7 +1,7 @@
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
 
-class initWelcomePage extends HTMLElement {
+class PetsAround extends HTMLElement {
 
    shadow: ShadowRoot;
    constructor() {
@@ -11,7 +11,12 @@ class initWelcomePage extends HTMLElement {
    connectedCallback(){
       this.render();
    }
-   render() {
+   async render() {
+      const currentState = state.getState();
+       await state.getPetsAroundMe();
+       const petsAround = currentState.lostPets;
+
+
       
       const div = document.createElement("div");
       div.innerHTML = `
@@ -22,8 +27,11 @@ class initWelcomePage extends HTMLElement {
          </section>
          <section class="section">
             <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
-            <custom-text variant="body">para conocer, las mascotas perdidas cerca tuyo, necesitamos permiso para conocer tu ubicacion </custom-text>
-            <button-comp class="button">Dar mi ubicacion</button-comp>
+            ${petsAround.map((pet)=>{
+               {console.log(pet, "my pet")}
+              return `<card-comp title=${pet.petname} img=${pet.petImage} ubi=${pet.place}></card-comp>`
+            }).join(" ")
+            }
          </section>
       `;
       
@@ -68,44 +76,10 @@ class initWelcomePage extends HTMLElement {
       
       div.appendChild(style);
       this.shadow.appendChild(div);
-      const currentState = state.getState();
-
-      const successCallback = (position)=>{
-         const lat = position.coords.latitude;
-         const lng = position.coords.longitude;
-         console.log(lat, lng);
-         currentState.myLat = lat;
-         currentState.myLng = lng
-      }
-      const errorCallback = (err)=>{
-         console.error("ha ocurrido un error", err);
-      }
-
-      const options = {
-         enableHighAccuracy: true,
-         maximumAge: 30000,
-         timeout:27000
-      }
-
-      if("geolocation" in navigator){
-         navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options)
-         
-         
-      }else{
-         console.error("la geolocalizacion no esta disponible");
-      }
+      
+      
       
 
-
-      this.shadow.querySelector(".button").addEventListener("click",()=>{
-            if(navigator.geolocation == null){
-               console.log("Dar ubicacion")
-            }else{
-               Router.go("/around");
-            }
-            
-         
-      });
    }
 }
-customElements.define("welcome-page", initWelcomePage);
+customElements.define("aroundpets-page", PetsAround);

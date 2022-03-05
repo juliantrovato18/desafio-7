@@ -9,6 +9,6 @@ router.setRoutes([
     {path: "/reports", component: "reports-page"},
     {path: "/pass", component: "ingresar-pass"},
     {path: "/pets", component: "pets-page"},
-    // {path: "/", component: ""},
-    // {path: "/", component: ""},
+    {path: "/around", component: "aroundpets-page"},
+    {path: "/edit", component: "edit-page"},
 ]);

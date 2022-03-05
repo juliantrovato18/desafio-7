@@ -19,6 +19,7 @@ export class Header extends HTMLElement {
             <div class="container-links">
             <a href="http://localhost:1234/signin" class="as">Mis datos</a>
             <a href="http://localhost:1234/pets" class="as">Mis mascotas perdidas</a>
+            <a href="http://localhost:1234/around" class="as">Mascotas cerca</a>
             <a href="http://localhost:1234/reports" class="as">Reportar mascota</a>
             </div>
             </header>
@@ -37,13 +38,15 @@ export class Header extends HTMLElement {
             .container-links{
                 display:flex;
                 flex-direction:row;
-                justify-content: space-between;
+                justify-content: space-evenly;
+                
                
                 
                 
             }
             as{
                 padding:20px;
+                margin-left: 10px;
             }
         `
         div.className = variant;

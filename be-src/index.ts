@@ -181,7 +181,7 @@ app.get("/mypets/:id", authMiddleware, async (req,res)=>{
         res.status(400).json("unauthorized");
     }else{
         const pets = await findMyPets(req._user.id)
-        res.json({pets});
+        res.json(pets);
     }
 })
 
@@ -202,7 +202,13 @@ app.put("/pets/:id", authMiddleware, async (req, res)=>{
             objectID:req.params.id
         });
          
-        res.json(updatedPet)
+        const petUpdateada = await Pet.findOne({
+            where:{
+                id:req.params.id
+            }
+        });
+
+        res.json(petUpdateada)
     } catch (er) {
         console.log(er)
     }
@@ -226,7 +232,7 @@ app.post("/report", authMiddleware, async (req, res)=>{
         })
     }else{
         const reporte = await createReport(req.body, req._user.id);
-            res.json(reporte)
+            res.json(reporte[0])
     }
     
     
@@ -243,6 +249,8 @@ app.get("/mascotas-cerca", async (req,res)=>{
     })
     res.json(hits);
 })
+
+
 
 
 

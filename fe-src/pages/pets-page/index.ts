@@ -10,18 +10,20 @@ class PetsPage extends HTMLElement {
    }
    connectedCallback(){
       this.render();
+      state.suscribe(()=>{
+         this.render();
+      })
    }
-   render() {
+   async render() {
 
       
       
       const div = document.createElement("div");
       const mascotas = document.createElement("div");
       const currentState = state.getState();
-      console.log(currentState);
-      state.getMyPets();
-      const myReportedPets = currentState.reportedPets
-      console.log({myReportedPets});
+      
+      await state.getMyPets();
+      const myReportedPets = currentState.reportedPets;
 
 
       if(myReportedPets.length ==0){
@@ -54,8 +56,8 @@ class PetsPage extends HTMLElement {
             <section class="section">
             <custom-text variant="title">Mis mascotas reportadas</custom-text>
             ${myReportedPets.map((pet)=>{
-               console.log({pet});
-               `<card-comp title=${pet.petname} img=${pet.petImage} ubi=${pet.place}></card-comp>`
+               {console.log(pet, "my pet")}
+              return `<card-comp title=${pet.petname} class="button" img=${pet.petImage} ubi=${pet.place}></card-comp>`
             }).join(" ")
             }
          </section>
@@ -104,30 +106,15 @@ class PetsPage extends HTMLElement {
       div.appendChild(style);
       this.shadow.appendChild(div);
       this.shadow.appendChild(mascotas);
-      
+      // const button = this.querySelector(".button");
+      // button.addEventListener("card", (e:any)=>{
+      //    e.preventDefault();
+      //    e.detail.name,
+      //    e.detail.image,
+      //    e.detail.place,
+      //    Router.go("/edit-page");
+      // })
 
-      const successCallback = (position)=>{
-         const lat = position.coords.latitude;
-         const lng = position.coords.longitude;
-         console.log(lat, lng);
-      }
-      const errorCallback = (err)=>{
-         console.error("ha ocurrido un error", err);
-      }
-
-      const options = {
-         enableHighAccuracy: true,
-         maximumAge: 30000,
-         timeout:27000
-      }
-
-      if("geolocation" in navigator){
-         navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options)
-         
-         
-      }else{
-         console.error("la geolocalizacion no esta disponible");
-      }
       
       
 

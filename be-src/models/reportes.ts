@@ -7,7 +7,7 @@ export class Reporte extends Model {}
 Reporte.init({
   name: DataTypes.STRING,
   phoneNumber: DataTypes.INTEGER,
-  when: DataTypes.STRING,
+  when: DataTypes.TEXT,
   user_id: DataTypes.INTEGER
   
 }, { sequelize, modelName: 'Reporte' });
