@@ -5,7 +5,7 @@ router.setRoutes([
     {path: "/", component: "welcome-page"},
     {path: "/ingresar", component: "ingresar-page"},
     {path: "/signin", component: "signin-page"},
-    // {path: "/", component: ""},
+    {path: "/copy", component: "copy-page"},
     {path: "/reports", component: "reports-page"},
     {path: "/pass", component: "ingresar-pass"},
     {path: "/pets", component: "pets-page"},

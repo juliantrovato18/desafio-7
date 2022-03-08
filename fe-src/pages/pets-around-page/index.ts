@@ -11,10 +11,11 @@ class PetsAround extends HTMLElement {
    connectedCallback(){
       this.render();
    }
-   async render() {
+    render() {
       const currentState = state.getState();
-       await state.getPetsAroundMe();
-       const petsAround = currentState.lostPets;
+      state.me();
+        state.getPetsAroundMe(()=>{
+         const petsAround = currentState.lostPets;
 
 
       
@@ -76,6 +77,8 @@ class PetsAround extends HTMLElement {
       
       div.appendChild(style);
       this.shadow.appendChild(div);
+        });
+       
       
       
       

@@ -13,7 +13,7 @@ const state = {
         petname: "",
         petImage:"",
         placeName:"",
-        petId:"",
+        id:"",
         lat: "",
         lng: "",
         myLat:"",
@@ -34,25 +34,31 @@ const state = {
             cb();
             console.log("soy el state he cambiado", state.getState());
         }
-        localStorage.setItem("storage", JSON.stringify(newState));
+        
         console.log("Soy el state, he cambiado:", newState);
         
     },
 
     me(){
-        const cs = state.getState(); 
+        const cs = state.getState();
+        const token = localStorage.getItem("storage");
+        cs["token"] = token;
         fetch(API_BASE_URL+ "/me",{
             method: "Get",
             headers:{
                 "content-type": "application/json",
-                "Authorization": "bearer "+ state.data.token,
+                "Authorization": "bearer "+ cs["token"],
             }
 
         }).then((res)=>{
             return res.json();
         }).then((data)=>{
+            console.log("data me",data);
             cs.email = data.email,
-            cs.name = data.name
+            cs.name = data.name,
+            cs.userId = data.id
+            console.log("toda la data", data);
+            
         })
     },
 
@@ -109,7 +115,8 @@ const state = {
         }).then((data)=>{
             console.log({data})
             cs.token = data.token
-            this.setState(cs.token);
+            localStorage.setItem("storage", data.token);
+            this.setState(cs);
             callback();
         })
        
@@ -137,7 +144,7 @@ const state = {
         return res.json()
     }).then((data)=>{
         console.log({data})
-        cs.petId = data.id;
+        cs.id = data.id;
         // cs.petname = data.petname,
         // cs.petImage = data.petImage,
         // cs.lat = data.lat,
@@ -165,10 +172,10 @@ const state = {
 
 
     //mascotas reportadas por un usuario en particular
-    getMyPets(){
+    getMyPets(callback){
         const cs = state.getState();
-
-        fetch(API_BASE_URL + "/mypets/"+ cs.user_id ,{
+        console.log(cs.userId);
+        fetch(API_BASE_URL + "/mypets/"+ cs.userId ,{
             method: "GET",
             headers:{
                 "Authorization": "bearer "+ state.data.token
@@ -177,25 +184,27 @@ const state = {
             return res.json()
         }).then((data)=>{
             console.log(data);
-            cs.reportedPets = data;
-            
+            cs["reportedPets"] = data;
+            callback();
         })
     },
 
 
-    init(){
-        const localData = JSON.parse(localStorage.getItem("storage"));
-        if (!localData) {
-            return;
-        }
-        this.setState(localData);
-    },
+    // init(){
+    //     const localData = JSON.parse(localStorage.getItem("storage"));
+    //     if (!localData) {
+    //         return;
+    //     }
+    //     this.setState(localData);
+    // },
 
 
-    getPetsAroundMe(){
+    getPetsAroundMe(callback){
         const cs = state.getState();
+        console.log("cs",cs);
         const lat = cs.myLat;
         const lng = cs.myLng;
+        
 
         fetch(API_BASE_URL + "/mascotas-cerca?lat=" +lat +"&lng="+lng ,{
             method: "GET",
@@ -207,7 +216,7 @@ const state = {
         }).then((data)=>{
             console.log(data);
             cs.lostPets = data;
-            
+            callback();
         })
     },
 
@@ -216,11 +225,13 @@ const state = {
 
     editPets(callback){
         const cs = state.getState();
-        console.log(cs.petId);
-        fetch(API_BASE_URL + "/pets/"+ cs.petId ,{
-            method: "PUT",
+        console.log(cs.id);
+        fetch(API_BASE_URL + "/pets/"+ cs.id ,{
+            method: "PATCH",
             headers:{
-                "Authorization": "bearer "+ state.data.token
+                "content-type": "application/json",
+                "Authorization": "bearer "+ state.data.token,
+                
             },
             body:JSON.stringify({
                 petname: cs.petname,
@@ -242,7 +253,31 @@ const state = {
         })
     },
 
+    //elimina de la base de datos una mascota que fue reportada
+    deletePet(callback){
+        const cs = state.getState();
+        fetch(API_BASE_URL + "/delete-report/" + cs.id,{
+            method: "DELETE",
+            headers:{
+                "content-type": "application/json",
+                "Authorization": "bearer "+ state.data.token,
+                
+            },
+        }).then((res)=>{
+            return res.json();
+        }).then((data)=>{
+            console.log(data);
+            callback();
+        })
+    },
 
+
+
+
+
+
+
+    //reportar a la mascota encontrada
     reportFoundedPet(callback){
         const cs = state.getState();
         fetch(API_BASE_URL + "/report", {

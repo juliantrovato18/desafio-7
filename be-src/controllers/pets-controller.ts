@@ -2,7 +2,8 @@ import { Pet } from "../models/pets";
 import { Reporte } from "../models/reportes";
 import { User } from "../models";
 import {index} from "../lib/algolia"
-
+import { v2 } from "cloudinary";
+import { cloudinary } from "../lib/cloudinary";
 
 
 //crear una mascota
@@ -18,6 +19,26 @@ export async function createPet(userId, data){
         user_id: userId
     })
 
+    if(data.petImage){
+        const imagen = await cloudinary.uploader.upload(data.petImage,{
+            resource_type: "image",
+            discard_original_filename: true,
+            width: 100
+        })
+
+        await pet.update({
+            petname: data.petname,
+            petImage:imagen.secure_url,
+            place:data.place,
+            lat: data.lat,
+            lng: data.lng,
+            user_id: userId
+        },{
+            where:{
+                id: userId
+            }
+        })
+    }
     
     const algoliaPet =  index.saveObject({
         
@@ -63,8 +84,8 @@ export async function updatePet(body, id?){
     if(body.petname){
         respuesta.petname = body.petname
     }
-    if(body.estado){
-        respuesta.estado = body.estado
+    if(body.petImage){
+        respuesta.petImage = body.petImage
     }
     if(body.lat){
         respuesta.lat = body.lat

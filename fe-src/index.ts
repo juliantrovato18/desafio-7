@@ -13,17 +13,18 @@ import "./pages/ingresar-page/index";
 import "./pages/report-pet-page/index";
 import "./pages/pets-around-page"
 import "./pages/edit-pet-page/index"
+import "./pages/copia-pets/index";
 import "./pages/edit-pet-page/index";
+import "./components/card-edit/index"
 import {state} from "./state"
 
 
 (function () {
     const cs = state.getState();
 
-    if(cs.token){
-        state.init();
-        state.me();
-    }
+    
+        
+       
 
 
 })();

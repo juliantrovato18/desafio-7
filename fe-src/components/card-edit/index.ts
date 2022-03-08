@@ -1,8 +1,9 @@
 import {Router} from "@vaadin/router"
 import { state } from "../../state";
-const x = require("../../img/Vector.jpg")
+const image5 = require("../../img/image5.png");
 
-export class Card extends HTMLElement {
+
+export class CardEdit extends HTMLElement {
     shadow: ShadowRoot;
     image;
     petName;
@@ -31,14 +32,14 @@ export class Card extends HTMLElement {
         const reportPageStyle = document.createElement("style");
 
 
-        const reportPetSeen = this.shadow.querySelector(".report-button").addEventListener('click', () => {
+        const reportPetSeen = this.shadow.querySelector(".edit-button").addEventListener('click', () => {
             
 
 
         const CustomPetEvent = new CustomEvent('report', {
             
             detail: {
-                petName: this.petName,
+                petname: this.petName,
                 image: this.image,
                 ubi: this.ubi,
                 
@@ -50,71 +51,14 @@ export class Card extends HTMLElement {
         const lostPets = this.shadow.querySelectorAll(".div");
             lostPets.forEach((lostPet) => {
 
-            const petSeen = lostPet.querySelector(".report-button");
+            const petSeen = lostPet.querySelector(".edit-button");
             petSeen.addEventListener('report', (e:any) => {
                 e.preventDefault();
                 console.log("detail", e.detail);
-        reportPage.innerHTML = `
-                <img src=${x} class="button-cerrar" />
-                <h2>Reportar info de bobby</h2>
-                <form class="form">
-                <label class="user-name">
-                <p class="nombre">Tu Nombre</p>
-                <input class="input-name" />
-                </label>
-                <label class="phone-number">
-                <p class="phone">Tu Numero de telefono</p>
-                <input class="input-phone" />
-                </label>
-                <label class="info-pet">
-                <p class="phone">¿Donde lo viste?</p>
-                <textarea class="input-phone"> </textarea>
-                </label>
-                <button class="send-button"></button>
-                </form>
-                
-                
-        `
-
-        reportPageStyle.innerHTML = `
-
-
         
-        .button-cerrar {
-            width: 30px;
-            height: 30px;
-            padding: 20px;
-            margin-left: 77%;
-        }
 
-        .form {
-            display: flex;
-            margin-left: 10px; 
-            flex-direction: column;
-        }
 
-        .button {
-            width: 280px;
-            height: 40px;
-            border: none;
-            margin-top: 10px;
-            margin-left: 5px;
-            border-radius: 4px;
-            background-color: #FF9DF5;
-        }
-
-        `
-
-                this.shadow.appendChild(reportPage);
-                this.shadow.appendChild(reportPageStyle);
-
-                const botonCerrar = this.querySelector(".button-cerrar");
-                botonCerrar.addEventListener("click", (e)=>{
-                    e.preventDefault();
-                    reportPageStyle.innerHTML = `
-                    .div{}
-                    ` 
-                })
+                
             })
             petSeen.dispatchEvent(CustomPetEvent);
 
@@ -127,7 +71,7 @@ export class Card extends HTMLElement {
     }
     render(){
         
-        const image = this.getAttribute("url");
+        const image = this.getAttribute("src");
         const petname = this.getAttribute("title");
         const ubi = this.getAttribute("ubi");
         
@@ -140,7 +84,7 @@ export class Card extends HTMLElement {
             </div>
             <h1 class="pet-title">${petname}</h1>
             <p class="pet-info">${ubi}</p>
-            <p class="report-button">Reportar info</p>
+            <img src=${image5} class="edit-button"/>
             </div>
         `;
 
@@ -167,15 +111,20 @@ export class Card extends HTMLElement {
         
         
 
-
+        
         
         this.shadow.appendChild(style);
         this.listeners();
-
+        const botonCerrar = this.shadow.querySelector(".edit-button");
+        botonCerrar.addEventListener("click", (e)=>{
+            e.preventDefault();
+            console.log("entra al console");
+           Router.go("/edit");
+        })
           
 
        
         
     }
 }
-customElements.define("card-comp", Card);
+customElements.define("card-edit", CardEdit);

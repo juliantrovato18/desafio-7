@@ -188,7 +188,7 @@ app.get("/mypets/:id", authMiddleware, async (req,res)=>{
 
 
 //modifica una mascota ya existente
-app.put("/pets/:id", authMiddleware, async (req, res)=>{
+app.patch("/pets/:id", authMiddleware, async (req, res)=>{
     try {
         const [updatedPet] = await Pet.update(req.body,{
             where:{
