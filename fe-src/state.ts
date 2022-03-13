@@ -225,7 +225,7 @@ const state = {
 
     editPets(callback){
         const cs = state.getState();
-        console.log(cs.id);
+        console.log("cs edit", cs.id);
         fetch(API_BASE_URL + "/pets/"+ cs.id ,{
             method: "PATCH",
             headers:{
@@ -256,7 +256,8 @@ const state = {
     //elimina de la base de datos una mascota que fue reportada
     deletePet(callback){
         const cs = state.getState();
-        fetch(API_BASE_URL + "/delete-report/" + cs.id,{
+        
+        fetch(API_BASE_URL + "/delete-report/" + cs["id"],{
             method: "DELETE",
             headers:{
                 "content-type": "application/json",
@@ -283,20 +284,18 @@ const state = {
         fetch(API_BASE_URL + "/report", {
             method: "POST",
             headers:{
-                "Authorization": "bearer "+ state.data.token
+                "Content-Type": "application/json",
+                "Authorization": "bearer "+ state.data.token,
             },
             body: JSON.stringify({
                 name: cs.name,
                 phoneNumber: cs.phoneNumber,
-                report: cs.report
+                when: cs.report
             })
         }).then((res)=>{
             return res.json()
         }).then((data)=>{
             console.log({data});
-            cs.name = data.name,
-            cs.phoneNumber = data.phoneNumber,
-            cs.report = data.report
             callback();
         })
     },

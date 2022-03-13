@@ -13,10 +13,15 @@ class PetsAround extends HTMLElement {
    }
     render() {
       const currentState = state.getState();
+      if(currentState.token == null){
+         Router.go("/signin");
+      }
+
+
       state.me();
         state.getPetsAroundMe(()=>{
          const petsAround = currentState.lostPets;
-
+         console.log(petsAround, "las around");
 
       
       const div = document.createElement("div");
@@ -30,7 +35,7 @@ class PetsAround extends HTMLElement {
             <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
             ${petsAround.map((pet)=>{
                {console.log(pet, "my pet")}
-              return `<card-comp title=${pet.petname} img=${pet.petImage} ubi=${pet.place}></card-comp>`
+              return `<card-comp petname=${pet.petname} image=${pet.petImage} ubi=${pet.place}></card-comp>`
             }).join(" ")
             }
          </section>

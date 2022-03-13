@@ -47,7 +47,6 @@ class InitEditPetPage extends HTMLElement {
                     <p>Buscá un punto de referencia para reportar a tu mascota. Puede ser una dirección, un barrio o una ciudad.</p>
                     <div class= "container-button">
                     <button class="button" type="submit">Guardar</button>
-                    <button class="found-button" type="click">Reportar encontrado</button>
                     <button class="delete-button" type="click">Despublicar</button>
                     </div>
                 </div>
@@ -200,7 +199,7 @@ class InitEditPetPage extends HTMLElement {
         const form = this.shadow.querySelector(".form");
         const searchButton = this.shadow.querySelector(".search-button");
         const petName = (this.shadow.querySelector(".name") as HTMLInputElement);
-        //const deleteButton = this.shadow.querySelector("delete-button");
+        const deleteButton = this.shadow.querySelector(".delete-button");
         petName.getAttribute("name");
         let pictureImg;
 
@@ -287,12 +286,12 @@ class InitEditPetPage extends HTMLElement {
                 
             });
 
-            // deleteButton.addEventListener("click", (e)=>{
-            //     e.preventDefault();
-            //     state.deletePet(()=>{
-            //         Router.go("/pets");
-            //     })
-            // })
+            deleteButton.addEventListener("click", (e)=>{
+                e.preventDefault();
+                state.deletePet(()=>{
+                    Router.go("/pets");
+                })
+            })
             
         })();
 

@@ -24,7 +24,7 @@ const port = process.env.PORT || 3003;
 
 
 
-
+app.use(express.json({ limit: "75mb" }));
 
 
 
@@ -231,8 +231,13 @@ app.post("/report", authMiddleware, async (req, res)=>{
             message: "no hay datos"
         })
     }else{
-        const reporte = await createReport(req.body, req._user.id);
-            res.json(reporte[0])
+
+        try {
+            const reporte = await createReport(req.body, req._user.id);
+            res.json(reporte);
+        } catch (err) {
+            console.log(err);
+        }
     }
     
     
@@ -262,7 +267,7 @@ app.use(express.static("dist"));
 
 app.get("*", function(req, res){
     
-    res.sendFile(path.resolve(__dirname, "./../index.html")) 
+    res.sendFile(path.resolve(__dirname, "./../fe-src/index.html")) 
 })
   
 // app.get("*", express.static(__dirname + "./../index.html"))

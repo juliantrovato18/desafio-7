@@ -1,20 +1,21 @@
 import {Router} from "@vaadin/router"
 import { state } from "../../state";
 const x = require("../../img/Vector.jpg")
+import  {sendEmail}  from "./../../../be-src/lib/sendgrid";
 
 export class Card extends HTMLElement {
     shadow: ShadowRoot;
     image;
-    petName;
+    petname;
     ubi;
-    
+    petId
     constructor() {    
         super();
         this.shadow = this.attachShadow({mode: 'open'});
-        this.petName = this.getAttribute("petName");
+        this.petname = this.getAttribute("petname");
         this.image = this.getAttribute("image");
         this.ubi = this.getAttribute("ubi");
-        
+        this.petId = this.getAttribute("petId");
         
         
     }
@@ -38,9 +39,10 @@ export class Card extends HTMLElement {
         const CustomPetEvent = new CustomEvent('report', {
             
             detail: {
-                petName: this.petName,
+                petname: this.petname,
                 image: this.image,
                 ubi: this.ubi,
+                petId: this.petId
                 
             },
             bubbles: true
@@ -53,24 +55,26 @@ export class Card extends HTMLElement {
             const petSeen = lostPet.querySelector(".report-button");
             petSeen.addEventListener('report', (e:any) => {
                 e.preventDefault();
+                currentState["id"] = this.petId
+                state.setState(currentState);
                 console.log("detail", e.detail);
         reportPage.innerHTML = `
-                <img src=${x} class="button-cerrar" />
+                <img src=${x} class="button-cerrar"/>
                 <h2>Reportar info de bobby</h2>
                 <form class="form">
                 <label class="user-name">
                 <p class="nombre">Tu Nombre</p>
-                <input class="input-name" />
+                <input name="name" class="input-name" />
                 </label>
                 <label class="phone-number">
                 <p class="phone">Tu Numero de telefono</p>
-                <input class="input-phone" />
+                <input name="phone" class="input-phone" />
                 </label>
                 <label class="info-pet">
                 <p class="phone">¿Donde lo viste?</p>
-                <textarea class="input-phone"> </textarea>
+                <textarea name="textarea" class="input-phone"> </textarea>
                 </label>
-                <button class="send-button"></button>
+                <button class="send-button">Enviar</button>
                 </form>
                 
                 
@@ -78,7 +82,10 @@ export class Card extends HTMLElement {
 
         reportPageStyle.innerHTML = `
 
-
+        .pet-founded{
+            position: absolute;
+            top: 200px; left: 400px;
+        }
         
         .button-cerrar {
             width: 30px;
@@ -108,11 +115,28 @@ export class Card extends HTMLElement {
                 this.shadow.appendChild(reportPage);
                 this.shadow.appendChild(reportPageStyle);
 
-                const botonCerrar = this.querySelector(".button-cerrar");
+            const sendForm = this.shadow.querySelector(".form");
+            sendForm.addEventListener("submit", (e:any)=>{
+                e.preventDefault();
+                currentState.name = e.target["name"].value
+                currentState.phoneNumber = e.target["phone"].value;
+                currentState.report = e.target["textarea"].value;
+                console.log(currentState, "current report");
+                sendEmail(currentState.email, currentState.petname, currentState.place, currentState.phoneNumber);
+                state.reportFoundedPet(()=>{
+                    Router.go("/around");
+                })
+            })
+
+
+
+                const botonCerrar = this.shadow.querySelector(".button-cerrar");
                 botonCerrar.addEventListener("click", (e)=>{
                     e.preventDefault();
                     reportPageStyle.innerHTML = `
-                    .div{}
+                    .pet-founded{
+                        display:none;
+                    }
                     ` 
                 })
             })
@@ -127,8 +151,8 @@ export class Card extends HTMLElement {
     }
     render(){
         
-        const image = this.getAttribute("url");
-        const petname = this.getAttribute("title");
+        const image = this.getAttribute("image");
+        const petname = this.getAttribute("petname");
         const ubi = this.getAttribute("ubi");
         
         
@@ -136,7 +160,7 @@ export class Card extends HTMLElement {
         this.shadow.innerHTML= `
             <div class="div">
             <div class= "container-img">
-            <img src=${image} class="img"></img>
+            <img src=${image} crossorigin="anonymous" class="img"></img>
             </div>
             <h1 class="pet-title">${petname}</h1>
             <p class="pet-info">${ubi}</p>
@@ -155,6 +179,9 @@ export class Card extends HTMLElement {
             border-radius: 2px;
             padding: 20px;
             background: #FFFFFF;
+        }
+        .report-button{
+            cursor: pointer;
         }
 
             .img{

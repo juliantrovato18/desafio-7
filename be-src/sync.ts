@@ -11,6 +11,6 @@ import {User, Pet, Auth, Reporte} from "./models/index"
     // Auth.sequelize.sync({force:true}).then((res)=>{
     //     console.log(res);
     // })
-    Reporte.sequelize.sync({force:true}).then((res)=>{
-        console.log(res);
-    })
+    // Reporte.sequelize.sync({force:true}).then((res)=>{
+    //     console.log(res);
+    // })

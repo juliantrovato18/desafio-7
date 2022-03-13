@@ -6,16 +6,17 @@ const image5 = require("../../img/image5.png");
 export class CardEdit extends HTMLElement {
     shadow: ShadowRoot;
     image;
-    petName;
+    petname;
     ubi;
+    petId
     
     constructor() {    
         super();
         this.shadow = this.attachShadow({mode: 'open'});
-        this.petName = this.getAttribute("petName");
+        this.petname = this.getAttribute("petname");
         this.image = this.getAttribute("image");
         this.ubi = this.getAttribute("ubi");
-        
+        this.petId = this.getAttribute("petId");
         
         
     }
@@ -39,9 +40,10 @@ export class CardEdit extends HTMLElement {
         const CustomPetEvent = new CustomEvent('report', {
             
             detail: {
-                petname: this.petName,
+                petname: this.petname,
                 image: this.image,
                 ubi: this.ubi,
+                petId: this.petId
                 
             },
             bubbles: true
@@ -50,10 +52,11 @@ export class CardEdit extends HTMLElement {
 
         const lostPets = this.shadow.querySelectorAll(".div");
             lostPets.forEach((lostPet) => {
-
             const petSeen = lostPet.querySelector(".edit-button");
             petSeen.addEventListener('report', (e:any) => {
                 e.preventDefault();
+                currentState["id"] = this.petId
+                state.setState(currentState);
                 console.log("detail", e.detail);
         
 
@@ -71,8 +74,8 @@ export class CardEdit extends HTMLElement {
     }
     render(){
         
-        const image = this.getAttribute("src");
-        const petname = this.getAttribute("title");
+        const image = this.getAttribute("image");
+        const petname = this.getAttribute("petname");
         const ubi = this.getAttribute("ubi");
         
         
@@ -80,7 +83,7 @@ export class CardEdit extends HTMLElement {
         this.shadow.innerHTML= `
             <div class="div">
             <div class= "container-img">
-            <img src=${image} class="img"></img>
+            <img src=${image} crossorigin="anonymous" class="img"></img>
             </div>
             <h1 class="pet-title">${petname}</h1>
             <p class="pet-info">${ubi}</p>

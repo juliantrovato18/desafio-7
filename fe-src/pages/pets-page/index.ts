@@ -21,6 +21,8 @@ class PetsPage extends HTMLElement {
       const div = document.createElement("div");
       const mascotas = document.createElement("div");
       const currentState = state.getState();
+      
+
       const page = document.createElement("div");
        state.getMyPets(()=>{
          const myReportedPets = currentState.reportedPets;
@@ -57,7 +59,8 @@ class PetsPage extends HTMLElement {
             <custom-text variant="title">Mis mascotas reportadas</custom-text>
             ${myReportedPets.map((pet)=>{
                {console.log(pet, "my pet")}
-              return `<card-edit title=${pet.petname} class="card" img=${pet.petImage} ubi=${pet.place}></card-edit>`
+               
+              return `<card-edit petname=${pet.petname} petId=${pet.id} class="card" image=${pet.petImage} ubi=${pet.place}></card-edit>`
             }).join(" ")
             }
          </section>
