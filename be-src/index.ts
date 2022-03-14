@@ -6,9 +6,10 @@ import * as crypto from "crypto";
 import * as cors from "cors";
 import * as path from "path";
 import *as jwt from "jsonwebtoken"
-import { createPet, findPet, findMyPets, findAllPets, updatePet, deleteReport } from "./controllers/pets-controller";
+import { createPet, sendEmail, findPet, findMyPets, findAllPets, updatePet, deleteReport } from "./controllers/pets-controller";
 import { createAuth, createUser, findToken} from "./controllers/user-controller";
 import { index } from "./lib/algolia";
+import { EmailAddress } from "@sendgrid/helpers/classes";
 
 
 
@@ -218,9 +219,14 @@ app.patch("/pets/:id", authMiddleware, async (req, res)=>{
 
 //Elimina el reporte de la mascota
 app.delete("/delete-report/:id", authMiddleware, async (req,res)=>{
-    const reportDeleted = await deleteReport(req.params.id);
-    const algoliaR = await index.delete(req.params.id);
+    try {
+        
+        const reportDeleted = await deleteReport(req.params.id)
+        
     res.json({message: "reporte eliminado"})
+    } catch (err) {
+        console.log(err);
+    }
     
 })
 
@@ -241,6 +247,23 @@ app.post("/report", authMiddleware, async (req, res)=>{
     }
     
     
+})
+
+
+//probando Report
+app.post("/report-founded/:id", authMiddleware, async (req, res)=>{
+    try {
+        const {email} = req.body;
+        const {petname} = req.body;
+        const {loc} = req.body;
+        const {phoneNumber} = req.body;
+        const {id} = req.params
+        const mail = await sendEmail(loc, phoneNumber, id);
+    
+        res.json(mail);
+    } catch (err) {
+        console.log(err);
+    }
 })
 
 

@@ -1,10 +1,13 @@
 import { Pet } from "../models/pets";
 import { Reporte } from "../models/reportes";
-import { User } from "../models";
+import { Auth, User } from "../models";
 import {index} from "../lib/algolia"
 import { v2 } from "cloudinary";
 import { cloudinary } from "../lib/cloudinary";
 import { where } from "sequelize/dist";
+import "dotenv/config";
+import * as sgMail from "@sendgrid/mail";
+
 
 
 //crear una mascota
@@ -27,23 +30,24 @@ export async function createPet(userId, data){
         user_id: userId
     })
 
-    
+    const id = await pet.get("id");
+    console.log("soy el id",id);
 
-        await pet.update({
-            petname: data.petname,
-            petImage:imagen.secure_url,
-            place:data.place,
-            lat: data.lat,
-            lng: data.lng,
-            user_id: userId
-        },{
-            where:{
-                id: userId
-            }
-        })
+        // await pet.update({
+        //     petname: data.petname,
+        //     petImage:imagen.secure_url,
+        //     place:data.place,
+        //     lat: data.lat,
+        //     lng: data.lng,
+        //     user_id: userId
+        // },{
+        //     where:{
+        //         id: userId
+        //     }
+        // })
     
     
-    const algoliaPet =  index.saveObject({
+    const algoliaPet = await index.saveObject({
         
         petname: data.petname,
         petImage:imagen.secure_url,
@@ -52,7 +56,7 @@ export async function createPet(userId, data){
             lat: data.lat,
             lng: data.lng
         },
-        objectID:userId,
+        objectID:id
     }).then(res=>{
         console.log("res",res);
     }).catch(e=>{
@@ -127,20 +131,20 @@ export async function updatePet(body, id?){
     //         id: id
     //     }
     // })
-
-    // const bodyChange = index.partialUpdateObject({
-    //     petname: body.petname,
-    //     petImage:body.petImage,
-    //     _geoloc:{
-    //         lat: body.lat,
-    //         lng: body.lng
-    //     },
-    //     objectID:id,
-    // }).then((res)=>{
-    //     console.log(res, "res");
-    // }).catch((e)=>{
-    //     console.log(e);
-    // })
+    
+    const bodyChange = await index.partialUpdateObject({
+        petname: body.petname,
+        petImage:body.petImage,
+        _geoloc:{
+            lat: body.lat,
+            lng: body.lng
+        },
+        objectID:id,
+    }).then((res)=>{
+        console.log(res, "res");
+    }).catch((e)=>{
+        console.log(e);
+    })
 
 
     return respuesta
@@ -168,3 +172,43 @@ export async function deleteReport(id){
 
     return petFounded;
 }
+
+
+//Enviar reporte de la mascota encontrada 
+export async function sendEmail( locData, phoneNumberData, id){
+    
+    const mascotaEncontrada = await Pet.findByPk(id);
+    const userId = await mascotaEncontrada["user_id"];
+    const petname = await mascotaEncontrada["petname"];
+    const userDeLaMascota = await Auth.findByPk(1);
+    console.log(userDeLaMascota, "el user es este");
+    const userEmail = await userDeLaMascota["email"];
+    
+      await sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg = {
+    to: userEmail,
+    from: "trovatojulian364@gmail.com", // Use the email address or domain you verified above
+    subject: `Se encontro a tu mascota:${petname}`,
+    text: `tenemos informacion de ${petname}`,
+    html: `<strong>encontramos a tu mascota vista en ${locData}, podes comunicarte conmigo, este es mi telefono ${phoneNumberData}</strong>`,
+  };
+   
+
+  
+  const enviarMail = await sgMail.send(msg).then(
+    () => {
+        console.log("email enviado");
+    },
+    (error) => {
+      console.error(error);
+  
+      if (error.response) {
+        console.error(error.response.body);
+      }
+    }
+  );
+     
+        
+  }
+  
+  

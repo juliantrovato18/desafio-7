@@ -1,7 +1,7 @@
 import {Router} from "@vaadin/router"
 import { state } from "../../state";
 const x = require("../../img/Vector.jpg")
-import  {sendEmail}  from "./../../../be-src/lib/sendgrid";
+
 
 export class Card extends HTMLElement {
     shadow: ShadowRoot;
@@ -55,7 +55,9 @@ export class Card extends HTMLElement {
             const petSeen = lostPet.querySelector(".report-button");
             petSeen.addEventListener('report', (e:any) => {
                 e.preventDefault();
-                currentState["id"] = this.petId
+                currentState.petId = this.petId
+                currentState["petname"] = this.petname
+                currentState["place"] = this.ubi
                 state.setState(currentState);
                 console.log("detail", e.detail);
         reportPage.innerHTML = `
@@ -121,11 +123,12 @@ export class Card extends HTMLElement {
                 currentState.name = e.target["name"].value
                 currentState.phoneNumber = e.target["phone"].value;
                 currentState.report = e.target["textarea"].value;
+                state.setState(currentState);
                 console.log(currentState, "current report");
-                sendEmail(currentState.email, currentState.petname, currentState.place, currentState.phoneNumber);
-                state.reportFoundedPet(()=>{
-                    Router.go("/around");
-                })
+                state.foundPetReport(()=>{
+                   Router.go("/around");
+               }) 
+               
             })
 
 

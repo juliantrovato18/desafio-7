@@ -1,3 +1,4 @@
+import { Json } from "sequelize/dist/lib/utils";
 import { callbackify } from "util";
 
 const API_BASE_URL = "http://localhost:3003";
@@ -13,6 +14,8 @@ const state = {
         petname: "",
         petImage:"",
         placeName:"",
+        petId: 0,
+        place:"",
         id:"",
         lat: "",
         lng: "",
@@ -272,6 +275,26 @@ const state = {
         })
     },
 
+    //reporta a la mascota que fue encontrada, eliminando el reporte 
+    foundPetReport(callback){
+        const cs = state.getState();
+        fetch(API_BASE_URL + "/report-founded/" + cs["petId"],{
+            method: "POST",
+            headers:{
+                "Content-Type": "Application/json",
+                "Authorization": "bearer "+ state.data.token,
+            },
+            body: JSON.stringify({
+                loc: cs.place,
+                phoneNumber: cs.phoneNumber
+            })
+        }).then((res)=>{
+            return res.json();
+        }).then((data)=>{
+            console.log(data, "termina" );
+            callback();
+        })
+    },
 
 
 
