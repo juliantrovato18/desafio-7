@@ -22,9 +22,26 @@ class PetsAround extends HTMLElement {
         state.getPetsAroundMe(()=>{
          const petsAround = currentState.lostPets;
          console.log(petsAround, "las around");
-
-      
+         
+      const noPet = document.createElement("div");
       const div = document.createElement("div");
+
+         if(petsAround.length ==0){
+
+         
+      noPet.innerHTML = `
+      <section class="section1">
+         <div>
+         </div>
+         <custom-header></custom-header>
+      </section>
+         <section class="section">
+         <custom-text variant="title">No hay mascotas cerca de tu Ubicacion</custom-text>
+         </section>
+      `
+
+      }else{
+      
       div.innerHTML = `
          <section class="section1">
             <div>
@@ -40,7 +57,7 @@ class PetsAround extends HTMLElement {
             }
          </section>
       `;
-      
+      }
       const style = document.createElement("style");
       style.innerHTML=`
              * {
@@ -81,7 +98,9 @@ class PetsAround extends HTMLElement {
       `;
       
       div.appendChild(style);
+      noPet.appendChild(style);
       this.shadow.appendChild(div);
+      this.shadow.appendChild(noPet);
         });
        
       

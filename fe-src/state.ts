@@ -60,7 +60,7 @@ const state = {
             cs.email = data.email,
             cs.name = data.name,
             cs.userId = data.id
-            console.log("toda la data", data);
+            
             
         })
     },
@@ -73,7 +73,7 @@ const state = {
     //newAuth
     singup(callback){
         const cs = state.getState();
-        console.log(cs.name);
+        
 
         fetch(API_BASE_URL + "/auth",{
             method: "post",
@@ -88,7 +88,6 @@ const state = {
         }).then(res=>{
             return res.json()
         }).then(data=>{
-            console.log({data});
             cs.name = data.name
             cs.email = data.email
             cs.password = data.password
@@ -228,7 +227,6 @@ const state = {
 
     editPets(callback){
         const cs = state.getState();
-        console.log("cs edit", cs.id);
         fetch(API_BASE_URL + "/pets/"+ cs.id ,{
             method: "PATCH",
             headers:{
@@ -289,10 +287,7 @@ const state = {
                 phoneNumber: cs.phoneNumber
             })
         }).then((res)=>{
-            return res.json();
-        }).then((data)=>{
-            console.log(data, "termina" );
-            callback();
+            console.log(res, "soy res");
         })
     },
 
