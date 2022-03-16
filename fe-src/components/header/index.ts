@@ -14,10 +14,18 @@ export class Header extends HTMLElement {
         const shadow = this.attachShadow({ mode: 'open' });
         const div = document.createElement("div");
         const style = document.createElement("style");
+        const styleMenu = document.createElement("style");
+        const menuAbierto = document.createElement("div");
         div.innerHTML = `
             <header class="header">
             <div class="foot">
             <image src="${patita}"></image>
+            </div>
+            <div class="button-desplegable">
+            <button class="cerrar-ventana">X</button>
+            </div>
+            <div class="cerrar-ventana2">
+            <button class="cerrar-ventana21">X</button>
             </div>
             <div class="container-links">
             <a href="http://localhost:1234/signin" class="as">Mis datos</a>
@@ -29,9 +37,27 @@ export class Header extends HTMLElement {
             </header>
             
         `
+        menuAbierto.innerHTML=`
+            <div class="menu">
+            <h3 class="datos">Mis datos</h3>
+            <h3 class="pets">Mis mascotas perdidas</h3>
+            <h3 class="around">Mascotas cerca</h3>
+            <h3 class="report">Reportar mascota</h3>
+            <h3 class="close-sesion">Cerrar sesion</h3>
+            </div>
+        `
+        styleMenu.innerHTML = `
+            .menu{
+                display:none;
+            }
+            .cerrar-ventana2{
+                display:none;
+            }
+        `
+
         style.innerHTML = `
             .header{
-                width:740px;
+                min-width:580px;
                 height: 60px;
                 padding:20px;
                 background-color: #FF6868;
@@ -39,12 +65,38 @@ export class Header extends HTMLElement {
                 flex-direction: row;
                 justify-content: space-between;
             }
+            @media (min-width: 375px){
+                .header{
+                    max-width:400px;
+                }
+            }
             .container-links{
-                display:flex;
-                flex-direction:row;
-                justify-content: space-evenly;
+                display:none;
                 
-               
+             
+            @media (min-width: 415px){
+                .container-links{
+                    display:none;
+                }
+            } 
+
+            .menu{
+                
+            }
+            .button-desplegable{
+                display:flex;
+            }
+            .ventana{
+                display:none;
+            }
+            .abre-ventana{
+                display:none;
+            }
+            @media (min-width:375px){
+                .abre-ventana{
+                    display:inherit;
+                }
+            }
                 
                 
             }
@@ -60,7 +112,73 @@ export class Header extends HTMLElement {
         `
         div.className = variant;
         shadow.appendChild(div);
+        shadow.appendChild(menuAbierto);
+        menuAbierto.appendChild(styleMenu);
         shadow.appendChild(style);
+
+        const button = this.shadowRoot.querySelector(".button-desplegable");
+        
+        button.addEventListener("click", (e)=>{
+            e.preventDefault();
+            styleMenu.innerHTML = `
+            .menu{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: fixed;
+                background-color: aqua;
+                
+            }
+            .cerrar-ventana2{
+                display:flex;
+            }
+            .cerrar-ventana{
+                display:none;
+            }
+            
+            `
+                
+            
+            
+
+        })
+        const buttonCerrar = this.shadowRoot.querySelector(".cerrar-ventana2");
+        buttonCerrar.addEventListener("click", (e)=>{
+            e.preventDefault();
+            console.log("llega el bot");
+            styleMenu.innerHTML = `
+                .menu{
+                display: none;
+                }
+                .cerrar-ventana2{
+                display:none;
+                }
+            `
+        })
+
+
+        const misDatos = this.shadowRoot.querySelector(".datos");
+        misDatos.addEventListener("click", ()=>{
+            Router.go("/signin");
+        })
+
+        const pets = this.shadowRoot.querySelector(".pets");
+        pets.addEventListener("click", ()=>{
+            Router.go("/pets");
+        })
+
+
+        const around = this.shadowRoot.querySelector(".around");
+        around.addEventListener("click", ()=>{
+            Router.go("/around");
+        })
+
+        const report = this.shadowRoot.querySelector(".report");
+        report.addEventListener("click", ()=>{
+            Router.go("/reports");
+        })
 
         const cs = state.getState();
         const cerrarSesion = this.shadowRoot.querySelector(".close-sesion");

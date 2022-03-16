@@ -258,7 +258,7 @@ const state = {
     deletePet(callback){
         const cs = state.getState();
         
-        fetch(API_BASE_URL + "/delete-report/" + cs["id"],{
+        fetch(API_BASE_URL + "/delete-report/" + cs["petId"],{
             method: "DELETE",
             headers:{
                 "content-type": "application/json",
@@ -287,7 +287,8 @@ const state = {
                 phoneNumber: cs.phoneNumber
             })
         }).then((res)=>{
-            console.log(res, "soy res");
+            console.log(res, "mail enviado");
+            callback();
         })
     },
 

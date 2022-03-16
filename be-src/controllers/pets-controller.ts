@@ -31,20 +31,9 @@ export async function createPet(userId, data){
     })
 
     const id = await pet.get("id");
-    console.log("soy el id",id);
+    
 
-        // await pet.update({
-        //     petname: data.petname,
-        //     petImage:imagen.secure_url,
-        //     place:data.place,
-        //     lat: data.lat,
-        //     lng: data.lng,
-        //     user_id: userId
-        // },{
-        //     where:{
-        //         id: userId
-        //     }
-        // })
+        
     
     
     const algoliaPet = await index.saveObject({
@@ -107,30 +96,6 @@ export async function updatePet(body, id?){
     }
     
 
-    // const actu = await Pet.update({
-    //     petname: body.petname,
-    //     petImage:body.petImage,
-    //         lat: body.lat,
-    //         lng: body.lng,
-    // },{
-    //     where:{
-    //         id: id
-    //     }
-    // })
-
-
-
-    // const actualizado = await Pet.update({
-    //     petname: body.petname,
-    //     petImage:body.petImage,
-    //         lat: body.lat,
-    //         lng: body.lng,
-    //         id:id,
-    // },{
-    //     where:{
-    //         id: id
-    //     }
-    // })
     
     const bodyChange = await index.partialUpdateObject({
         petname: body.petname,
@@ -197,18 +162,13 @@ export async function sendEmail( locData, phoneNumberData, id){
   
   const enviarMail = await sgMail.send(msg).then(
     () => {
-        return {message:"email enviado"};
-    },
-    (error) => {
-      console.error(error);
-  
-      if (error.response) {
-        console.error(error.response.body);
-      }
-       
-    }
+        console.log({message:"email enviado"});
+    }).catch((err)=>{
+        console.log(err);
+    })
     
-  );
+    
+    
      
         
   }

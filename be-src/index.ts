@@ -29,61 +29,7 @@ app.use(express.json({ limit: "75mb" }));
 
 
 
-// app.post("/auth/token", async (req, res)=>{
-//     const {email, password} = req.body;
-//     const passwordHasheado = getSHA256ofString(password)
-//     const auth = await Auth.findOne({
-//         where:{ email: req.body.email,
-//             password: passwordHasheado
 
-//         }
-//     })
-//     const token = jwt.sign({id: auth.get("user_id")}, SECRET);
-//     if(auth){
-//         res.json({
-//             token
-//         });
-//     }else{
-//         res.status(400).json("user or password incorrect");
-//     }
-// })
-
-
-// app.get("/me", async (req, res)=>{
-//     const token = req.headers.authorization.split(" ")[1];
-//     const data = jwt.verify(token, SECRET);
-//     res.json(data);
-// })
-
-// function authMiddleware (req, res, next){
-//     const token = req.headers.authorization.split(" ")[1];
-//     try{
-//     const data = jwt.verify(token, SECRET);
-//     req.body._user = data;
-//     next();
-//     }catch(e){
-//         res.status(401).json("unauthorized")
-//     }
-// }
-
-// app.post("/products", authMiddleware, async (req, res)=>{
-//     const product = await Product.create({
-//         ...req.body,
-//         userId: req.body._user.id
-//     })
-//     res.json(product)
-// })
-
-
-// app.get("/me/products", authMiddleware, async (req, res)=>{
-//     const product = await Product.findAll({
-//         where:{
-//             userId: req.body._user.id
-//         },
-//         include:[User]
-//     })
-//     res.json(product)
-// })
 
 
 //Signup
@@ -253,14 +199,13 @@ app.post("/report", authMiddleware, async (req, res)=>{
 //probando Report
 app.post("/report-founded/:id", authMiddleware, async (req, res)=>{
     try {
-        const {email} = req.body;
-        const {petname} = req.body;
+        
         const {loc} = req.body;
         const {phoneNumber} = req.body;
         const {id} = req.params
         const mail = await sendEmail(loc, phoneNumber, id);
     
-        res.json(mail);
+         res.json(mail);
     } catch (err) {
         console.log(err);
     }

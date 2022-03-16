@@ -58,7 +58,7 @@ class PetsPage extends HTMLElement {
             <section class="section">
             <custom-text variant="title">Mis mascotas reportadas</custom-text>
             ${myReportedPets.map((pet)=>{
-               {console.log(pet, "my pet")}
+               
                
               return `<card-edit petname=${pet.petname} petId=${pet.id} class="card" image=${pet.petImage} ubi=${pet.place}></card-edit>`
             }).join(" ")
@@ -75,6 +75,27 @@ class PetsPage extends HTMLElement {
             width: 330px;
             height: 147 px;
          }
+         .small{
+            min-width: 730px;
+         }
+         .section{
+            min-width: 730px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+         }
+         @media (min-width: 375px){
+            .section{
+               max-width: 375px;
+               max-height: 800px;
+               display:flex;
+               flex-direction: column;
+               align-items:center;
+               justify-content:space-between;
+            }
+
+
        ` 
 
 

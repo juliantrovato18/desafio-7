@@ -94,6 +94,7 @@ class InitReportPetPage extends HTMLElement {
             }
             .input-container{
                 min-height: 350px;
+                min-width: 650px;
                 display: flex; 
                 justify-content:space-between;
                 flex-direction:column;

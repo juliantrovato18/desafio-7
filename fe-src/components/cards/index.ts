@@ -59,7 +59,7 @@ export class Card extends HTMLElement {
                 currentState["petname"] = this.petname
                 currentState["place"] = this.ubi
                 state.setState(currentState);
-                console.log("detail", e.detail);
+                
         reportPage.innerHTML = `
                 <img src=${x} class="button-cerrar"/>
                 <h2>Reportar info de bobby</h2>
@@ -88,6 +88,14 @@ export class Card extends HTMLElement {
             position: absolute;
             top: 200px; left: 400px;
         }
+        @media (min-width: 375px){
+            .pet-founded{
+               position: absolute;
+               top: 300px; left: 100px;
+            }
+            .div{
+                display:none;
+            }
         
         .button-cerrar {
             width: 30px;
@@ -126,7 +134,10 @@ export class Card extends HTMLElement {
                 state.setState(currentState);
                 console.log(currentState, "current report");
                 state.foundPetReport(()=>{
-                   Router.go("/around");
+                state.deletePet(()=>{
+                    Router.go("/pets");
+                })
+                   
                }) 
                
             })

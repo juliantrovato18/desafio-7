@@ -14,6 +14,8 @@ export class TextComponent extends HTMLElement {
             .title{
                 font-size: 40px;
                 font-weight: bold;
+                justify-content: center;
+                align-self:center;
                 color: black;
                 padding:0px;
                 

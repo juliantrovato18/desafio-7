@@ -86,19 +86,40 @@ class InitEditPetPage extends HTMLElement {
             }
 
             .form{
-                min-width: 300px;
+                min-width: 650px;
                 min-height: 500px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-evenly;
                 align-items: center;
             }
+
+            @media (min-width: 375px){
+                .form{
+                   max-width: 375px;
+                   max-height: 800px;
+                   display:flex;
+                   flex-direction: column;
+                   align-items:center;
+                   justify-content:space-between;
+                }
             .input-container{
                 min-height: 350px;
+                width: 600px;
                 display: flex; 
                 justify-content:space-between;
                 flex-direction:column;
             }
+            @media (min-width: 375px){
+                .input-container{
+                   max-width: 375px;
+                   max-height: 800px;
+                   display:flex;
+                   margin-left: 20px;
+                   flex-direction: column;
+                   align-items:center;
+                   justify-content:space-between;
+                }
             .img-change {
                 width: 330px;
                 height: 250px;
@@ -277,7 +298,7 @@ class InitEditPetPage extends HTMLElement {
                     currentState.placeName = e.target["q"].value,
                     currentState.lat = lat;
                     currentState.lng = lng;
-                    console.log(currentState);
+                    
                     state.editPets(()=>{
                         
                         Router.go("/pets");

@@ -41,13 +41,23 @@ class initWelcomePage extends HTMLElement {
             background-color: #FF6868;
          }
          .section{
-            width: 375px;
+            min-width: 650px;
             min-height:580px;
             padding: 20px;
             display:flex;
             flex-direction: column;
             align-items:center;
             justify-content:space-between;
+         }
+         @media (min-width: 375px){
+            .section{
+               max-width: 375px;
+               max-height: 800px;
+               display:flex;
+               flex-direction: column;
+               align-items:center;
+               justify-content:space-between;
+            }
          }
          .patita{
             padding: 10px;
@@ -76,7 +86,7 @@ class initWelcomePage extends HTMLElement {
       const successCallback = (position)=>{
          const lat = position.coords.latitude;
          const lng = position.coords.longitude;
-         console.log(lat, lng);
+         
          currentState.myLat = lat;
          currentState.myLng = lng
       }

@@ -72,7 +72,7 @@ class PetsAround extends HTMLElement {
             background-color: #FF6868;
          }
          .section{
-            width: 375px;
+            min-width: 650px;
             min-height:580px;
             padding: 20px;
             display:flex;
@@ -80,6 +80,15 @@ class PetsAround extends HTMLElement {
             align-items:center;
             justify-content:space-between;
          }
+         @media (min-width: 375px){
+            .section{
+               max-width: 375px;
+               max-height: 800px;
+               display:flex;
+               flex-direction: column;
+               align-items:center;
+               justify-content:space-between;
+            }
          .patita{
             padding: 10px;
             margin-left: 20px;
