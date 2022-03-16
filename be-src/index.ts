@@ -235,7 +235,7 @@ app.use(express.static(relativeRoute));
 
 app.get("*", function(req, res){
     
-    res.sendFile(relativeRoute + "/index.html") 
+    res.sendFile(relativeRoute + "/index.html");
 })
   
 // app.get("*", express.static(__dirname + "./../index.html"))
