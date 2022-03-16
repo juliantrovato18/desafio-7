@@ -227,15 +227,15 @@ app.get("/mascotas-cerca", async (req,res)=>{
 
 
 
-
-app.use(express.static("dist"));
+const relativeRoute = path.resolve(__dirname + "../../dist");
+app.use(express.static(relativeRoute));
 
 // const staticPath = path.resolve(__dirname, "../fe-src");
 // app.use(express.static(staticPath));
 
 app.get("*", function(req, res){
     
-    res.sendFile(path.resolve(__dirname, "./../fe-src/index.html")) 
+    res.sendFile(relativeRoute + "/index.html") 
 })
   
 // app.get("*", express.static(__dirname + "./../index.html"))
