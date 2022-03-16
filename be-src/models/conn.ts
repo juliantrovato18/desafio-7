@@ -2,11 +2,11 @@ import {Sequelize} from "sequelize";
 
 export const sequelize = new Sequelize({
     dialect: "postgres",
-    username: "rkqneiekophuak",
-    password: "8ae329c0776268bdf8a8d9e381487ce448f4d53290d0f41355f39164f8ce3b47",
-    database: "d7qrmjso4i69bl",
+    username: process.env.USER_NAME_POSTGRE,
+    password: process.env.PASSWORD_POSTGRE,
+    database: process.env.DATA_BASE,
     port: 5432,
-    host: "ec2-18-210-159-154.compute-1.amazonaws.com",
+    host: process.env.HOST,
     ssl: true,
     // esto es necesario para que corra correctamente
     dialectOptions: {

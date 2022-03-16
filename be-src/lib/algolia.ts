@@ -3,7 +3,7 @@ import algoliasearch from 'algoliasearch';
 
 
 
-const client = algoliasearch('IDYAQ7IUHB', 'f87c1473916c1dcc03867808d06cf67c');
+const client = algoliasearch(process.env.APPLICATION_ID_ALGOLIA, process.env.API_KEY_ALGOLIA);
  const index = client.initIndex('pets');
 
  export {index}

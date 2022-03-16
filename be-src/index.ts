@@ -19,7 +19,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const SECRET = "asdasdasdsad2211"
+const SECRET = process.env.SECRET
 
 const port = process.env.PORT || 3003;
 
