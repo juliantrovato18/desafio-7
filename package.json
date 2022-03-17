@@ -7,8 +7,7 @@
     "dev:fe": "parcel serve ./fe-src/index.html",
     "build:be": "tsc",
     "build:fe": "parcel build ./fe-src/index.html",
-    "build": "npm run build:be",
-    "deploy": "gh-pages -d build",
+    "build": "yarn build:fe && yarn build:be-src",
     "start": "node ./be-dist/index.js"
   },
   "dependencies": {
