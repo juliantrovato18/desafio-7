@@ -1,4 +1,10 @@
 import {Sequelize} from "sequelize";
+import 'dotenv/config'
+
+
+
+
+
 
 export const sequelize = new Sequelize({
     dialect: "postgres",
@@ -16,3 +22,5 @@ export const sequelize = new Sequelize({
       },
     },
   });
+
+  

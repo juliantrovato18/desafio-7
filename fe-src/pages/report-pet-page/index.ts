@@ -4,6 +4,7 @@ import MapboxClient from "mapbox";
 import * as mapboxgl from "mapbox-gl";
 import Dropzone from "dropzone";
 const imgChange = require("../../img/change.jpg");
+import "dotenv/config"
 // const mapboxToken = process.env.TOKEN_MAPBOX;
 const mapboxClient = new MapboxClient(process.env.TOKEN_MAPBOX);
 

@@ -2,6 +2,7 @@ import { state } from "../../state";
 import { Router } from "@vaadin/router";
 import MapboxClient from "mapbox";
 import * as mapboxgl from "mapbox-gl";
+import "dotenv/config"
 import Dropzone from "dropzone";
 const imgChange = require("../../img/change.jpg");
 // const mapboxToken = process.env.TOKEN_MAPBOX;

@@ -1,4 +1,4 @@
-
+import "dotenv/config"
 import algoliasearch from 'algoliasearch';
 
 

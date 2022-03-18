@@ -1,13 +1,13 @@
 import { sequelize} from "../be-src/models/conn";
-import {User, Pet, Auth} from "../be-src/models/index"
 import { createReport } from "./controllers/reporte-controller";
 import * as express from "express";
 import * as crypto from "crypto";
 import * as cors from "cors";
 import * as path from "path";
 import *as jwt from "jsonwebtoken"
+import "dotenv/config"
 import { createPet, sendEmail, findPet, findMyPets, findAllPets, updatePet, deleteReport } from "./controllers/pets-controller";
-import { createAuth, createUser, findToken} from "./controllers/user-controller";
+import { createAuth, createUser, findToken, findUser} from "./controllers/user-controller";
 import { index } from "./lib/algolia";
 import { EmailAddress } from "@sendgrid/helpers/classes";
 
@@ -77,10 +77,16 @@ app.post("/auth/token", async (req, res)=>{
 }
 
 
-//me 
+
+
+//me
 app.get("/me", authMiddleware, async (req,res)=>{
-        const findUser = await User.findByPk(req._user.id)
-        res.json(findUser);
+    try {
+        const user = await findUser(req._user.id);
+    res.json({user});
+    } catch (err) {
+        console.log(err);
+    }
 })
 
 
@@ -134,34 +140,26 @@ app.get("/mypets/:id", authMiddleware, async (req,res)=>{
 
 
 
-//modifica una mascota ya existente
-app.patch("/pets/:id", authMiddleware, async (req, res)=>{
-    try {
-        const [updatedPet] = await Pet.update(req.body,{
-            where:{
-                id:req.params.id
-            }
-        })
-        
-         const indexItem = await updatePet(req.body);
-        const algoliaRes = await index.saveObject({
-            ...indexItem, 
-            objectID:req.params.id
-        });
-         
-        const petUpdateada = await Pet.findOne({
-            where:{
-                id:req.params.id
-            }
-        });
 
-        res.json(petUpdateada)
+
+//modifica una mascota ya existente en la base de datos
+app.patch("/pets/:id", authMiddleware, async (req, res)=>{
+    const {id} = req.params
+    try {
+        
+         const indexItem = await updatePet(req.body, id);
+         
+
+        res.json(indexItem)
     } catch (er) {
         console.log(er)
     }
     
 
 })
+
+
+
 
 //Elimina el reporte de la mascota
 app.delete("/delete-report/:id", authMiddleware, async (req,res)=>{

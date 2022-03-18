@@ -3,12 +3,12 @@ import { cloudinary } from "../lib/cloudinary";
 import { where } from "sequelize/dist";
 import * as crypto from "crypto"
 import * as jwt from "jsonwebtoken";
-
+import "dotenv/config"
 // export async function createProduct(userId:number, productData) {
 //     return productData
 // }
 
-const SECRET = "asdasdasdsad2211"
+const SECRET = process.env.SECRET
 
 function getSHA256ofString(text:string){
     return crypto.createHash('sha256').update(text).digest('hex')
@@ -33,6 +33,12 @@ export async function createUser(dataProfile){
     
     
 }
+
+export async function findUser(id){
+    const user = await User.findByPk(id);
+    return user
+}
+
 
 export async function createAuth(userId, data){
     const [auth, authCreated] = await Auth.findOrCreate({

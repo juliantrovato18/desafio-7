@@ -77,6 +77,9 @@ export async function findAllPets(){
 //editar mascota perdida
 export async function updatePet(body, id?){
     const respuesta:any =  {}
+    const pet = await Pet.findByPk(id);
+    const objectID = await pet.get("id");
+    
 
     if(body.petname){
         respuesta.petname = body.petname
@@ -94,17 +97,29 @@ export async function updatePet(body, id?){
     if(body.objectID){
         respuesta.objectID = id
     }
+    const [updatedPet] = await Pet.update({
+        petname: respuesta.petname,
+        petImage: respuesta.petImage,
+        place: respuesta.place,
+        lat: respuesta.lat,
+        lng: respuesta.lng
+    },{
+        where:{
+            id:objectID
+        }
+    })
     
 
     
     const bodyChange = await index.partialUpdateObject({
         petname: body.petname,
         petImage:body.petImage,
+        place: body.place,
         _geoloc:{
             lat: body.lat,
             lng: body.lng
         },
-        objectID:id,
+        objectID:objectID,
     }).then((res)=>{
         console.log(res, "res");
     }).catch((e)=>{
@@ -112,7 +127,7 @@ export async function updatePet(body, id?){
     })
 
 
-    return respuesta
+    return updatedPet
 }
 
 
