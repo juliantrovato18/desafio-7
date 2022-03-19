@@ -4,7 +4,6 @@ import { Auth, User } from "../models";
 import {index} from "../lib/algolia"
 import { v2 } from "cloudinary";
 import { cloudinary } from "../lib/cloudinary";
-import { where } from "sequelize/dist";
 import "dotenv/config";
 import * as sgMail from "@sendgrid/mail";
 

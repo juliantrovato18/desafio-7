@@ -1,6 +1,5 @@
 import { User, Pet, Reporte, Auth} from "../models";
 import { cloudinary } from "../lib/cloudinary";
-import { where } from "sequelize/dist";
 import * as crypto from "crypto"
 import * as jwt from "jsonwebtoken";
 import "dotenv/config"
