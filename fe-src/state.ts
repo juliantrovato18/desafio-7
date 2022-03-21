@@ -1,7 +1,8 @@
 import { Json } from "sequelize/dist/lib/utils";
 import { callbackify } from "util";
+import "dotenv/config";
 
-const API_BASE_URL = "http://localhost:3003";
+const API_BASE_URL = process.env.API_BASE_URL ||"http://localhost:3003";
 
 const state = {
     data : {
