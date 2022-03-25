@@ -2,11 +2,10 @@ import { state } from "../../state";
 import { Router } from "@vaadin/router";
 import MapboxClient from "mapbox";
 import * as mapboxgl from "mapbox-gl";
-import "dotenv/config"
 import Dropzone from "dropzone";
 const imgChange = require("../../img/change.jpg");
-// const mapboxToken = process.env.TOKEN_MAPBOX;
-const mapboxClient = new MapboxClient(process.env.TOKEN_MAPBOX);
+
+const mapboxClient = new MapboxClient("pk.eyJ1Ijoia2VhbmVkZXYiLCJhIjoiY2t3emQ3cGk4MHR1cDJ1cW9sbGVhZ2xndSJ9.NXLbCbcSGIJxdMY7TKj50Q");
 
 class InitEditPetPage extends HTMLElement {
 

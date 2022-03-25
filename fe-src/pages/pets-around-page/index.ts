@@ -14,11 +14,11 @@ class PetsAround extends HTMLElement {
    listeners(){
       state.me();
       state.traeData();
+      
    }
     render() {
       const currentState = state.getState();
-      state.me();
-      state.traeData();
+     
       
       if(currentState.token == null){
          Router.go("/signin");
@@ -117,13 +117,15 @@ class PetsAround extends HTMLElement {
       noPet.appendChild(style);
       this.shadow.appendChild(div);
       this.shadow.appendChild(noPet);
-      this.listeners();
+     
         });
        
       
-      
+        this.listeners();
       
 
    }
+   
 }
+ 
 customElements.define("aroundpets-page", PetsAround);

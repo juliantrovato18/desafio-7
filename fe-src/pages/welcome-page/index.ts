@@ -82,7 +82,7 @@ class initWelcomePage extends HTMLElement {
       
       div.appendChild(style);
       this.shadow.appendChild(div);
-      this.listeners();
+     
       const currentState = state.getState();
       if(currentState.token == null){
          Router.go("/signin");
@@ -124,6 +124,7 @@ class initWelcomePage extends HTMLElement {
             
          
       });
+      this.listeners();
    }
 }
 customElements.define("welcome-page", initWelcomePage);
