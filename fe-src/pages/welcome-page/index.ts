@@ -84,9 +84,7 @@ class initWelcomePage extends HTMLElement {
       this.shadow.appendChild(div);
      
       const currentState = state.getState();
-      if(currentState.token == null){
-         Router.go("/signin");
-      }
+      
 
       const successCallback = (position)=>{
          const lat = position.coords.latitude;

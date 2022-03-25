@@ -1,7 +1,7 @@
 
 
-// const API_BASE_URL = "https://desafio-7.herokuapp.com";
-const API_BASE_URL = "http://localhost:3003"
+ const API_BASE_URL = "https://desafio-7.herokuapp.com";
+//const API_BASE_URL = "http://localhost:3003"
 
 const state = {
     data : {

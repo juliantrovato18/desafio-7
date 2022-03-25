@@ -171,6 +171,9 @@ class InitReportPetPage extends HTMLElement {
         this.shadow.appendChild(div);
         
         const currentState = state.getState();
+        if(currentState.token == null){
+            Router.go("/ingresar");
+         }
         const form = this.shadow.querySelector(".form");
         const searchButton = this.shadow.querySelector(".search-button");
         const petName = (this.shadow.querySelector(".name") as HTMLInputElement);

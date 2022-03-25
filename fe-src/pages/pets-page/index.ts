@@ -21,7 +21,9 @@ class PetsPage extends HTMLElement {
       const div = document.createElement("div");
       const mascotas = document.createElement("div");
       const currentState = state.getState();
-      
+      if(currentState.token == null){
+         Router.go("/ingresar");
+      }
 
       const page = document.createElement("div");
        state.getMyPets(()=>{
