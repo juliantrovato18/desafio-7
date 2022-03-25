@@ -9,7 +9,11 @@ class initWelcomePage extends HTMLElement {
       this.shadow = this.attachShadow({mode: 'open'});
    }
    connectedCallback(){
-      this.render();
+         this.render();
+   }
+   listeners(){
+      state.me();
+      state.traeData();
    }
    render() {
       
@@ -78,6 +82,7 @@ class initWelcomePage extends HTMLElement {
       
       div.appendChild(style);
       this.shadow.appendChild(div);
+      this.listeners();
       const currentState = state.getState();
       if(currentState.token == null){
          Router.go("/signin");

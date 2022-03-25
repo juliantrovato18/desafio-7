@@ -103,10 +103,12 @@ export class Header extends HTMLElement {
             as{
                 padding:20px;
                 margin-left: 10px;
+                cursor:pointer;
             }
             close-sesion{
                 padding:20px;
                 margin-left: 10px;
+                cursor:pointer;
             }
 
         `

@@ -2,7 +2,8 @@ import { Json } from "sequelize/dist/lib/utils";
 import { callbackify } from "util";
 import "dotenv/config";
 
-const API_BASE_URL = process.env.API_BASE_URL ||"http://localhost:3003";
+//const API_BASE_URL = "https://desafio-7.herokuapp.com";
+const API_BASE_URL = "http://localhost:3003"
 
 const state = {
     data : {
@@ -66,10 +67,22 @@ const state = {
         })
     },
 
-
     suscribe(callback: (any) => any) {
         this.listeners.push(callback);
     },
+
+    //recupera la ubicacion y el token
+    traeData(){
+        const cs = state.getState();
+        const lat = localStorage.getItem("lat");
+        const lng = localStorage.getItem("lng");
+        console.log(lng, lng);
+        cs["lat"] = lat;
+        cs["lng"]=lng;
+        
+
+    },
+
 
     //newAuth
     singup(callback){
@@ -219,6 +232,8 @@ const state = {
         }).then((data)=>{
             console.log(data);
             cs.lostPets = data;
+            localStorage.setItem("lat", lat);
+            localStorage.setItem("lng",lng);
             callback();
         })
     },

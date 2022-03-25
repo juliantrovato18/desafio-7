@@ -13,12 +13,15 @@ class PetsAround extends HTMLElement {
    }
     render() {
       const currentState = state.getState();
+      state.me();
+      state.traeData();
+      
       if(currentState.token == null){
          Router.go("/signin");
       }
 
 
-      state.me();
+      
         state.getPetsAroundMe(()=>{
          const petsAround = currentState.lostPets;
          console.log(petsAround, "las around");

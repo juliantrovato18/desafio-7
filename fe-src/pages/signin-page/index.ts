@@ -15,6 +15,7 @@ class initiSigninPage extends HTMLElement {
         this.render();
     }
     render() {
+       
         const div = document.createElement("div");
         div.innerHTML = `
             <section class="section1">
@@ -32,7 +33,7 @@ class initiSigninPage extends HTMLElement {
                     <label class ="label">Contraseña</label>
                     <input type="password"  name="password" class="input"></input>
                     <label class ="label">Repetir contraseña</label>
-                    <input type="password1" name="password1" class="input"></input>
+                    <input type="password" name="password1" class="input"></input>
                 </div>
                 <div class="container-button">
                     <button class="button"> Guardar </button>

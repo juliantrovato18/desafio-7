@@ -19,7 +19,7 @@ class InitEditPetPage extends HTMLElement {
         this.render();
     }
     render() {
-
+        
         const div = document.createElement("div");
         div.innerHTML = `
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>

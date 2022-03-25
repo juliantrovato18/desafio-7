@@ -12,6 +12,7 @@ class IngresarPage extends HTMLElement {
         this.render();
     }
     render() {
+        
         const div = document.createElement("div");
         div.innerHTML = `
             <section class= "section1">
