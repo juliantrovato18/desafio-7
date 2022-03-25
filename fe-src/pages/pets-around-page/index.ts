@@ -11,6 +11,10 @@ class PetsAround extends HTMLElement {
    connectedCallback(){
       this.render();
    }
+   listeners(){
+      state.me();
+      state.traeData();
+   }
     render() {
       const currentState = state.getState();
       state.me();
@@ -113,6 +117,7 @@ class PetsAround extends HTMLElement {
       noPet.appendChild(style);
       this.shadow.appendChild(div);
       this.shadow.appendChild(noPet);
+      this.listeners();
         });
        
       
