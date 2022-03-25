@@ -21,7 +21,7 @@ app.use(express.json());
 
 const SECRET = process.env.SECRET
 
-const port = process.env.port || 3003;
+const PORT = process.env.PORT || 3003;
 
 
 
@@ -238,6 +238,6 @@ app.get("*", function(req, res){
   
 // app.get("*", express.static(__dirname + "./../index.html"))
 
-app.listen(port, ()=>{
-      console.log("todo ok, corriendo en", port);
+app.listen(PORT, ()=>{
+      console.log("todo ok, corriendo en", PORT);
   })
