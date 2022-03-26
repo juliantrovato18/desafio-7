@@ -15,6 +15,7 @@ class PetsAround extends HTMLElement {
       state.me();
       state.traeData();
       
+      
    }
     render() {
       const currentState = state.getState();
@@ -22,6 +23,8 @@ class PetsAround extends HTMLElement {
       
       if(currentState.token == null){
          Router.go("/signin");
+      }else if(currentState.token && currentState.lat ==null && currentState.lng == null){
+         Router.go("/");
       }
 
 

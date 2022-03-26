@@ -12,11 +12,26 @@ class initWelcomePage extends HTMLElement {
          this.render();
    }
    listeners(){
-      state.me();
-      state.traeData();
+      const currentState = state.getState();
+      const isToken =  currentState.token == "";
+      const isLat = currentState.lat == null;
+      const isLng = currentState.lng == null;
+      const storageToken = localStorage.getItem("token");
+      const storageLat = localStorage.getItem("lat");
+      const storageLng = localStorage.getItem("lng");
+      if(isToken && isLat && isLng){
+         console.log("entro al ist");
+         state.me();
+         state.traeData();
+      }
    }
    render() {
-      
+      const cs = state.getState();
+      if(cs.token == ""){
+         Router.go("/signin");
+      }else if(cs.token && cs.lat == null && cs.lng ==null){
+         Router.go("/");
+      }
       const div = document.createElement("div");
       div.innerHTML = `
          <section class="section1">

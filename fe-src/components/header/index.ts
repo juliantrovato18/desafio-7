@@ -163,23 +163,40 @@ export class Header extends HTMLElement {
 
         const misDatos = this.shadowRoot.querySelector(".datos");
         misDatos.addEventListener("click", ()=>{
-            Router.go("/signin");
+            if(cs.token == null){
+                Router.go("/ingresar");
+             }else{
+                 Router.go("/signin")
+             }
+
         })
 
         const pets = this.shadowRoot.querySelector(".pets");
         pets.addEventListener("click", ()=>{
-            Router.go("/pets");
+            if(cs.token){
+                Router.go("/pets");
+            }else{
+                Router.go("/ingresar");
+            }
         })
 
 
         const around = this.shadowRoot.querySelector(".around");
         around.addEventListener("click", ()=>{
-            Router.go("/around");
+            if(cs.token){
+                Router.go("/around");
+            }else{
+                Router.go("/ingresar");
+            }
         })
 
         const report = this.shadowRoot.querySelector(".report");
         report.addEventListener("click", ()=>{
-            Router.go("/reports");
+            if(cs.token){
+                Router.go("/reports");
+            }else{
+                Router.go("/ingresar");
+            }
         })
 
         const cs = state.getState();
