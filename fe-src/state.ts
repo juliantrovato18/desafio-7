@@ -1,7 +1,7 @@
 
 
- const API_BASE_URL = "https://desafio-7.herokuapp.com";
- //const API_BASE_URL = "http://localhost:3003"
+ //const API_BASE_URL = "https://desafio-7.herokuapp.com";
+ const API_BASE_URL = "http://localhost:3003"
 
 const state = {
     data : {
@@ -104,8 +104,10 @@ const state = {
             cs.email = data.email
             cs.password = data.password
             cs.userId = data.userId
-            
-            
+            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("name", data.name);
+            localStorage.setItem("email", data.email);
+            this.setState(cs);
             callback();
         })
     },
@@ -134,6 +136,25 @@ const state = {
             callback();
         })
        
+    },
+
+    //verifica el mail del usuario
+    verifyEmail(callback){
+        const cs = state.getState();
+        fetch(API_BASE_URL + "/mail" ,{
+            method: "POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                email:cs.email
+            })
+        }).then((res)=>{
+            res.json();
+        }).then((data)=>{
+            console.log("soy la nueva data", data);
+            callback();
+        })
     },
 
     //crea una mascota en la base de datos

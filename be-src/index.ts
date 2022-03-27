@@ -8,6 +8,7 @@ import *as jwt from "jsonwebtoken"
 import "dotenv/config"
 import { createPet, sendEmail, findPet, findMyPets, findAllPets, updatePet, deleteReport } from "./controllers/pets-controller";
 import { createAuth, createUser, findToken, findUser} from "./controllers/user-controller";
+import { verifyEmail } from "./controllers/auth-controller";
 import { index } from "./lib/algolia";
 import { EmailAddress } from "@sendgrid/helpers/classes";
 
@@ -89,6 +90,16 @@ app.get("/me", authMiddleware, async (req,res)=>{
     }
 })
 
+//verifica el email del usuario para hacer el signin
+app.post("/mail", async (req,res)=>{
+    const {email} = req.body
+    try {
+        const user = await verifyEmail(email);
+        res.json(user);
+    } catch (err) {
+        console.log(err);
+    }
+})
 
 //crea una mascota en la base de datos
 app.post("/pet", authMiddleware, async (req, res)=>{

@@ -28,7 +28,7 @@ class initWelcomePage extends HTMLElement {
    render() {
       const cs = state.getState();
       if(cs.token == ""){
-         Router.go("/signin");
+         Router.go("/ingresar");
       }else if(cs.token && cs.lat == null && cs.lng ==null){
          Router.go("/");
       }

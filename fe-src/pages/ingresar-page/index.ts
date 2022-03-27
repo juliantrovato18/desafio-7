@@ -98,10 +98,17 @@ class IngresarPage extends HTMLElement {
         div.appendChild(style);
         this.shadow.append(div);
         const cs = state.getState();
+        
         const mail = (this.shadow.querySelector(".input") as HTMLInputElement)
         
+        
         this.shadow.querySelector(".button").addEventListener("click",()=>{
+            cs.email = mail.value;
+            state.verifyEmail(()=>{
+                
+            })
             if(mail.value == cs.email){
+                
                 Router.go("/pass");
                 
             }else{

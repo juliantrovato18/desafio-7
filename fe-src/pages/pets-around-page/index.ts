@@ -23,7 +23,7 @@ class PetsAround extends HTMLElement {
       
       if(currentState.token == null){
          Router.go("/signin");
-      }else if(currentState.token && currentState.lat ==null && currentState.lng == null){
+      }else if(currentState.token && currentState.lat == "" && currentState.lng == ""){
          Router.go("/");
       }
 

@@ -3,9 +3,7 @@ import { cloudinary } from "../lib/cloudinary";
 import * as crypto from "crypto"
 import * as jwt from "jsonwebtoken";
 import "dotenv/config"
-// export async function createProduct(userId:number, productData) {
-//     return productData
-// }
+
 
 const SECRET = process.env.SECRET
 
@@ -71,35 +69,3 @@ export async function findToken(data){
 
 
 
-// export async function updateProfile(userId ,updateData){
-//     if(updateData.pictureDataURL){
-//         const imagen = await cloudinary.uploader.upload(updateData.pictureDataURL,
-//             {
-//                 resource_type: "image",
-//                 discard_original_filename: true,
-//                 width: 100,
-
-//             }
-//         )
-//         const updateDataComplete = {
-//             nombre:updateData.nombre,
-//             bio:updateData.bio,
-//             pictureDataURL: imagen.secure_url
-//         };
-//         await User.update(updateDataComplete
-//             ,{
-//             where: {
-//                 id: userId
-//             }
-//           });
-        
-//           return updateDataComplete
-//     }
-   
-// }
-
-// export async function getProfile(userId){
-//     const profileFound = await User.findByPk(userId);
-    
-//     return profileFound
-// }
