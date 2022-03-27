@@ -27,11 +27,11 @@ class initWelcomePage extends HTMLElement {
    }
    render() {
       const cs = state.getState();
-      if(cs.token == ""){
-         Router.go("/ingresar");
-      }else if(cs.token && cs.lat == null && cs.lng ==null){
-         Router.go("/");
-      }
+      // if(cs.token == ""){
+      //    Router.go("/ingresar");
+      // }else if(cs.token && cs.lat == null && cs.lng ==null){
+      //    Router.go("/");
+      // }
       const div = document.createElement("div");
       div.innerHTML = `
          <section class="section1">

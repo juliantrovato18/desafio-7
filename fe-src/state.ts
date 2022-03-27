@@ -107,6 +107,7 @@ const state = {
             localStorage.setItem("userId", data.userId);
             localStorage.setItem("name", data.name);
             localStorage.setItem("email", data.email);
+            localStorage.setItem("pass", data.password);
             this.setState(cs);
             callback();
         })
@@ -244,7 +245,7 @@ const state = {
         fetch(API_BASE_URL + "/mascotas-cerca?lat=" +lat +"&lng="+lng ,{
             method: "GET",
             headers:{
-                "Authorization": "bearer "+ state.data.token
+                
             } 
         }).then((res)=>{
             return res.json()
