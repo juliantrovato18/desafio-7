@@ -39,7 +39,7 @@ export class Header extends HTMLElement {
         `
         menuAbierto.innerHTML=`
             <div class="menu">
-            <h3 class="datos">Mis datos</h3>
+            <h3 class="datos">Registrarme</h3>
             <h3 class="pets">Mis mascotas perdidas</h3>
             <h3 class="around">Mascotas cerca</h3>
             <h3 class="report">Reportar mascota</h3>

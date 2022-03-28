@@ -1,7 +1,7 @@
 
 
- const API_BASE_URL = "https://desafio-7.herokuapp.com";
- //const API_BASE_URL = "http://localhost:3003"
+ //const API_BASE_URL = "https://desafio-7.herokuapp.com";
+ const API_BASE_URL = "http://localhost:3003"
 
 const state = {
     data : {
@@ -72,8 +72,8 @@ const state = {
     //recupera la ubicacion y el token
     traeData(){
         const cs = state.getState();
-        const lat = localStorage.getItem("lat");
-        const lng = localStorage.getItem("lng");
+        const lat = JSON.parse(localStorage.getItem("lat"));
+        const lng = JSON.parse(localStorage.getItem("lng"));
         console.log(lng, lng);
         cs["lat"] = lat;
         cs["lng"]=lng;

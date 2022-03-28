@@ -14,15 +14,20 @@ class PetsAround extends HTMLElement {
    listeners(){
       const currentState = state.getState();
       const isToken =  currentState.token == "";
-      const isLat = currentState.lat == null;
-      const isLng = currentState.lng == null;
-      const storageToken = localStorage.getItem("token");
+      const isLat = currentState.lat == "";
+      const isLng = currentState.lng == "";
+      //const storageToken = localStorage.getItem("storage");
       const storageLat = localStorage.getItem("lat");
       const storageLng = localStorage.getItem("lng");
+      console.log("antes del if, listeners");
       if(isToken && isLat && isLng){
-         console.log("entro al ist");
-         state.me();
+         console.log("entro al ist", currentState);
+         //currentState.token = storageToken;
+         currentState.lat = storageLat;
+         currentState.lng = storageLng;
          state.traeData();
+         state.me();
+         
       }
       
       
@@ -31,11 +36,12 @@ class PetsAround extends HTMLElement {
       const currentState = state.getState();
      
       
-      if(currentState.token == null){
-         Router.go("/signin");
-      }else if(currentState.token && currentState.lat == "" && currentState.lng == ""){
-         Router.go("/");
-      }
+      // if(currentState.token == ""){
+      //    console.log("mostra", currentState.token);
+      //    Router.go("/ingresar");
+      // }else if(currentState.token && currentState.lat == "" && currentState.lng == ""){
+      //    Router.go("/");
+      // }
 
 
       

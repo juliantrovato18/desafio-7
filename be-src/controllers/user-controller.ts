@@ -63,7 +63,7 @@ export async function findToken(data){
         }
         
     })
-    const token = jwt.sign({ id: auth.get("user_id") }, SECRET);
+    const token =  jwt.sign({ id: auth["user_id"] }, SECRET);
     return {token};
 }
 
