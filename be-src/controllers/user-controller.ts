@@ -56,15 +56,22 @@ export async function createAuth(userId, data){
 
 
 export async function findToken(data){
-    const auth = await Auth.findOne({
-        where:{
-            email:data.email,
-            password:getSHA256ofString(data.password),
-        }
-        
-    })
-    const token =  jwt.sign({ id: auth["user_id"] }, SECRET);
-    return {token};
+    try {
+        const auth = await Auth.findOne({
+            where:{
+                email:data.email,
+                password:getSHA256ofString(data.password),
+            }
+            
+        })
+        await console.log(auth);
+        const userId = await auth.get("id");
+        await console.log(userId, "userId")
+        const token =  await jwt.sign({ id: auth.get("id") }, SECRET);
+        return { token , userId }
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 

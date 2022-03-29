@@ -20,13 +20,14 @@ class PetsAround extends HTMLElement {
       const storageLat = localStorage.getItem("lat");
       const storageLng = localStorage.getItem("lng");
       console.log("antes del if, listeners");
-      if(isToken && isLat && isLng){
+      if(isLat && isLng){
          console.log("entro al ist", currentState);
          //currentState.token = storageToken;
          currentState.lat = storageLat;
          currentState.lng = storageLng;
-         state.traeData();
-         state.me();
+         // state.traeData(()=>{
+         // })
+         //state.me();
          
       }
       
@@ -34,15 +35,11 @@ class PetsAround extends HTMLElement {
    }
     render() {
       const currentState = state.getState();
-     
-      
-      // if(currentState.token == ""){
-      //    console.log("mostra", currentState.token);
-      //    Router.go("/ingresar");
-      // }else if(currentState.token && currentState.lat == "" && currentState.lng == ""){
-      //    Router.go("/");
-      // }
+      const isLat = currentState.lat == "";
+      const isLng = currentState.lng == "";
 
+
+      if(isLat && isLng){
 
       
         state.getPetsAroundMe(()=>{
@@ -131,15 +128,23 @@ class PetsAround extends HTMLElement {
             justify-content:center;
          }
       `;
-      
+   
       div.appendChild(style);
       noPet.appendChild(style);
       this.shadow.appendChild(div);
       this.shadow.appendChild(noPet);
-     
+   
         });
        
-      
+      }else{
+         state.traeData(()=>{
+            state.getPetsAroundMe(()=>{
+               const petsAround = currentState.lostPets;
+            console.log(petsAround, "las around");
+            })
+         })
+      }
+
         this.listeners();
       
 

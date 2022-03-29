@@ -86,12 +86,15 @@ export class Card extends HTMLElement {
 
         .pet-founded{
             position: absolute;
-            top: 200px; left: 400px;
+            top: 300px; left: 600px;
         }
         @media (min-width: 375px){
             .pet-founded{
                position: absolute;
                top: 300px; left: 100px;
+               border: solid 5px;
+                background-color: aquamarine;
+                padding: 20px;
             }
             .div{
                 display:none;

@@ -70,14 +70,14 @@ const state = {
     },
 
     //recupera la ubicacion y el token
-    traeData(){
+    traeData(callback){
         const cs = state.getState();
         const lat = JSON.parse(localStorage.getItem("lat"));
         const lng = JSON.parse(localStorage.getItem("lng"));
         console.log(lng, lng);
         cs["lat"] = lat;
         cs["lng"]=lng;
-        
+        callback();
 
     },
 
@@ -132,7 +132,9 @@ const state = {
         }).then((data)=>{
             console.log({data})
             cs.token = data.token
+            cs.userId = data.userId
             localStorage.setItem("storage", data.token);
+            localStorage.setItem("user_id", data.userId);
             this.setState(cs);
             callback();
         })
