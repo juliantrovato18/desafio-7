@@ -11,75 +11,94 @@ class PetsAround extends HTMLElement {
    connectedCallback(){
       this.render();
    }
-   listeners(){
-      const currentState = state.getState();
-      const isToken =  currentState.token == "";
-      const isLat = currentState.lat == "";
-      const isLng = currentState.lng == "";
-      //const storageToken = localStorage.getItem("storage");
-      const storageLat = localStorage.getItem("lat");
-      const storageLng = localStorage.getItem("lng");
-      console.log("antes del if, listeners");
-      if(isLat && isLng){
-         console.log("entro al ist", currentState);
-         //currentState.token = storageToken;
-         currentState.lat = storageLat;
-         currentState.lng = storageLng;
-         // state.traeData(()=>{
-         // })
-         //state.me();
-         
-      }
-      
-      
-   }
     render() {
       const currentState = state.getState();
       const isLat = currentState.lat == "";
       const isLng = currentState.lng == "";
 
-
-      if(isLat && isLng){
-
-      
-        state.getPetsAroundMe(()=>{
-         const petsAround = currentState.lostPets;
-         console.log(petsAround, "las around");
-         
       const noPet = document.createElement("div");
       const div = document.createElement("div");
 
-         if(petsAround.length ==0){
+      if(isLat && isLng) {
 
-         
-      noPet.innerHTML = `
-      <section class="section1">
-         <div>
-         </div>
-         <custom-header></custom-header>
-      </section>
-         <section class="section">
-         <custom-text variant="title">No hay mascotas cerca de tu Ubicacion</custom-text>
-         </section>
-      `
+         state.traeData(()=> {
 
-      }else{
-      
-      div.innerHTML = `
-         <section class="section1">
-            <div>
-            </div>
-            <custom-header></custom-header>
-         </section>
-         <section class="section">
-            <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
-            ${petsAround.map((pet)=>{
-               {console.log(pet, "my pet")}
-              return `<card-comp petname=${pet.petname} petId=${pet.objectID} image=${pet.petImage} ubi=${pet.place}></card-comp>`
-            }).join(" ")
+         state.getPetsAroundMe(()=>{
+            const petsAround = currentState.lostPets;
+            console.log(petsAround, "las around");
+
+            if(petsAround.length ==0){
+
+            noPet.innerHTML = `
+            <section class="section1">
+               <div>
+               </div>
+               <custom-header></custom-header>
+            </section>
+               <section class="section">
+               <custom-text variant="title">No hay mascotas cerca de tu Ubicacion</custom-text>
+                </section>
+            `;
+
+            } else {
+
+                        div.innerHTML = `
+                  <section class="section1">
+                     <div>
+                     </div>
+                     <custom-header></custom-header>
+                  </section>
+                  <section class="section">
+                     <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
+                     ${petsAround.map((pet)=>{
+                        {console.log(pet, "my pet")}
+                       return `<card-comp petname=${pet.petname} petId=${pet.objectID} image=${pet.petImage} ubi=${pet.place}></card-comp>`
+                     }).join(" ")
+                     }
+                  </section>
+               `;
             }
-         </section>
-      `;
+         });
+      });
+
+      } else {
+
+         state.getPetsAroundMe(()=>{
+            const petsAround = currentState.lostPets;
+            console.log(petsAround, "las around");
+
+            if(petsAround.length ==0){
+
+            noPet.innerHTML = `
+            <section class="section1">
+               <div>
+               </div>
+               <custom-header></custom-header>
+            </section>
+               <section class="section">
+               <custom-text variant="title">No hay mascotas cerca de tu Ubicacion</custom-text>
+                </section>
+            `;
+
+            } else {
+
+                        div.innerHTML = `
+                  <section class="section1">
+                     <div>
+                     </div>
+                     <custom-header></custom-header>
+                  </section>
+                  <section class="section">
+                     <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
+                     ${petsAround.map((pet)=>{
+                        {console.log(pet, "my pet")}
+                       return `<card-comp petname=${pet.petname} petId=${pet.objectID} image=${pet.petImage} ubi=${pet.place}></card-comp>`
+                     }).join(" ")
+                     }
+                  </section>
+               `;
+            }
+         });
       }
       const style = document.createElement("style");
       style.innerHTML=`
@@ -128,28 +147,12 @@ class PetsAround extends HTMLElement {
             justify-content:center;
          }
       `;
-   
+      
       div.appendChild(style);
       noPet.appendChild(style);
       this.shadow.appendChild(div);
       this.shadow.appendChild(noPet);
-   
-        });
-       
-      }else{
-         state.traeData(()=>{
-            state.getPetsAroundMe(()=>{
-               const petsAround = currentState.lostPets;
-            console.log(petsAround, "las around");
-            })
-         })
-      }
-
-        this.listeners();
-      
-
    }
-   
 }
- 
+
 customElements.define("aroundpets-page", PetsAround);

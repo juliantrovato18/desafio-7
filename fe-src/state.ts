@@ -74,11 +74,11 @@ const state = {
         const cs = state.getState();
         const lat = JSON.parse(localStorage.getItem("lat"));
         const lng = JSON.parse(localStorage.getItem("lng"));
-        console.log(lng, lng);
-        cs["lat"] = lat;
-        cs["lng"]=lng;
+        console.log("Desde el traeData: ", lng, lng);
+        cs["myLat"] = lat;
+        cs["myLng"]= lng;
+        console.log("desde el traeData: ", cs);
         callback();
-
     },
 
 
