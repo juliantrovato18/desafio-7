@@ -1,7 +1,7 @@
 
 
- //const API_BASE_URL = "https://desafio-7.herokuapp.com";
- const API_BASE_URL = "http://localhost:3003"
+ const API_BASE_URL = "https://desafio-7.herokuapp.com";
+ //const API_BASE_URL = "http://localhost:3003"
 
 const state = {
     data : {
@@ -42,7 +42,7 @@ const state = {
         
     },
 
-    me(){
+    me(callback){
         const cs = state.getState();
         const token = localStorage.getItem("storage");
         cs["token"] = token;
@@ -60,7 +60,7 @@ const state = {
             cs.email = data.email,
             cs.name = data.name,
             cs.userId = data.id
-            
+            callback();
             
         })
     },
@@ -74,11 +74,18 @@ const state = {
         const cs = state.getState();
         const lat = JSON.parse(localStorage.getItem("lat"));
         const lng = JSON.parse(localStorage.getItem("lng"));
-        console.log(lng, lng);
-        cs["lat"] = lat;
-        cs["lng"]=lng;
+        console.log("Desde el traeData: ", lng, lng);
+        cs["myLat"] = lat;
+        cs["myLng"]= lng;
+        console.log("desde el traeData: ", cs);
         callback();
+    },
 
+    traePetId(callback){
+        const cs = state.getState();
+        const idPet = JSON.parse(localStorage.getItem("petId"));
+        cs["id"] = idPet;
+        callback();
     },
 
 
@@ -183,6 +190,8 @@ const state = {
     }).then((data)=>{
         console.log({data})
         cs.id = data.id;
+        localStorage.setItem("petId", data.id);
+        this.setState(cs);
         // cs.petname = data.petname,
         // cs.petImage = data.petImage,
         // cs.lat = data.lat,
