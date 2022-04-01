@@ -14,14 +14,15 @@ class PetsAround extends HTMLElement {
    
     render() {
       const currentState = state.getState();
-      const isLat = currentState.lat == "";
-      const isLng = currentState.lng == "";
+      console.log(currentState, "aca");
+      const isLat = currentState.myLat == "";
+      const isLng = currentState.myLng == "";
 
       const noPet = document.createElement("div");
       const div = document.createElement("div");
 
       if(isLat && isLng) {
-
+         console.log("antes del trae data", currentState);
          state.traeData(()=> {
 
              state.getPetsAroundMe(()=>{
@@ -65,7 +66,7 @@ class PetsAround extends HTMLElement {
       });
 
       }else{
-
+         console.log("entra al else de around");
          state.getPetsAroundMe(()=>{
             const petsAround = currentState.lostPets;
             console.log(petsAround, "las around");

@@ -12,21 +12,59 @@ class initWelcomePage extends HTMLElement {
          this.render();
    }
    listeners(){
-      // const currentState = state.getState();
-      // const isToken =  currentState.token == "";
-      // const isLat = currentState.lat == null;
-      // const isLng = currentState.lng == null;
-      // const storageToken = localStorage.getItem("token");
-      // const storageLat = localStorage.getItem("lat");
-      // const storageLng = localStorage.getItem("lng");
-      // if(isToken && isLat && isLng){
-      //    console.log("entro al ist");
-      //    state.me();
-      //    state.traeData();
-      // }
+      this.shadow.querySelector(".button").addEventListener("click",(e)=>{
+         e.preventDefault();
+
+         const currentState = state.getState();
+      
+
+       const  successCallback = (position)=>{
+         const lat = position.coords.latitude;
+         const lng = position.coords.longitude;
+         
+         currentState.myLat = lat;
+         currentState.myLng = lng;
+         state.setLoc(currentState.myLat, currentState.myLng, ()=>{
+            state.getPetsAroundMe(()=>{
+               Router.go("/around");
+            })
+         });
+         
+         console.log(currentState, "currente ahora");
+      }
+      const errorCallback = (err)=>{
+         console.error("ha ocurrido un error", err);
+      }
+
+      const options = {
+         enableHighAccuracy: true,
+         maximumAge: 30000,
+         timeout:27000
+      }
+
+      if("geolocation" in navigator){
+         navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options)
+         
+         
+      }else{
+         console.error("la geolocalizacion no esta disponible");
+      }
+
+
+
+
+         if(navigator.geolocation == null){
+            console.log("Dar ubicacion")
+         }
+         // else{
+         //    Router.go("/around");
+         // }
+         
+      
+   });
    }
    render() {
-      const cs = state.getState();
+     
       // if(cs.token == ""){
       //    Router.go("/ingresar");
       // }else if(cs.token && cs.lat == null && cs.lng ==null){
@@ -98,46 +136,9 @@ class initWelcomePage extends HTMLElement {
       div.appendChild(style);
       this.shadow.appendChild(div);
      
-      const currentState = state.getState();
-      
-
-      const successCallback = (position)=>{
-         const lat = position.coords.latitude;
-         const lng = position.coords.longitude;
-         
-         currentState.myLat = lat;
-         currentState.myLng = lng
-      }
-      const errorCallback = (err)=>{
-         console.error("ha ocurrido un error", err);
-      }
-
-      const options = {
-         enableHighAccuracy: true,
-         maximumAge: 30000,
-         timeout:27000
-      }
-
-      if("geolocation" in navigator){
-         navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options)
-         
-         
-      }else{
-         console.error("la geolocalizacion no esta disponible");
-      }
-      
-
-
-      this.shadow.querySelector(".button").addEventListener("click",()=>{
-            if(navigator.geolocation == null){
-               console.log("Dar ubicacion")
-            }else{
-               Router.go("/around");
-            }
-            
-         
-      });
       this.listeners();
+      
    }
+   
 }
 customElements.define("welcome-page", initWelcomePage);

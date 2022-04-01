@@ -1,7 +1,7 @@
 
 
- const API_BASE_URL = "https://desafio-7.herokuapp.com";
- //const API_BASE_URL = "http://localhost:3003"
+ //const API_BASE_URL = "https://desafio-7.herokuapp.com";
+ const API_BASE_URL = "http://localhost:3003"
 
 const state = {
     data : {
@@ -80,6 +80,14 @@ const state = {
         console.log("desde el traeData: ", cs);
         callback();
     },
+
+    setLoc(lng, lat, callback) {
+        const cs = state.getState();
+        cs.myLng = lng;
+        cs.myLat = lat;
+        this.setState(cs);
+        callback();
+      },
 
     traePetId(callback){
         const cs = state.getState();
@@ -265,6 +273,7 @@ const state = {
             cs.lostPets = data;
             localStorage.setItem("lat", lat);
             localStorage.setItem("lng",lng);
+            state.setState(cs);
             callback();
         })
     },
