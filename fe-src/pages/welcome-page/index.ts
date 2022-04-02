@@ -19,8 +19,8 @@ class initWelcomePage extends HTMLElement {
       
 
        const  successCallback = (position)=>{
-         const lat = position.coords.latitude;
-         const lng = position.coords.longitude;
+         const lng = position.coords.latitude;
+         const lat = position.coords.longitude;
          
          currentState.myLat = lat;
          currentState.myLng = lng;
