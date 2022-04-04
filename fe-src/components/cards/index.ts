@@ -137,10 +137,7 @@ export class Card extends HTMLElement {
                 state.setState(currentState);
                 console.log(currentState, "current report");
                 state.foundPetReport(()=>{
-                state.deletePet(()=>{
                     Router.go("/pets");
-                })
-                   
                }) 
                
             })
