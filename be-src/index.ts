@@ -227,7 +227,7 @@ app.get("/mascotas-cerca", async (req,res)=>{
     const {lat, lng} = req.query;
     const {hits} = await index.search("",{
         aroundLatLng : [lat, lng].join(","),
-        aroundRadius: 10000
+        aroundRadius: 20000
     })
     res.json(hits);
 })
