@@ -245,14 +245,6 @@ const state = {
     },
 
 
-    // init(){
-    //     const localData = JSON.parse(localStorage.getItem("storage"));
-    //     if (!localData) {
-    //         return;
-    //     }
-    //     this.setState(localData);
-    // },
-
 
     getPetsAroundMe(callback){
         const cs = state.getState();
@@ -314,7 +306,7 @@ const state = {
     deletePet(callback){
         const cs = state.getState();
         
-        fetch(API_BASE_URL + "/delete-report/" + cs["petId"],{
+        fetch(API_BASE_URL + "/delete-report/" + cs.id,{
             method: "DELETE",
             headers:{
                 "content-type": "application/json",
