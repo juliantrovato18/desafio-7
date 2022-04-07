@@ -67,7 +67,7 @@ export class Header extends HTMLElement {
             }
             @media (min-width: 375px){
                 .header{
-                    max-width:400px;
+                    
                 }
             }
             .container-links{

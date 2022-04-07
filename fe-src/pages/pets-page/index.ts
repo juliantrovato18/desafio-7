@@ -167,6 +167,7 @@ class PetsPage extends HTMLElement {
             }
             .small{
                min-width: 730px;
+               background-color: #FF6868;
             }
             .section{
                min-width: 730px;
