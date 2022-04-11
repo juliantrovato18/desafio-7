@@ -300,7 +300,7 @@ class InitEditPetPage extends HTMLElement {
                     });
                     currentState.petname = petName.value;
                     currentState.petImage = pictureImg;
-                    currentState.placeName = e.target["q"].value,
+                    currentState.place = e.target["q"].value,
                     currentState.lat = lat;
                     currentState.lng = lng;
                     
@@ -605,7 +605,7 @@ class InitEditPetPage extends HTMLElement {
                     });
                     currentState.petname = petName.value;
                     currentState.petImage = pictureImg;
-                    currentState.placeName = e.target["q"].value,
+                    currentState.place = e.target["q"].value,
                     currentState.lat = lat;
                     currentState.lng = lng;
                     

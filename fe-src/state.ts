@@ -1,7 +1,7 @@
 
 
- const API_BASE_URL = "https://desafio-7.herokuapp.com";
- //const API_BASE_URL = "http://localhost:3003"
+ //const API_BASE_URL = "https://desafio-7.herokuapp.com";
+ const API_BASE_URL = "http://localhost:3003"
 
 const state = {
     data : {
@@ -285,14 +285,13 @@ const state = {
             body:JSON.stringify({
                 petname: cs.petname,
                 petImage: cs.petImage,
-                place: cs.placeName,
+                place: cs.place,
                 lat: cs.lat,
                 lng: cs.lng,
             })
         }).then((res)=>{
             return res.json()
         }).then((data)=>{
-            console.log("LA DATAA ACTUALIZADA" ,{data});
             cs.petname = data.petname,
             cs.petImage = data.petImage,
             cs.place = data.place,

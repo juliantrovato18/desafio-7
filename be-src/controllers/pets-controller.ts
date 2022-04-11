@@ -86,6 +86,9 @@ export async function updatePet(body, id?){
     if(body.petImage){
         respuesta.petImage = body.petImage
     }
+    if(body.place){
+        respuesta.place = body.place
+    }
     if(body.lat){
         respuesta.lat = body.lat
     }

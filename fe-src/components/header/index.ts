@@ -32,7 +32,7 @@ export class Header extends HTMLElement {
             <a href="http://localhost:1234/pets" class="as">Mis mascotas perdidas</a>
             <a href="http://localhost:1234/around" class="as">Mascotas cerca</a>
             <a href="http://localhost:1234/reports" class="as">Reportar mascota</a>
-            <a href="http://localhost:1234/" class="close-sesion">Cerrar sesion</a>
+            <a href="http://localhost:1234/signin" class="close-sesion">Cerrar Sesion</a>
             </div>
             </header>
             
@@ -43,7 +43,7 @@ export class Header extends HTMLElement {
             <h3 class="pets">Mis mascotas perdidas</h3>
             <h3 class="around">Mascotas cerca</h3>
             <h3 class="report">Reportar mascota</h3>
-            <h3 class="close-sesion">Cerrar sesion</h3>
+            <h3 class="close-sesion">Cerrar Sesion</h3>
             </div>
         `
         styleMenu.innerHTML = `
@@ -160,7 +160,7 @@ export class Header extends HTMLElement {
             `
         })
 
-
+        const cs = state.getState();
         const misDatos = this.shadowRoot.querySelector(".datos");
         misDatos.addEventListener("click", ()=>{
             if(cs.token == null){
@@ -199,15 +199,18 @@ export class Header extends HTMLElement {
             }
         })
 
-        const cs = state.getState();
+        
         const cerrarSesion = this.shadowRoot.querySelector(".close-sesion");
-        cerrarSesion.addEventListener("click",(e)=>{
-            e.preventDefault();
+        cerrarSesion.addEventListener("click", ()=>{
+            console.log("apreta close");
             cs.email = ""
             cs.token = ""
             cs.lat = ""
             cs.lng = ""
             localStorage.removeItem("storage");
+            localStorage.removeItem("email");
+            localStorage.removeItem("lat");
+            localStorage.removeItem("lng");
             Router.go("/signin")
         })
     }
