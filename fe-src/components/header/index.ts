@@ -32,7 +32,7 @@ export class Header extends HTMLElement {
             <a href="http://localhost:1234/pets" class="as">Mis mascotas perdidas</a>
             <a href="http://localhost:1234/around" class="as">Mascotas cerca</a>
             <a href="http://localhost:1234/reports" class="as">Reportar mascota</a>
-            <a href="http://localhost:1234/signin" class="close-sesion">Cerrar Sesion</a>
+            <a href="http://localhost:1234/signin" class="close">Cerrar Sesion</a>
             </div>
             </header>
             
@@ -100,13 +100,14 @@ export class Header extends HTMLElement {
                 
                 
             }
-            as{
+            .as{
                 padding:20px;
                 margin-left: 10px;
                 cursor:pointer;
             }
-            close-sesion{
+            .close-sesion{
                 padding:20px;
+                
                 margin-left: 10px;
                 cursor:pointer;
             }
@@ -115,8 +116,8 @@ export class Header extends HTMLElement {
         div.className = variant;
         shadow.appendChild(div);
         shadow.appendChild(menuAbierto);
-        menuAbierto.appendChild(styleMenu);
         shadow.appendChild(style);
+        menuAbierto.appendChild(styleMenu);
 
         const button = this.shadowRoot.querySelector(".button-desplegable");
         
@@ -181,6 +182,20 @@ export class Header extends HTMLElement {
         })
 
 
+        const cerrarSesion = this.shadowRoot.querySelector(".close-sesion");
+        cerrarSesion.addEventListener("click", ()=>{
+            console.log("apreta close");
+            cs.email = ""
+            cs.token = ""
+            cs.lat = ""
+            cs.lng = ""
+            localStorage.removeItem("storage");
+            localStorage.removeItem("email");
+            localStorage.removeItem("lat");
+            localStorage.removeItem("lng");
+            Router.go("/welcome")
+        })
+
         const around = this.shadowRoot.querySelector(".around");
         around.addEventListener("click", ()=>{
             if(cs.token){
@@ -200,19 +215,7 @@ export class Header extends HTMLElement {
         })
 
         
-        const cerrarSesion = this.shadowRoot.querySelector(".close-sesion");
-        cerrarSesion.addEventListener("click", ()=>{
-            console.log("apreta close");
-            cs.email = ""
-            cs.token = ""
-            cs.lat = ""
-            cs.lng = ""
-            localStorage.removeItem("storage");
-            localStorage.removeItem("email");
-            localStorage.removeItem("lat");
-            localStorage.removeItem("lng");
-            Router.go("/signin")
-        })
+        
     }
 }
 customElements.define("custom-header", Header);
