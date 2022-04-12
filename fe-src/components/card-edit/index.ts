@@ -86,7 +86,7 @@ export class CardEdit extends HTMLElement {
             <img src=${image} crossorigin="anonymous" class="img"></img>
             </div>
             <h1 class="pet-title">${petname}</h1>
-            <p class="pet-info">${ubi}</p>
+            <div class="pet-info">${ubi}</div>
             <img src=${image5} class="edit-button"/>
             </div>
         `;
