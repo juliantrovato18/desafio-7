@@ -111,6 +111,18 @@ export class Header extends HTMLElement {
                 margin-left: 10px;
                 cursor:pointer;
             }
+            .datos{
+                cursor:pointer;
+            }
+            .pets{
+                cursor:pointer;
+            }
+            .around{
+                cursor:pointer;
+            }
+            .report{
+                cursor:pointer;
+            }
 
         `
         div.className = variant;

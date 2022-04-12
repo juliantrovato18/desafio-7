@@ -55,7 +55,7 @@ class PetsAround extends HTMLElement {
                      <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
                      ${petsAround.map((pet)=>{
                         {console.log(pet, "my pet")}
-                       return `<card-comp petname=${pet.petname} petId=${pet.objectID} image=${pet.petImage} ubi=${pet.place}></card-comp>`
+                       return `<card-comp petname="${pet.petname}" petId=${pet.objectID} image=${pet.petImage} ubi="${pet.place}" ></card-comp>`
                      }).join(" ")
                      }
                   </section>
@@ -96,7 +96,7 @@ class PetsAround extends HTMLElement {
                      <custom-text variant="title">Mascotas perdidas cerca tuyo</custom-text>
                      ${petsAround.map((pet)=>{
                         {console.log(pet, "my pet")}
-                       return `<card-comp petname=${pet.petname} petId=${pet.objectID} image=${pet.petImage} ubi=${pet.place}></card-comp>`
+                       return `<card-comp petname="${pet.petname}" petId=${pet.objectID} image=${pet.petImage} ubi="${pet.place}" ></card-comp>`
                      }).join(" ")
                      }
                   </section>

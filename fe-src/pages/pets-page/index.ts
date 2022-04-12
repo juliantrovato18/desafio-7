@@ -62,7 +62,7 @@ class PetsPage extends HTMLElement {
                   ${myReportedPets.map((pet)=>{
                      
                      
-                    return `<card-edit petname=${pet.petname} petId=${pet.id} class="card" image=${pet.petImage} ubi=${pet.place}></card-edit>`
+                    return `<card-edit petname="${pet.petname}" petId=${pet.id} class="card" image=${pet.petImage} ubi="${pet.place}"></card-edit>`
                   }).join(" ")
                   }
                </section>
@@ -149,7 +149,7 @@ class PetsPage extends HTMLElement {
                ${myReportedPets.map((pet)=>{
                   
                   
-                 return `<card-edit petname=${pet.petname} petId=${pet.id} class="card" image=${pet.petImage} ubi=${pet.place}></card-edit>`
+                 return `<card-edit petname="${pet.petname}" petId=${pet.id} class="card" image=${pet.petImage} ubi="${pet.place}" ></card-edit>`
                }).join(" ")
                }
             </section>
