@@ -162,9 +162,11 @@ export async function sendEmail( locData, phoneNumberData, id){
     const mascotaEncontrada = await Pet.findByPk(id);
     const userId = await mascotaEncontrada["user_id"];
     const petname = await mascotaEncontrada["petname"];
-    const userDeLaMascota = await Auth.findByPk(1);
     
+    const userDeLaMascota = await Auth.findByPk(userId);
     const userEmail = await userDeLaMascota["email"];
+    await console.log(userEmail, "mail");
+    
     
       await sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
@@ -175,18 +177,18 @@ export async function sendEmail( locData, phoneNumberData, id){
     html: `<strong>encontramos a tu mascota vista en ${locData}, podes comunicarte conmigo, este es mi telefono ${phoneNumberData}</strong>`,
   };
    
-
+  
   
   const enviarMail = await sgMail.send(msg).then(
     () => {
-        console.log({message:"email enviado"});
+     console.log({message:"email enviado"});
     }).catch((err)=>{
         console.log(err);
     })
     
     
     
-     
+     return enviarMail;
         
   }
   

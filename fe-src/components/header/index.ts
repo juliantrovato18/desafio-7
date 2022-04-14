@@ -205,7 +205,7 @@ export class Header extends HTMLElement {
             localStorage.removeItem("email");
             localStorage.removeItem("lat");
             localStorage.removeItem("lng");
-            Router.go("/welcome")
+            Router.go("/")
         })
 
         const around = this.shadowRoot.querySelector(".around");

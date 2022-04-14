@@ -21,11 +21,9 @@ import {state} from "./state"
 
 (function () {
     const cs = state.getState();
-    if(cs.email == "" && cs.token == ""){
-        state.initState(()=>{
-
-        });
-    }
+    state.initState(()=>{
+        
+    })
     
 
     

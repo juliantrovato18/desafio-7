@@ -66,16 +66,26 @@ const state = {
     },
     initState(callback){
         const cs = state.getState();
-        const mail2 = localStorage.getItem("email");
-        const token = localStorage.getItem("storage");
-        const userId = localStorage.getItem("userId");
-        cs.email = mail2;
-        cs.token = token;
-        cs.userId = userId;
-        this.setState(cs);
-        callback();
+        if(cs.email == "" && cs.token == "" && cs.userId == ""){
+            const mail2 = localStorage.getItem("email");
+            const token = localStorage.getItem("storage");
+            const userId = localStorage.getItem("userId");
+            cs.email = mail2;
+            cs.token = token;
+            cs.userId = userId;
+            this.setState(cs);
+            callback();
+        }
+        
     },
 
+
+    checkData(callback){
+        const cs = state.getState();
+        const isEmail = localStorage.getItem("email") != "";
+        cs.email = localStorage.getItem("email");
+        callback();
+    },
 
     suscribe(callback: (any) => any) {
         this.listeners.push(callback);
@@ -183,6 +193,7 @@ const state = {
         }).then((res)=>{
             res.json();
         }).then((data)=>{
+            
             console.log("soy la nueva data", data);
             callback();
         })
