@@ -43,7 +43,7 @@ export class Header extends HTMLElement {
             <h3 class="pets">Mis mascotas perdidas</h3>
             <h3 class="around">Mascotas cerca</h3>
             <h3 class="report">Reportar mascota</h3>
-            <h3 class="close-sesion">Cerrar Sesion</h3>
+            <h3 id="close" class="close-sesion">Cerrar Sesion</h3>
             </div>
         `
         styleMenu.innerHTML = `
@@ -67,7 +67,7 @@ export class Header extends HTMLElement {
             }
             @media (min-width: 375px){
                 .header{
-                    
+                    min-width:980px;
                 }
             }
             .container-links{
@@ -176,7 +176,7 @@ export class Header extends HTMLElement {
         const cs = state.getState();
         const misDatos = this.shadowRoot.querySelector(".datos");
         misDatos.addEventListener("click", ()=>{
-            if(cs.token == null){
+            if(cs.token){
                 Router.go("/ingresar");
              }else{
                  Router.go("/signin")

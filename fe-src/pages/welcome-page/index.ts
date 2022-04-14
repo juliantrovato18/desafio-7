@@ -108,7 +108,7 @@ class initWelcomePage extends HTMLElement {
          }
          @media (min-width: 375px){
             .section{
-               max-width: 375px;
+               min-width: 375px;
                max-height: 800px;
                display:flex;
                flex-direction: column;

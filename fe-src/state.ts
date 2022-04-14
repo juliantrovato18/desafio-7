@@ -64,6 +64,18 @@ const state = {
             
         })
     },
+    initState(callback){
+        const cs = state.getState();
+        const mail2 = localStorage.getItem("email");
+        const token = localStorage.getItem("storage");
+        const userId = localStorage.getItem("userId");
+        cs.email = mail2;
+        cs.token = token;
+        cs.userId = userId;
+        this.setState(cs);
+        callback();
+    },
+
 
     suscribe(callback: (any) => any) {
         this.listeners.push(callback);
@@ -149,6 +161,7 @@ const state = {
             cs.token = data.token
             cs.userId = data.userId
             localStorage.setItem("storage", data.token);
+            localStorage.setItem("email", cs.email);
             localStorage.setItem("user_id", data.userId);
             this.setState(cs);
             callback();
