@@ -140,11 +140,12 @@ app.get("/pets", authMiddleware, async (req,res)=>{
 
 
 //busca las reportadas del usuario
-app.get("/mypets/:id", authMiddleware, async (req,res)=>{
+app.get("/mypets", authMiddleware, async (req,res)=>{
+    const {id} = req._user;
     if(!req._user.id){
         res.status(400).json("unauthorized");
     }else{
-        const pets = await findMyPets(req._user.id)
+        const pets = await findMyPets(id)
         res.json(pets);
     }
 })

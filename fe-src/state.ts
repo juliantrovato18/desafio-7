@@ -1,7 +1,7 @@
 
 
- const API_BASE_URL = "https://desafio-7.herokuapp.com";
- //const API_BASE_URL = "http://localhost:3003"
+ //const API_BASE_URL = "https://desafio-7.herokuapp.com";
+ const API_BASE_URL = "http://localhost:3003"
 
 const state = {
     data : {
@@ -92,16 +92,16 @@ const state = {
     },
 
     //recupera la ubicacion y el token
-    traeData(callback){
-        const cs = state.getState();
-        const lat = JSON.parse(localStorage.getItem("lat"));
-        const lng = JSON.parse(localStorage.getItem("lng"));
-        console.log("Desde el traeData: ", lng, lng);
-        cs["myLat"] = lat;
-        cs["myLng"]= lng;
-        console.log("desde el traeData: ", cs);
-        callback();
-    },
+    // traeData(callback){
+    //     const cs = state.getState();
+    //     const lat = JSON.parse(localStorage.getItem("lat"));
+    //     const lng = JSON.parse(localStorage.getItem("lng"));
+    //     console.log("Desde el traeData: ", lng, lng);
+    //     cs["myLat"] = lat;
+    //     cs["myLng"]= lng;
+    //     console.log("desde el traeData: ", cs);
+    //     callback();
+    // },
 
     setLoc(lng, lat, callback) {
         const cs = state.getState();
@@ -111,12 +111,12 @@ const state = {
         callback();
       },
 
-    traePetId(callback){
-        const cs = state.getState();
-        const idPet = JSON.parse(localStorage.getItem("petId"));
-        cs["id"] = idPet;
-        callback();
-    },
+    // traePetId(callback){
+    //     const cs = state.getState();
+    //     const idPet = JSON.parse(localStorage.getItem("petId"));
+    //     cs["id"] = idPet;
+    //     callback();
+    // },
 
 
     //newAuth
@@ -344,7 +344,7 @@ const state = {
         })
     },
 
-    //reporta a la mascota que fue encontrada, eliminando el reporte 
+    //reporta a la mascota que fue encontrada, eliminando el reporte  // es estee!
     foundPetReport(callback){
         const cs = state.getState();
         fetch(API_BASE_URL + "/report-founded/" + cs["petId"],{
