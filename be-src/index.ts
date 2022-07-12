@@ -17,17 +17,17 @@ import { EmailAddress } from "@sendgrid/helpers/classes";
 
 
 const app = express();
-//app.use(cors());
-const allowedHosts = ["https://modulo-8-3fb82.web.app/*"]
+app.use(cors());
+// const allowedHosts = ["https://modulo-8-3fb82.web.app/*"]
 
 
-app.use(cors({ 
+// app.use(cors({ 
 
-	origin: allowedHosts
+// 	origin: allowedHosts
 
- }
+//  }
 
-));
+// ));
 
 
 app.use(express.json());
