@@ -17,19 +17,6 @@ import { EmailAddress } from "@sendgrid/helpers/classes";
 
 
 const app = express();
-
-// const allowedHosts = ["https://modulo-8-3fb82.web.app/*"]
-
-
-// app.use(cors({ 
-
-// 	origin: allowedHosts
-
-//  }
-
-// ));
-
-
 app.use(express.json());
 
 const SECRET = process.env.SECRET
@@ -40,7 +27,16 @@ const PORT = process.env.PORT || 3003;
 
 
 app.use(express.json({ limit: "75mb" }));
-app.use(cors());
+const allowedHosts = ["https://modulo-8-3fb82.web.app/*"]
+
+
+app.use(cors({ 
+
+	origin: allowedHosts
+
+ }
+
+));
 
 
 
