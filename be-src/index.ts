@@ -27,13 +27,13 @@ const PORT = process.env.PORT || 3003;
 
 
 app.use(express.json({ limit: "75mb" }));
-const allowedHosts = "https://modulo-8-3fb82.web.app"
+const allowedHosts = "*"
 
 
 app.use(cors({ 
 
 	origin: allowedHosts
-
+    
  }
 
 ));
