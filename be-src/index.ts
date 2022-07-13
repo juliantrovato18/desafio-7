@@ -25,18 +25,9 @@ const PORT = process.env.PORT || 3003;
 
 
 
-
+app.use(cors());
 app.use(express.json({ limit: "75mb" }));
-const allowedHosts = "*"
 
-
-app.use(cors({ 
-
-	origin: allowedHosts
-    
- }
-
-));
 
 
 
