@@ -23,9 +23,13 @@ const SECRET = process.env.SECRET
 
 const PORT = process.env.PORT || 3003;
 
+const config = require('./config');
+
+app.use(cors(
+    config.application.cors.server
+  ));
 
 
-app.use(cors());
 app.use(express.json({ limit: "75mb" }));
 app.use(express.static("dist"));
 
