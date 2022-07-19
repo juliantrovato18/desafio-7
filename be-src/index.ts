@@ -10,14 +10,13 @@ import { createAuth, createUser, findToken, findUser} from "./controllers/user-c
 import { verifyEmail } from "./controllers/auth-controller";
 import { index } from "./lib/algolia";
 import { EmailAddress } from "@sendgrid/helpers/classes";
-const cors = require("cors");
+import * as cors from "cors";
 
 
 
 
 const app = express();
-const whiteList = ["https://modulo-8-3fb82.web.app/"];
-app.use(cors({origin:whiteList}));
+app.use(cors());
 app.use(express.json());
 
 const SECRET = process.env.SECRET
