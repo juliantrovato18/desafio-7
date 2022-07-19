@@ -16,15 +16,15 @@ const cors = require("cors");
 
 
 const app = express();
+const whiteList = ["https://modulo-8-3fb82.web.app/"];
+app.use(cors({origin:whiteList}));
 app.use(express.json());
 
 const SECRET = process.env.SECRET
 
 const PORT = process.env.PORT || 3003;
 
-const whiteList = ["https://modulo-8-3fb82.web.app/"]
 
-app.use(cors({origin:whiteList}));
 
 
 app.use(express.json({ limit: "75mb" }));
