@@ -2,7 +2,6 @@ import { sequelize} from "../be-src/models/conn";
 import { createReport } from "./controllers/reporte-controller";
 import * as express from "express";
 import * as crypto from "crypto";
-import * as cors from "cors";
 import * as path from "path";
 import *as jwt from "jsonwebtoken"
 import "dotenv/config"
@@ -11,7 +10,7 @@ import { createAuth, createUser, findToken, findUser} from "./controllers/user-c
 import { verifyEmail } from "./controllers/auth-controller";
 import { index } from "./lib/algolia";
 import { EmailAddress } from "@sendgrid/helpers/classes";
-
+const cors = require("cors");
 
 
 
@@ -23,11 +22,9 @@ const SECRET = process.env.SECRET
 
 const PORT = process.env.PORT || 3003;
 
-const config = require('./config');
+const whiteList = ["https://modulo-8-3fb82.web.app/"]
 
-app.use(cors(
-    config.application.cors.server
-  ));
+app.use(cors({origin:whiteList}));
 
 
 app.use(express.json({ limit: "75mb" }));
