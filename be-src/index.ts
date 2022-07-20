@@ -16,8 +16,7 @@ import * as cors from "cors";
 
 
 const app = express();
-const whiteList = ["https://modulo-8-3fb82.web.app/*", "https://desafio-7.herokuapp.com/*","http://localhost:3003/*"];
-app.use(cors({origin:whiteList}));
+app.use(cors());
 app.use(express.json());
 
 const SECRET = process.env.SECRET
