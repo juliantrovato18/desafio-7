@@ -24,15 +24,15 @@
     "jsonwebtoken": "^8.5.1",
     "mapbox": "^1.0.0-beta10",
     "mapbox-gl": "^2.7.0",
-    "nodemon": "^2.0.15",
-    "parcel": "^2.0.0-rc.0",
+    "nodemon": "^2.0.19",
+    "parcel": "^2.6.2",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.17.0",
     "typescript": "^4.2.3"
   },
   "devDependencies": {
-    "@parcel/transformer-image": "2.0.0-rc.0",
+    "@parcel/transformer-image": "^2.6.2",
     "@types/dropzone": "^5.7.4"
   }
 }
