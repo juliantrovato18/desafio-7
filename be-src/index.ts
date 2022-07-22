@@ -27,10 +27,6 @@ const PORT = process.env.PORT || 3003;
 
 
 app.use(express.json({ limit: "75mb" }));
-app.use(express.static("dist"));
-
-
-
 
 
 //Signup
