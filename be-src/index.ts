@@ -16,6 +16,7 @@ import * as cors from "cors";
 
 
 const app = express();
+app.use(express.json({ limit: "75mb" }));
 app.use(cors());
 app.use(express.json());
 
@@ -26,7 +27,7 @@ const PORT = process.env.PORT || 3003;
 
 
 
-app.use(express.json({ limit: "75mb" }));
+
 
 
 //Signup
@@ -232,21 +233,21 @@ app.get("/mascotas-cerca", async (req,res)=>{
 
 
 
-app.use(express.static(path.resolve(__dirname, "../dist")));
-app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../dist/index.html"));
-  });
+// app.use(express.static(path.resolve(__dirname, "../dist")));
+// app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "../dist/index.html"));
+//   });
 
-// const relativeRoute = path.resolve(__dirname + "../../dist");
-// app.use(express.static(relativeRoute));
+const relativeRoute = path.resolve(__dirname + "../dist");
+app.use(express.static(relativeRoute));
 
 // const staticPath = path.resolve(__dirname, "../fe-src");
 // app.use(express.static(staticPath));
 
-// app.get("*", function(req, res){
+app.get("*", function(req, res){
     
-//     res.sendFile(relativeRoute + "/index.html");
-// })
+    res.sendFile(relativeRoute + "/index.html");
+})
   
 // app.get("*", express.static(__dirname + "./../index.html"))
 
