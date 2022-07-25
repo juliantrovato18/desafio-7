@@ -135,7 +135,7 @@ export async function updatePet(body, id?){
 
 //busca las mascotas que el usuario reporto
 export async function findMyPets(userId){
-    const petsFounded = Pet.findAll({
+    const petsFounded = await Pet.findAll({
         where:{
             user_id: userId
         }
