@@ -17,7 +17,7 @@ import * as cors from "cors";
 
 const app = express();
 app.use(express.json({ limit: "75mb" }));
-app.options('*', cors())
+app.use(cors());
 app.use(express.json());
 
 const SECRET = process.env.SECRET
