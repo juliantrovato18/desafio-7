@@ -17,7 +17,10 @@ import * as cors from "cors";
 
 const app = express();
 app.use(express.json({ limit: "75mb" }));
-app.options('*', cors())
+const allowedHosts = ["https://modulo-8-3fb82.web.app/*"];
+app.use(cors({
+    origin:allowedHosts
+}))
 app.use(express.json());
 
 const SECRET = process.env.SECRET
