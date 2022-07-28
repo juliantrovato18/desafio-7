@@ -24,7 +24,6 @@ const state = {
         userId:"",
         lostPets :[],
         reportedPets:[],
-
         
     },
         listeners:[],
