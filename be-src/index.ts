@@ -16,16 +16,10 @@ import * as cors from "cors";
 
 
 const app = express();
-const allowedHosts = ["https://modulo-8-3fb82.web.app/"];
 
 
-app.use(cors({ 
 
-	origin: allowedHosts
-
- }
-
-));
+app.use(cors());
 app.use(express.json({ limit: "75mb" }));
 app.use(express.json());
 const SECRET = process.env.SECRET
@@ -246,7 +240,8 @@ app.get("/mascotas-cerca", async (req,res)=>{
 //     res.sendFile(path.resolve(__dirname, "../dist/index.html"));
 //   });
 
-const relativeRoute = path.resolve(__dirname + "/../dist");
+const relativeRoute = path.resolve(__dirname, "../dist");
+
 app.use(express.static(relativeRoute));
 
 // const staticPath = path.resolve(__dirname, "../fe-src");
@@ -260,4 +255,5 @@ app.get("*", function(req, res){
 
 app.listen(PORT, ()=>{
       console.log("todo ok, corriendo en", PORT);
+      console.log(relativeRoute);
   })
