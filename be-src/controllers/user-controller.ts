@@ -54,6 +54,23 @@ export async function createAuth(userId, data){
     return auth
 }
 
+export async function updateUser(data, userId){
+    const {name, password} = data;
+    const user = await Auth.findByPk(userId)
+
+    const updatedUser = await Auth.update(
+        {
+            ...user,
+            name,
+            password: getSHA256ofString(password)
+        },{
+        where:{
+            id: userId,
+        }
+    })
+    return updatedUser;
+}
+
 
 export async function findToken(data){
     try {

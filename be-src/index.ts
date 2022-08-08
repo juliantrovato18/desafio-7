@@ -6,7 +6,7 @@ import * as path from "path";
 import *as jwt from "jsonwebtoken"
 import "dotenv/config"
 import { createPet, sendEmail, findPet, findMyPets, findAllPets, updatePet, deleteReport } from "./controllers/pets-controller";
-import { createAuth, createUser, findToken, findUser} from "./controllers/user-controller";
+import { createAuth, createUser, findToken, findUser, updateUser} from "./controllers/user-controller";
 import { verifyEmail } from "./controllers/auth-controller";
 import { index } from "./lib/algolia";
 import { EmailAddress } from "@sendgrid/helpers/classes";
@@ -98,6 +98,20 @@ app.post("/mail", async (req,res)=>{
     } catch (err) {
         console.log(err);
     }
+})
+
+//actualiza la data de un usuario existente
+app.put("/update", authMiddleware, async  (req,res)=>{
+    
+    try {
+        const newUser = await updateUser(req.body,req._user.id)
+        res.status(200).json({
+            newUser
+        })
+    } catch (error) {
+        console.log(error);
+    }
+    
 })
 
 //crea una mascota en la base de datos
