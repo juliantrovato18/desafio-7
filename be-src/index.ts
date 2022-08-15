@@ -110,6 +110,7 @@ app.put("/update", authMiddleware, async  (req,res)=>{
         })
     } catch (error) {
         console.log(error);
+        
     }
     
 })
